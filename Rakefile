@@ -10,7 +10,7 @@ document_root  = "~/website.com/"
 rsync_delete   = false
 rsync_args     = ""  # Any extra arguments to pass to rsync
 deploy_default = "s3"
-s3_bucket = "perceptile.com"
+s3_bucket = "vikparuchuri.com"
 # This will be configured for you when you run config_deploy
 deploy_branch  = "gh-pages"
 
@@ -18,6 +18,7 @@ deploy_branch  = "gh-pages"
 
 public_dir      = "public"    # compiled site directory
 source_dir      = "source"    # source file directory
+src_dir         = "_rmd"       # src file directory
 blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
 deploy_dir      = "_deploy"   # deploy directory (for Github pages deployment)
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
@@ -25,6 +26,7 @@ posts_dir       = "_posts"    # directory for blog files
 themes_dir      = ".themes"   # directory for blog files
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
+new_src_ext     = "Rmd"       # default new post file extension when using the new_post task
 server_port     = "4000"      # port for preview server eg. localhost:4000
 
 
@@ -392,4 +394,28 @@ desc "Deploy website via s3cmd"
 task :s3 do
   puts "## Deploying website via s3cmd"
   ok_failed system("s3cmd sync --acl-public --config ~/.s3cfg public/* s3://#{s3_bucket}/")
+end
+
+# usage rake new_rmd[my-new-rmd] or rake new_post['my new rmd'] or rake new_rmd (defaults to "new-rmd")
+desc "Begin a new post in #{source_dir}/#{src_dir}"
+task :new_rmd, :title do |t, args|
+  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
+  mkdir_p "#{source_dir}/#{src_dir}"
+  args.with_defaults(:title => 'new-rmd')
+  title = args.title
+  filename = "#{source_dir}/#{src_dir}/#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}.#{new_src_ext}"
+  if File.exist?(filename)
+    abort("rake aborted!") if ask("#{filename} already exists. Do you want to overwrite?", ['y', 'n']) == 'n'
+  end
+  puts "Creating new post: #{filename}"
+  open(filename, 'w') do |post|
+    post.puts "---"
+    post.puts "layout: post"
+    post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
+    post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
+    post.puts "comments: true"
+    post.puts "categories: "
+    post.puts "published: false"
+    post.puts "---"
+  end
 end
