@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Intro</title>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h2>Intro</h2>
+
+<p>You may have noticed that this site recently changed over from blogger to wordpress.  I made this change for a lot of reasons, which I will get into in more depth in a subsequent post.</p>
+
+<p>In order to make this change, I setup a wordpress multisite installation with domain mapping.  A multisite installation is when one wordpress install lets you run multiple websites.  I like multisite because it enables me to flexibly manage multiple websites with less duplication of effort than a single wordpress installation for each website would allow me.</p>
+
+<p>Wordpress multisite normally works with subdomains (ie mail.google.com), but I combined the multisite mode with <a href="http://wordpress.org/plugins/wordpress-mu-domain-mapping/">domain mapping</a> to enable top-level domains to be used for each sub-site (so, we have vikparuchuri.com).</p>
+
+<p>This post will be kind of a meta-post, where I go into the details of how I set the site up.  I am not a sysadmin by trade (what am I by trade, anyways?), but some new tools make it really simple to build repeatable configurations.  I can&#39;t stress the repeatable part enough.  If you setup an installation &ldquo;by hand&rdquo; and run a lot of manual system commands, it will be extremely hard to reproduce if you need to run another site, or if you want to backup and re-initialize your site with different hardware.  It may take more initial work to make something repeatable, but it is well worth doing.</p>
+
+<p>Feel free to contact me if you have any questions about this process.  Note that these steps have been tested only on Ubuntu 12.10.  It will most likely work with windows, but some steps may need to be modified.</p>
+
+<h2>High level questions</h2>
+
+<h3>What will this post help me do?</h3>
+
+<ul>
+<li>Setup your own wordpress server for your personal blog.</li>
+<li>Setup your own wordpress server for several of your own websites.</li>
+<li>Setup a wordpress server that allows users to register their own sites automatically.</li>
+</ul>
+
+<h3>Why setup your own wordpress server?</h3>
+
+<ul>
+<li>Often cheaper than using a hosted solution.</li>
+<li>You get more control over your data.</li>
+<li>Can install plugins/themes as you want.</li>
+<li>Quicker to make system-level changes such as package installation, switching domains, etc.</li>
+<li>Easier and more customizable scaling.</li>
+</ul>
+
+<h3>Why use multisite?</h3>
+
+<p>These instructions can be used to setup a single site or a multisite, but there are some advantages to using a multisite rather than setting up several single sites.</p>
+
+<ul>
+<li>Higher upfront time to setup, but much easier to setup each individual site after that.</li>
+<li>Central plugin and backup management.</li>
+<li>Easier to scale and manage.</li>
+</ul>
+
+<h2>Technologies Used</h2>
+
+<p>To enable the configuration steps to be repeatable, I used the following technologies:</p>
+
+<ul>
+<li><a href="http://aws.amazon.com/ec2/">EC2</a> is an Amazon service that lets you create or shutdown servers on an on demand basis.  It is great for deploying websites in seconds.</li>
+<li><a href="http://aws.amazon.com/route53/">Route 53</a> Route 53 is Amazon&#39;s DNS service.  It makes it incredibly simple to setup DNS records.</li>
+<li><a href="http://aws.amazon.com/cloudformation/">CloudFormation</a> is another Amazon service that lets you use templates to create resource &ldquo;stacks&rdquo;.  These resources can be servers (EC2), databases (RDS), and so on.  This lets you easily create and manage configurable resources.  In our case, it allows us to create our server and associated resources very easily.</li>
+<li><a href="http://www.ansibleworks.com/">Ansible</a> is an open source project that allows for idempotent commands to be run by sshing into a server or group of servers.  In our case, it allows us to very easily configure our wordpress server.</li>
+</ul>
+
+<h2>Getting the code</h2>
+
+<p>To get started, we first need to grab the wordpress-deployment repository:</p>
+
+<pre><code>git clone git@github.com:VikParuchuri/wp-deployment.git
+</code></pre>
+
+<p>Git is a version control system, and github is a social coding tool.  If you haven&#39;t used git before, <a href="https://help.github.com/articles/set-up-git">github</a> has some good tutorials.</p>
+
+<p>The git clone command will make a new directory where you cloned it called wp-deployment.</p>
+
+<h2>Starting the cloudformation stack</h2>
+
+<p>After you have cloned the repository, you will be able to find the cloudformation template at <code>wp-deployment/cloudformation/wordpress.json</code> .</p>
+
+<p>We will now need to login to an existing AWS account to use this template.  See <a href="http://aws.amazon.com/">Amazon AWS</a> for details on making an account.</p>
+
+<p>One you login, you should be at the <a href="https://console.aws.amazon.com/console/home?#">management console</a>.  The management console allows you to interact with AWS resources.  In this case, we care about the <a href="https://console.aws.amazon.com/cloudformation/home">cloudformation section</a>.</p>
+
+<p>Once you are in the cloudformation console, you will be able to click on &ldquo;create stack&rdquo;.  <strong>Note that creating a stack will cost money.</strong>  You can use <a href="http://calculator.s3.amazonaws.com/calc5.html">this tool</a> to estimate your cost.</p>
+
+<p><img src="../images/wordpress-install/cf_console.png" alt="create_stack"/></p>
+
+<p>After clicking on &ldquo;create stack&rdquo;, you will need to choose to upload the wordpress.json template.</p>
+
+<p><img src="../images/wordpress-install/cf_template.png" alt="upload template"/></p>
+
+<p>Once you fill in the stack name and click &ldquo;next&rdquo;, you will come to the &ldquo;specify parameters&rdquo; screen.  This is where the extensibility of cloudformation comes to the fore.  This template lets you specify a few different variables.</p>
+
+<ul>
+<li>SSHLocation - If you want to restrict SSH access, set this.  Otherwise, leave it at the default.</li>
+<li>EnvironmentTag - If you want a stage or sandbox instance to test with, change this.  Otherwise, leave at prod.  This will not change anything with the instance, it will only change how the instance is tagged.  Ansible finds instances by how they are tagged (more on this later), so this is only if you want multiple types of servers with different configurations.</li>
+<li>ApplicationTag - Again, this is only a tag, so it only affects how the instance is discovered.  I would recommend leaving it as the default.</li>
+<li>KeyName - In your EC2 setup, you will need to specify keypairs that can SSH into your instances.  See the <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/generating-a-keypair.html">user guide</a> for more info on this.  The KeyName is the name of the keypair that you want to use.  You will need to have it registered with EC2, and the private key will need to be on your computer.</li>
+<li>InstanceType - How large of an <a href="http://aws.amazon.com/ec2/instance-types/#instance-details">EC2 instance</a> you want to create.  I recommend not using the t1.micro, as it has not been fully tested (but if you are adventurous, feel free to test!).</li>
+</ul>
+
+<p>Once you have set these, you will need to check the box that says &ldquo;I acknowledge that this template may created IAM resources.&rdquo;  <a href="http://aws.amazon.com/iam/">IAM resources</a> are an Amazon feature that allow for multiple user roles with various access permissions.  In this case, we are creating a user for our wordpress server that has limited access.</p>
+
+<p>You can now hit &ldquo;continue&rdquo; through the next two screens (add tags and review).  Amazon will now get to work creating your stack!</p>
+
+<h2>What is in the stack?</h2>
+
+<p>While the stack is being created, let&#39;s talk about what is actually being made.</p>
+
+<h3>IAM User</h3>
+
+<p>As I alluded to before, cloudformation is making an IAM user.  IAM gives us greater security, because we are not keeping our main AWS credentials on the server we are making.  In this case, we are making a user that can access Amazon S3 (file storage), and send email via Amazon SES.  Access to S3 allows the instance to be &ldquo;bootstrapped&rdquo; with some needed applications when it is created.  Basically, the application downloads some basic applications from S3 and does some initial configuration.  This makes it simpler for us down the line.  Access to SES will let our wordpress instance send email to users (if we enable it), and it will let us backup our wordpress installation to S3 (again, if we enable it).</p>
+
+<h3>EC2 Server</h3>
+
+<p>The template will also create a server.  This server will run wordpress, once we set everything up.  It will need to have access to a database (or run a database locally).  It will run the Ubuntu OS.</p>
+
+<h3>ELB</h3>
+
+<p>An ELB is an elastic load balancer.  It basically redirects from an external facing URL to a group of servers.  It is generally intended to balance load between several machines.  In our case, it serves two purposes.  Amazon Route 53 (which we will go into later) does not allow naked domain redirection (ie vikparuchuri.com instead of <a href="http://www.vikparuchuri.com">www.vikparuchuri.com</a>) unless we use an ELB. The ELB also allows us to swap servers in/out on the backend however we want later.</p>
+
+<h3>Security Group</h3>
+
+<p>A security group determines who can access our server, and from what ports.</p>
+
+<h2>The database</h2>
+
+<p>You may have noticed that I did not include a database in the previous description of the stack.  This is because I wanted to make it as flexible as possible what database you use.  Also, including the database in a stack is a bit fraught with danger, because you risk losing all of your data if you accidentally delete a stack.</p>
+
+<p>You can either create a database locally on the EC2 server you have just made, or make a separate database server using <a href="http://aws.amazon.com/rds/">Amazon RDS</a>.  In my case, I used Amazon RDS because it makes it more flexible to add/remove EC2 servers without losing data.</p>
+
+<p>Feel free to use either option.  For the purposes of this tutorial, I will go with a local database, because RDS is a bit more complex to setup.</p>
+
+<h2>Stack outputs</h2>
+
+<p>The stack should now have finished coming up.  If you see a red light and the status &ldquo;ROLLBACK_COMPLETE&rdquo;, you should check &ldquo;Events&rdquo; under the stack detail to find the reason for the rollback.  Often, it is something like having typed a configuration setting in incorrectly.</p>
+
+<p>Now that the stack has been created, you can click on the stack in the console and check on the outputs.</p>
+
+<p><img src="../images/wordpress-install/cf_outputs.png" alt="outputs"/></p>
+
+<p>The outputs will tell you the ELB address (referred to from hereon as ELBAddress) and the EC2 server address (referred to from hereon as ServerAddress).  Save both of these somewhere: you can access them here anytime, but we will need them in several places.</p>
+
+<h2>Setting up a local database</h2>
+
+<p>We can now setup a local database for the wordpress instance.  Feel free to skip this if you will be using an external database.  Regardless of what database server you are using, it is still nice to have a user just for wordpress with limited access, though (this will automatically be setup later on).</p>
+
+<h3>Install mysql server</h3>
+
+<p>Let&#39;s ssh into our instance:</p>
+
+<pre><code>ssh ubuntu@ServerAddress
+</code></pre>
+
+<p>We will need to install mysql:</p>
+
+<pre><code>sudo apt-get install mysql-server
+</code></pre>
+
+<p>Set whatever root password you want, but make sure you save it somewhere.</p>
+
+<h3>Setup database/user/permissions</h3>
+
+<p><strong>The following steps in this section (creating a database, a user, and granting the relevant permissions), will be done automatically.  Only do it yourself if you want to understand the process or debug.</strong></p>
+
+<p>Now, let&#39;s create a database, a database user, and give the user the right permissions.</p>
+
+<pre><code>mysql -u root -p
+</code></pre>
+
+<p>Type in the password you set during the installation of mysql-server when it asks for a password.</p>
+
+<p>Once you are in the mysql shell:</p>
+
+<pre><code>CREATE DATABASE wordpress;
+CREATE USER wordpress IDENTIFIED BY &#39;[insert password here]&#39;;
+GRANT SELECT,INSERT,UPDATE,DELETE ON wordpress.* TO &#39;wordpress&#39;@&#39;localhost&#39;;
+</code></pre>
+
+<p>Save your wordpress user password somewhere.</p>
+
+<p>We are now done setting up the database, and we can move on to the other steps.  Use <code>exit</code> to terminate the ssh connection.</p>
+
+<h2>Setup Route53 to forward our domain to the ELB</h2>
+
+<p>Route53 is Amazon&#39;s DNS management system, as I mentioned earlier.  It will allow us to point users who go to <a href="http://www.oursite.com">www.oursite.com</a> to our ELB.  <strong>Feel free to skip this if you don&#39;t need this, or if you plan to manage your DNS some other way.  You will always be able to access your site via ELBAddress.</strong></p>
+
+<p>To use Route53, first go to the <a href="https://console.aws.amazon.com/route53/home?#">Route53 Console</a>.</p>
+
+<p>Then, click on &ldquo;Create Hosted Zone&rdquo;.</p>
+
+<p>This will pop up a box on the right that lets you enter your domain name. Enter your domain name without the www, and then click create hosted zone at the bottom.</p>
+
+<p><img src="../images/wordpress-install/53_hosted.png" alt="hosted zones"/></p>
+
+<p>Your domain will now appear in the center panel.  Select your domain, and then look at &ldquo;delegation sets&rdquo; at the right.
+<img src="../images/wordpress-install/53_delegation.png" alt="dns entries"/></p>
+
+<p>These are your namesevers, and you will need to set these as the DNS records with your registrar.  The AWS help at the top right will give you information on this if you have questions.</p>
+
+<p>Once you have setup the nameserver configuration, you will need to setup the records to point at your wordpress elb (which will point to your server).</p>
+
+<p>To do this, you will need to setup two alias records, one for the &ldquo;naked&rdquo; domain (vikparuchuri.com), and one for the full domain (<a href="http://www.vikparuchuri.com">www.vikparuchuri.com</a>).</p>
+
+<p>Select your domain in the Route 53 control panel, and the click on &ldquo;go to record sets&rdquo; at the top left.  This will bring you to a detail view of the record set.</p>
+
+<p>Now, you can click on &ldquo;Create record set&rdquo;, which will pop up a box at the right.</p>
+
+<p>We will be making an alias record that points at our ELBAddress.
+<img src="../images/wordpress-install/53_ndomain.png" alt="naked domain redirect"/></p>
+
+<p>Click create record set when you are done, and then do the same for the full domain.
+<img src="../images/wordpress-install/53_domain.png" alt="full domain redirect"/></p>
+
+<p>We are now setup as far as what we need for the wordpress install.</p>
+
+<h2>Setup for wordpress deployment</h2>
+
+<p>We are now ready to do our basic wordpress configuration with ansible.  This will setup a basic single-site wordpress install.</p>
+
+<h3>Setup ansible</h3>
+
+<p>On our local machine, let&#39;s go to the wp-deployment folder that we created earlier with git clone:</p>
+
+<pre><code>cd wp-deployment
+</code></pre>
+
+<p>You will need to be running python 2.6+ before doing the following step.  See <a href="http://askubuntu.com/questions/101591/how-do-i-install-python-2-7-2-on-ubuntu">this link</a> for how to install python on ubuntu.  You will also need <code>pip</code>, which you can get by doing <code>easy_install pip</code> after python is installed.  See <a href="http://myadventuresincoding.wordpress.com/2011/09/11/python-upgrading-python-with-easy_install-pip-and-virtualenv-on-a-mac/">this link</a> for a description of how to do this on a mac, and <a href="http://stackoverflow.com/questions/4750806/how-to-install-pip-on-windows">this link</a> for how to do this on windows.</p>
+
+<p>Now, using the python package manager pip, let&#39;s install the requirements.  Feel free to use a virtualenv or not use one for this.  A <a href="http://www.virtualenv.org/en/latest/">virtualenv</a> is a python tool that allows you to isolate environments for each of your applications.  I highly recommend looking at <a href="http://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a> if you choose to use a virtualenv.</p>
+
+<pre><code>pip install -r requirements.txt
+</code></pre>
+
+<h3>Set secret variables</h3>
+
+<p>Ansible has a concept called playbooks.  Each playbook will match a certain subset of the potential hosts (in this case, the hosts are our ec2 instances, and subsets are the ones with the correct tags, which is why it was important to set tags earlier).</p>
+
+<p>Playbooks will run certain commands on a certain set of hosts.  In this case, we want to run the commands to correctly setup wordpress.</p>
+
+<p>Get the template file from <code>secrets/vars/wordpress_prod_vars.yml.template</code>.  Then, edit the values to reflect what you need.</p>
+
+<p>The values from <code>auth_key</code> to <code>nonce_salt</code> are wordpress internal secret variables (salts).  You can generate random ones <a href="https://api.wordpress.org/secret-key/1.1/salt/">here</a>.  When you insert them into the template, make sure that you put them between the quotes.  The single quotes need to be there.</p>
+
+<p>Your final template should look something like this (<strong>don&#39;t use these salts, generate your own!</strong>).</p>
+
+<pre><code>database_user: wordpress
+database_password: INSERT_PASSWORD_HERE
+
+database_host: localhost
+database_root_user: root
+database_root_password: INSERT_ROOT_PASSWORD_HERE
+
+auth_key: &#39;!UCVyMfA4q6~GOt]hr9!{9H/Ec8*rs9,9Ow|~n0pEbRacmLnD~Bb]GC9DW9/n+;k&#39;
+secure_auth_key: &#39;:rg-V/}0h`0]Sx]/tR6YByYwulzT&lt;TXd_tD^&amp;CBY$+b$H`yxA{*`Bv! -Mmwqp (&#39;
+logged_in_key: &#39;/QA}nvBwLjVIY&gt;CPH(.}FQ%&amp;)@e((yCn_V`RrVg&gt;@[YiyX]DX9{q@&amp;@H|!O7PiE@&#39;
+nonce_key: &#39;O!,(tiA;C,$]v&amp;:,N6^60wT&lt;-hq/p sF])0)Y9(pQ`u0!.J,;KYU]n%oTD]$o{Oq&#39;
+auth_salt: &#39;&gt;@E7siI)e|;rc@ qwo^9GX}D O+9DEh6@hd%PifC/yyvaH?c8)+7swV-D9=%WJF1&#39;
+secure_auth_salt: &#39;YLKK+W&amp;Lrx-/4@r&lt;1[AW9&gt;v&amp;Sg|HnZ. c)N`NNvBe!gc=`5[bqjSisslF+:L1x G&#39;
+logged_in_salt: &#39;@AzQQr#}5;QD&lt;iDSu#)|wM(UQ7?LV#I|F` ]=:LnFN`-!)1i!!I&gt;a96iaqE*y[1+&#39;
+nonce_salt: &#39;39OSa0v~!=vh0j[YXOmR?,tq-G]x:uphoNaO)Hj..&amp;|2Dg@G:S|#}QZ@49+b46j5&#39;
+
+elb_address: INSERT_ELBAddress_HERE
+</code></pre>
+
+<p>A note on the elb_address.  This is the site where your server will be accessed from.  If you have a domain that you want to access your site from that you just setup with route53 (ie vikparuchuri.com), then use that.  For multisite, make it the primary address you will be accessing from.  If you don&#39;t have a domain, using the ELBAddress is fine.</p>
+
+<p>Once your template looks good, you can save it without the .template extension (<code>wordpress_prod_vars.yml</code>).</p>
+
+<h2>Boto configuration</h2>
+
+<p>Ansible needs to find your server, which it does via boto, which is a python utility to connect to Amazon AWS.  To configure boto, you will need to make a .boto file with your AWS credentials.</p>
+
+<p>Please see <a href="http://boto.readthedocs.org/en/latest/boto_config_tut.html">these instructions</a> for more information on configuring boto.</p>
+
+<p>If boto is setup correctly, you will be able to run:</p>
+
+<pre><code>cd wp-deployment/playbooks
+./ec2.py
+</code></pre>
+
+<p>This should show you all your running EC2 servers.</p>
+
+<h2>Deploying wordpress via ansible</h2>
+
+<p>These instructions will setup a single site via wordpress, which can then be extended to be a multisite.</p>
+
+<h3>Inspecting the playbooks</h3>
+
+<p>We will need to first go to the playbooks directory.</p>
+
+<pre><code>cd wp-deployment/playbooks
+</code></pre>
+
+<p>If you look at the folder, you will see that there are .yml files, which are the playbooks, and a roles folder, which contains the code that the playbooks actually run on the hosts.</p>
+
+<p>If you look at the roles folder, you will see two roles: &ldquo;mu&rdquo; and &ldquo;wp&rdquo;.  The wp role will make a wordpress installation on a site, and the mu role will convert it to be a multisite installation.</p>
+
+<p>Both roles have associated variables in their vars folder that you can edit if you want, but there is no real reason not to use the defaults.</p>
+
+<h3>Running the playbook</h3>
+
+<p>We can now run <code>ansible-playbook -vvv --user=ubuntu  wp_prod.yml -i ./ec2.py  -c ssh</code>, and it will connect to our EC2 server and configure it with wordpress.</p>
+
+<p>If the command creates an error, you may have done the cloudformation configuration incorrectly and tagged your machines improperly.  You can look at the tags and fix this in the &ldquo;hosts&rdquo; section of the <code>wp_prod.yml</code> playbook.</p>
+
+<p>Once the playbook finishes running, you can go to <code>YOUR_SERVER_NAME/wp-admin/install.php</code> on your server to begin wordpress installation.  <code>YOUR_SERVER_NAME</code> should be what you entered for <code>elb_address</code> in the template.  In this example, I set up route 53 to point to my ELB, and used the route 53 domain.</p>
+
+<h2>Setting up wordpress</h2>
+
+<p>Once you can get to <code>YOUR_SERVER_NAME/wp-admin/install.php</code>, you can setup your site through the interface.  One note of caution : <strong>do not use admin as your username.</strong>  There are people who scan for the admin username and try to guess the password through brute force attacks.</p>
+
+<p>Once you finish the setup screens, congratulations!  You have setup a single user wordpress site.</p>
+
+<h2>Activating multisite mode</h2>
+
+<h3>Activation</h3>
+
+<p>Now, to activate multisite mode for your wordpress install, you will have to go to the wp-admin, and then click on tools/network setup.  You can also go to the url <code>YOUR_SERVER_NAME/wp-admin/network.php</code>.</p>
+
+<p>You can then type in some settings to setup network mode.  Make sure you select sub-domains!</p>
+
+<p><img src="../images/wordpress-install/wp_network.png" alt="activate network mode"/></p>
+
+<h3>Post activation</h3>
+
+<p>After you hit the install button, you will come to a screen that asks you to do some configuration.  You can ignore those steps for now, as we will be doing that through an ansible playbook.</p>
+
+<p>If you see a &ldquo;Warning! Wildcard DNS may not be configured correctly!&rdquo; in red at the top, this means that you have not setup <code>*.YOUR_SERVER_ADDRESS.com</code> to redirect to the ELB.  You can do this using Route 53 alias records (see the previous section on this), or you can skip it for now.  All this means is that whenever you make another site in the multisite network, you will need to setup a redirect from <code>MULTISITE_NAME.YOUR_SERVER_ADDRESS.com</code> to the ELB (you need to do this even if you are using separate domain names for each of your sites on multisite).</p>
+
+<h2>Configuring multisite mode</h2>
+
+<p>After activating multisite mode, you can then run the mu playbook to setup multisite.</p>
+
+<pre><code>cd wp-deployment/playbooks
+ansible-playbook -vvv --user=ubuntu  mu_prod.yml -i ./ec2.py  -c ssh
+</code></pre>
+
+<p>And now you will be able to go to wp-admin on your site, and login.  Multisite mode is now active, and you will be able to make a network of sites with their own domain names.</p>
+
+<h2>Making new sites</h2>
+
+<h3>Set up a new site with a subdomain</h3>
+
+<p>To make a new site, go to <code>YOUR_SERVER_ADDRESS/wp-admin/network/site-new.php</code>, and make a new site with a subdomain.</p>
+
+<p><img src="../images/wordpress-install/wp_addsite.png" alt="new site"/></p>
+
+<p>Set up the DNS for that subdomain to redirect to your ELB, even if you are not using Route 53.  If you already have a wildcard redirect, then you can skip this.</p>
+
+<h3>Using a top level domain</h3>
+
+<p>If you want to use a top level domain, such as test.com, for the site:</p>
+
+<p>Go to domain mapping in <code>YOUR_SERVER_ADDRESS/wp-admin/network/settings.php?page=dm_domains_admin</code> and set the id of the site (you can get this from the url when you click on a site in sites), and the domain.  Make sure that primary is checked.</p>
+
+<p><img src="../images/wordpress-install/wp_adddomain.png" alt="new domain"/></p>
+
+<p>You will have to redirect the domain (<a href="http://www.test.com">www.test.com</a>) and the apex domain (test.com) to your ELB.  You can do this via Route 53, and the instructions are above.</p>
+
+<h2>Modifications/Contributions</h2>
+
+<p>The code for the cloudformation template and the ansible playbooks is on <a href="https://github.com/vikparuchuri/wp-deployment">github</a>, so please feel free to fork and submit a pull request if you want to change something.</p>
+
+<h2>Future post topics</h2>
+
+<p>There are some other useful things that I did to make wordpress easier to manage, and these include:</p>
+
+<ul>
+<li>Setting up email via Amazon SES</li>
+<li>Automated backups via xcloner</li>
+<li>Migrating from blogger to wordpress and setting up redirects</li>
+<li>Setting up a database using Amazon RDS</li>
+<li>Setting up email/calendar using Google Apps</li>
+</ul>
+
+<p>I intend to post about these down the line, as time permits.  Please let me know if any of them are particularly interesting.</p>
+
+</body>
+
+</html>

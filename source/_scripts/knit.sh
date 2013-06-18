@@ -9,16 +9,16 @@ knit <- function (inputFile, outputFile) {
 
   # configure output options
   knitr::pat_md()
-  knitr::opts_knit$set(out.format = 'markdown')
+  knitr::opts_knit$set(out.format = 'html')
   renderOcto()
 
   # do the knit
-  knitr::knit(input = inputFile, output = outputFile)
+  knitr::knit2html(input = inputFile, output = outputFile, options=c("use_xhtml","smartypants","mathjax","highlight_code"))
 }
 
 # adaption of knitr::render_jekyll
 renderOcto <- function(extra = '') {
-  knitr::render_markdown(TRUE)
+  knitr::render_markdown(FALSE)
   # code
   hook.c = function(x, options) {
 	  prefix <- sprintf("\n\n```r", options$label)
