@@ -1,0 +1,11 @@
+---
+layout: post
+title: "Playing MP3s in Ruby on Windows"
+date: 2012-01-10T18:38:00-08:00
+categories:
+ - Ruby
+ - Windows
+---
+
+<div class='post'>
+I recently needed to play music in Ruby in order to create an alarm clock of sorts.  The code to do this was (surprise surprise) fairly simple, but I want to post it for posterity.  <pre class="ruby"><br />require 'win32ole'<br />player = WIN32OLE.new('WMPlayer.OCX')<br />player.OpenPlayer('C:\alarm.mp3')<br /></pre> This will open a new instance of Windows Media Player that plays the selected song.<br><br> Note that win32ole should be installed by default, and does not need to be installed as a gem.</div>
