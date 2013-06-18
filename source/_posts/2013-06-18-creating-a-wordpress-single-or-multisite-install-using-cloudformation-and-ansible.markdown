@@ -8,20 +8,19 @@ categories:
     - deployment
     - wordpress
     - python
-published: false
+published: true
 ---
-
 
 Intro
 -------------------------
 
-You may have noticed that this site recently changed over from blogger to wordpress.  I made this change for a lot of reasons, which I will get into in more depth in a subsequent post.
+I recently had to create some sites quickly.  After evaluating a few options, setting up a wordpress multisite seemed like a good option.
 
 In order to make this change, I setup a wordpress multisite installation with domain mapping.  A multisite installation is when one wordpress install lets you run multiple websites.  I like multisite because it enables me to flexibly manage multiple websites with less duplication of effort than a single wordpress installation for each website would allow me.
 
 Wordpress multisite normally works with subdomains (ie mail.google.com), but I combined the multisite mode with [domain mapping](http://wordpress.org/plugins/wordpress-mu-domain-mapping/) to enable top-level domains to be used for each sub-site (so, we have vikparuchuri.com).
 
-This post will be kind of a meta-post, where I go into the details of how I set the site up.  I am not a sysadmin by trade (what am I by trade, anyways?), but some new tools make it really simple to build repeatable configurations.  I can't stress the repeatable part enough.  If you setup an installation "by hand" and run a lot of manual system commands, it will be extremely hard to reproduce if you need to run another site, or if you want to backup and re-initialize your site with different hardware.  It may take more initial work to make something repeatable, but it is well worth doing.
+I am not a sysadmin by trade (what am I by trade, anyways?), but some new tools make it really simple to build repeatable configurations.  I can't stress the repeatable part enough.  If you setup an installation "by hand" and run a lot of manual system commands, it will be extremely hard to reproduce if you need to run another site, or if you want to backup and re-initialize your site with different hardware.  It may take more initial work to make something repeatable, but it is well worth doing.
 
 Feel free to contact me if you have any questions about this process.  Note that these steps have been tested only on Ubuntu 12.10.  It will most likely work with windows, but some steps may need to be modified.
 
@@ -63,7 +62,7 @@ Getting the code
 
 To get started, we first need to grab the wordpress-deployment repository:
 
-```
+```python
 git clone git@github.com:VikParuchuri/wp-deployment.git
 ```
 
@@ -149,13 +148,13 @@ We can now setup a local database for the wordpress instance.  Feel free to skip
 ### Install mysql server
 
 Let's ssh into our instance:
-```
+```python
 ssh ubuntu@ServerAddress
 ```
 
 We will need to install mysql:
 
-```
+```python
 sudo apt-get install mysql-server
 ```
 
@@ -167,7 +166,7 @@ Set whatever root password you want, but make sure you save it somewhere.
 
 Now, let's create a database, a database user, and give the user the right permissions.
 
-````
+```python
 mysql -u root -p
 ```
 
@@ -175,7 +174,7 @@ Type in the password you set during the installation of mysql-server when it ask
 
 Once you are in the mysql shell:
 
-```
+```python
 CREATE DATABASE wordpress;
 CREATE USER wordpress IDENTIFIED BY '[insert password here]';
 GRANT SELECT,INSERT,UPDATE,DELETE ON wordpress.* TO 'wordpress'@'localhost';
@@ -228,7 +227,7 @@ We are now ready to do our basic wordpress configuration with ansible.  This wil
 
 On our local machine, let's go to the wp-deployment folder that we created earlier with git clone:
 
-```
+```python
 cd wp-deployment
 ```
 
@@ -236,9 +235,9 @@ You will need to be running python 2.6+ before doing the following step.  See [t
 
 Now, using the python package manager pip, let's install the requirements.  Feel free to use a virtualenv or not use one for this.  A [virtualenv](http://www.virtualenv.org/en/latest/) is a python tool that allows you to isolate environments for each of your applications.  I highly recommend looking at [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/) if you choose to use a virtualenv.
 
-````
+```python
 pip install -r requirements.txt
-````
+```
 
 ### Set secret variables
 
@@ -252,7 +251,7 @@ The values from `auth_key` to `nonce_salt` are wordpress internal secret variabl
 
 Your final template should look something like this (**don't use these salts, generate your own!**).
 
-```
+```python
 database_user: wordpress
 database_password: INSERT_PASSWORD_HERE
 
@@ -285,7 +284,7 @@ Please see [these instructions](http://boto.readthedocs.org/en/latest/boto_confi
 
 If boto is setup correctly, you will be able to run:
 
-```
+```python
 cd wp-deployment/playbooks
 ./ec2.py
 ```
@@ -301,7 +300,7 @@ These instructions will setup a single site via wordpress, which can then be ext
 
 We will need to first go to the playbooks directory.
 
-```
+```python
 cd wp-deployment/playbooks
 ```
 
@@ -349,7 +348,7 @@ Configuring multisite mode
 
 After activating multisite mode, you can then run the mu playbook to setup multisite.
 
-```
+```python
 cd wp-deployment/playbooks
 ansible-playbook -vvv --user=ubuntu  mu_prod.yml -i ./ec2.py  -c ssh
 ```

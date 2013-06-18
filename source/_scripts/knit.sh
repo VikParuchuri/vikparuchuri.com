@@ -13,7 +13,7 @@ knit <- function (inputFile, outputFile) {
   renderOcto()
 
   # do the knit
-  knitr::knit2html(input = inputFile, output = outputFile, options=c("use_xhtml","smartypants","mathjax","highlight_code"))
+  knitr::knit(input = inputFile, output = outputFile)
 }
 
 # adaption of knitr::render_jekyll
