@@ -24,6 +24,8 @@ I am not a sysadmin by trade (what am I by trade, anyways?), but some new tools 
 
 Feel free to contact me if you have any questions about this process.  Note that these steps have been tested only on Ubuntu 12.10.  It will most likely work with windows, but some steps may need to be modified.
 
+<!--more-->
+
 High level questions
 -------------------------
 

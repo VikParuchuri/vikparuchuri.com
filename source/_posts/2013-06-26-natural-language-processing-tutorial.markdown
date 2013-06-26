@@ -12,12 +12,15 @@ categories:
 published: true
 ---
 
-
-
-
 ## Introduction
 
-This will serve as an introduction to natural language processing.  We will go from tokenization to feature extraction to creating a model using a machine learning algorithm.  The goal is to provide a reasonable baseline on top of which more complex natural language processing can be done, and provide a good introduction to the material.  The examples in this code are done in R, but are easily translatable to other languages.  You can get the source of the post from [github](http://www.github.com/vikparuchuri/vikparuchuri.com)
+This will serve as an introduction to natural language processing.  I adapted it from slides for a recent talk at Boston Python.
+
+We will go from tokenization to feature extraction to creating a model using a machine learning algorithm.  The goal is to provide a reasonable baseline on top of which more complex natural language processing can be done, and provide a good introduction to the material.  
+
+The examples in this code are done in R, but are easily translatable to other languages.  You can get the source of the post from [github](http://www.github.com/vikparuchuri/vikparuchuri.com)
+
+<!--more-->
 
 ## Training set example
 
@@ -36,7 +39,7 @@ The responses might look like this:
 ```
 
 
-Let's say that the survey also asks people to rate the talks on a scale of 0 to 2.
+Let's say that the survey also asks people to rate their interest on a scale of 0 to 2.
 
 We would now have text and associated scores:
 
