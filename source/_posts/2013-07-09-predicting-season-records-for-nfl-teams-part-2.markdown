@@ -13,7 +13,7 @@ categories:
 published: true
 ---
 
-*Cross-posted to [Vik's Blog](http://www.vikparuchuri.com) and [Equirio](http://www.equirio.com).  This is the second, technical, part.  See [the first part](/blog/predicting-nfl-season-records-with-percept) for more detail.*
+*Cross-posted to [Vik's Blog](http://www.vikparuchuri.com) and [Equirio](http://www.equirio.com).  This is the second, technical, part.  See [the first part](/blog/predicting-nfl-season-records-with-percept) for the overview.*
 
 Introduction
 -------------------
