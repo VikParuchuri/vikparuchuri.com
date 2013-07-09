@@ -229,7 +229,7 @@ Look at *tasks.tasks.CleanupNFLCSV* for a full listing of what is done.
 Our cleaned data:
 
 <div>
-<table border="1" class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>Week</th>      <th>Home</th>      <th>Winner/tie</th>      <th>YdsW</th>      <th>TOW</th>      <th>PtsW</th>      <th>YdsL</th>      <th>Loser/tie</th>      <th>TOL</th>      <th>Year</th>      <th>Day</th>      <th>PtsL</th>      <th>DayNum</th>      <th>MonthNum</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td> 1</td>      <td> 0</td>      <td>   Indianapolis Colts</td>      <td> 452</td>      <td> 1</td>      <td> 41</td>      <td> 293</td>      <td>   New Orleans Saints</td>      <td> 3</td>      <td> 2007</td>      <td> 3</td>      <td> 10</td>      <td> 6</td>      <td> 9</td>    </tr>    <tr>      <th>1</th>      <td> 1</td>      <td> 0</td>      <td>     Seattle Seahawks</td>      <td> 343</td>      <td> 1</td>      <td> 20</td>      <td> 284</td>      <td> Tampa Bay Buccaneers</td>      <td> 2</td>      <td> 2007</td>      <td> 6</td>      <td>  6</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>2</th>      <td> 1</td>      <td> 1</td>      <td>  Pittsburgh Steelers</td>      <td> 365</td>      <td> 1</td>      <td> 34</td>      <td> 221</td>      <td>     Cleveland Browns</td>      <td> 5</td>      <td> 2007</td>      <td> 6</td>      <td>  7</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>3</th>      <td> 1</td>      <td> 0</td>      <td>    Green Bay Packers</td>      <td> 215</td>      <td> 2</td>      <td> 16</td>      <td> 283</td>      <td>  Philadelphia Eagles</td>      <td> 3</td>      <td> 2007</td>      <td> 6</td>      <td> 13</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>4</th>      <td> 1</td>      <td> 1</td>      <td>     Tennessee Titans</td>      <td> 350</td>      <td> 2</td>      <td> 13</td>      <td> 272</td>      <td> Jacksonville Jaguars</td>      <td> 1</td>      <td> 2007</td>      <td> 6</td>      <td> 10</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>5</th>      <td> 1</td>      <td> 0</td>      <td>       Dallas Cowboys</td>      <td> 478</td>      <td> 2</td>      <td> 45</td>      <td> 438</td>      <td>      New York Giants</td>      <td> 1</td>      <td> 2007</td>      <td> 6</td>      <td> 35</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>6</th>      <td> 1</td>      <td> 1</td>      <td> New England Patriots</td>      <td> 431</td>      <td> 0</td>      <td> 38</td>      <td> 227</td>      <td>        New York Jets</td>      <td> 0</td>      <td> 2007</td>      <td> 6</td>      <td> 14</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>7</th>      <td> 1</td>      <td> 0</td>      <td>    Minnesota Vikings</td>      <td> 302</td>      <td> 1</td>      <td> 24</td>      <td> 265</td>      <td>      Atlanta Falcons</td>      <td> 2</td>      <td> 2007</td>      <td> 6</td>      <td>  3</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>8</th>      <td> 1</td>      <td> 0</td>      <td>  Washington Redskins</td>      <td> 400</td>      <td> 2</td>      <td> 16</td>      <td> 273</td>      <td>       Miami Dolphins</td>      <td> 1</td>      <td> 2007</td>      <td> 6</td>      <td> 13</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>9</th>      <td> 1</td>      <td> 1</td>      <td>    Carolina Panthers</td>      <td> 385</td>      <td> 2</td>      <td> 27</td>      <td> 238</td>      <td>       St. Louis Rams</td>      <td> 2</td>      <td> 2007</td>      <td> 6</td>      <td> 13</td>      <td> 9</td>      <td> 9</td>    </tr>  </tbody></table>
+<table border="1" class="dataframe table display">  <thead>    <tr style="text-align: right;">      <th></th>      <th>Week</th>      <th>Home</th>      <th>Winner/tie</th>      <th>YdsW</th>      <th>TOW</th>      <th>PtsW</th>      <th>YdsL</th>      <th>Loser/tie</th>      <th>TOL</th>      <th>Year</th>      <th>Day</th>      <th>PtsL</th>      <th>DayNum</th>      <th>MonthNum</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td> 1</td>      <td> 0</td>      <td>   Indianapolis Colts</td>      <td> 452</td>      <td> 1</td>      <td> 41</td>      <td> 293</td>      <td>   New Orleans Saints</td>      <td> 3</td>      <td> 2007</td>      <td> 3</td>      <td> 10</td>      <td> 6</td>      <td> 9</td>    </tr>    <tr>      <th>1</th>      <td> 1</td>      <td> 0</td>      <td>     Seattle Seahawks</td>      <td> 343</td>      <td> 1</td>      <td> 20</td>      <td> 284</td>      <td> Tampa Bay Buccaneers</td>      <td> 2</td>      <td> 2007</td>      <td> 6</td>      <td>  6</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>2</th>      <td> 1</td>      <td> 1</td>      <td>  Pittsburgh Steelers</td>      <td> 365</td>      <td> 1</td>      <td> 34</td>      <td> 221</td>      <td>     Cleveland Browns</td>      <td> 5</td>      <td> 2007</td>      <td> 6</td>      <td>  7</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>3</th>      <td> 1</td>      <td> 0</td>      <td>    Green Bay Packers</td>      <td> 215</td>      <td> 2</td>      <td> 16</td>      <td> 283</td>      <td>  Philadelphia Eagles</td>      <td> 3</td>      <td> 2007</td>      <td> 6</td>      <td> 13</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>4</th>      <td> 1</td>      <td> 1</td>      <td>     Tennessee Titans</td>      <td> 350</td>      <td> 2</td>      <td> 13</td>      <td> 272</td>      <td> Jacksonville Jaguars</td>      <td> 1</td>      <td> 2007</td>      <td> 6</td>      <td> 10</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>5</th>      <td> 1</td>      <td> 0</td>      <td>       Dallas Cowboys</td>      <td> 478</td>      <td> 2</td>      <td> 45</td>      <td> 438</td>      <td>      New York Giants</td>      <td> 1</td>      <td> 2007</td>      <td> 6</td>      <td> 35</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>6</th>      <td> 1</td>      <td> 1</td>      <td> New England Patriots</td>      <td> 431</td>      <td> 0</td>      <td> 38</td>      <td> 227</td>      <td>        New York Jets</td>      <td> 0</td>      <td> 2007</td>      <td> 6</td>      <td> 14</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>7</th>      <td> 1</td>      <td> 0</td>      <td>    Minnesota Vikings</td>      <td> 302</td>      <td> 1</td>      <td> 24</td>      <td> 265</td>      <td>      Atlanta Falcons</td>      <td> 2</td>      <td> 2007</td>      <td> 6</td>      <td>  3</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>8</th>      <td> 1</td>      <td> 0</td>      <td>  Washington Redskins</td>      <td> 400</td>      <td> 2</td>      <td> 16</td>      <td> 273</td>      <td>       Miami Dolphins</td>      <td> 1</td>      <td> 2007</td>      <td> 6</td>      <td> 13</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>9</th>      <td> 1</td>      <td> 1</td>      <td>    Carolina Panthers</td>      <td> 385</td>      <td> 2</td>      <td> 27</td>      <td> 238</td>      <td>       St. Louis Rams</td>      <td> 2</td>      <td> 2007</td>      <td> 6</td>      <td> 13</td>      <td> 9</td>      <td> 9</td>    </tr>  </tbody></table>
 </div>
 
 CleanupNFLCSV inherits from Task, and is a task, distinct from inputs and formatters.
@@ -296,6 +296,12 @@ Now, we have some per-season features for the team in isolation.  To take the ne
 * Get statistics that span multiple teams in a single season (ie strength of schedule)
 * Get statistics that span multiple seasons for a single team (ie points scored over the last 3 seasons)
 
+Our per-season data (only first 25 features shown for brevity):
+
+<div>
+<table border="1" class="dataframe table display">  <thead>    <tr style="text-align: right;">      <th></th>      <th>atlanta_falcons</th>      <th>away_eff_ratio</th>      <th>away_opp_pts_per_yard</th>      <th>away_pts_last_10_opp_stat</th>      <th>away_pts_last_10_ratio</th>      <th>away_pts_last_10_spread</th>      <th>away_pts_last_10_stat</th>      <th>away_pts_last_3_opp_stat</th>      <th>away_pts_last_3_ratio</th>      <th>away_pts_last_3_spread</th>      <th>away_pts_last_3_stat</th>      <th>away_pts_last_5_opp_stat</th>      <th>away_pts_last_5_ratio</th>      <th>away_pts_last_5_spread</th>      <th>away_pts_last_5_stat</th>      <th>away_pts_opp_stat</th>      <th>away_pts_per_yard</th>      <th>away_pts_ratio</th>      <th>away_pts_spread</th>      <th>away_pts_stat</th>      <th>away_yds_last_10_opp_stat</th>      <th>away_yds_last_10_ratio</th>      <th>away_yds_last_10_spread</th>      <th>away_yds_last_10_stat</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td> 2</td>      <td>  0.96</td>      <td>  0.06</td>      <td> 20.38</td>      <td>  1.22</td>      <td>  3.62</td>      <td> 16.75</td>      <td> 22.67</td>      <td>  1.55</td>      <td>  8.00</td>      <td> 14.67</td>      <td> 20.60</td>      <td>  1.24</td>      <td>  4.00</td>      <td> 16.60</td>      <td> 20.38</td>      <td>  0.06</td>      <td>  1.22</td>      <td>  3.62</td>      <td> 16.75</td>      <td>334.38</td>      <td>  1.27</td>      <td> 70.38</td>      <td>264.00</td>    </tr>    <tr>      <th>0</th>      <td> 0</td>      <td>  0.95</td>      <td>  0.06</td>      <td> 23.88</td>      <td>  1.28</td>      <td>  5.25</td>      <td> 18.62</td>      <td> 24.67</td>      <td>  0.86</td>      <td> -4.00</td>      <td> 28.67</td>      <td> 22.80</td>      <td>  0.95</td>      <td> -1.20</td>      <td> 24.00</td>      <td> 23.88</td>      <td>  0.07</td>      <td>  1.28</td>      <td>  5.25</td>      <td> 18.62</td>      <td>373.12</td>      <td>  1.34</td>      <td> 95.25</td>      <td>277.88</td>    </tr>    <tr>      <th>0</th>      <td> 1</td>      <td>  0.64</td>      <td>  0.05</td>      <td> 17.11</td>      <td>  0.67</td>      <td> -8.33</td>      <td> 25.44</td>      <td> 23.00</td>      <td>  0.96</td>      <td> -1.00</td>      <td> 24.00</td>      <td> 23.60</td>      <td>  0.89</td>      <td> -2.80</td>      <td> 26.40</td>      <td> 17.11</td>      <td>  0.08</td>      <td>  0.67</td>      <td> -8.33</td>      <td> 25.44</td>      <td>319.00</td>      <td>  1.05</td>      <td> 16.56</td>      <td>302.44</td>    </tr>    <tr>      <th>0</th>      <td> 2</td>      <td>  1.32</td>      <td>  0.08</td>      <td> 32.00</td>      <td>  2.10</td>      <td> 16.75</td>      <td> 15.25</td>      <td> 38.00</td>      <td>  2.59</td>      <td> 23.33</td>      <td> 14.67</td>      <td> 34.40</td>      <td>  2.42</td>      <td> 20.20</td>      <td> 14.20</td>      <td> 32.00</td>      <td>  0.06</td>      <td>  2.10</td>      <td> 16.75</td>      <td> 15.25</td>      <td>392.25</td>      <td>  1.60</td>      <td>146.38</td>      <td>245.88</td>    </tr>    <tr>      <th>0</th>      <td> 1</td>      <td>  1.06</td>      <td>  0.06</td>      <td> 21.75</td>      <td>  1.35</td>      <td>  5.62</td>      <td> 16.12</td>      <td> 24.00</td>      <td>  0.95</td>      <td> -1.33</td>      <td> 25.33</td>      <td> 24.00</td>      <td>  1.35</td>      <td>  6.20</td>      <td> 17.80</td>      <td> 21.75</td>      <td>  0.06</td>      <td>  1.35</td>      <td>  5.62</td>      <td> 16.12</td>      <td>344.00</td>      <td>  1.27</td>      <td> 73.75</td>      <td>270.25</td>    </tr>    <tr>      <th>0</th>      <td> 0</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>    </tr>    <tr>      <th>0</th>      <td> 0</td>      <td>  0.99</td>      <td>  0.06</td>      <td> 18.00</td>      <td>  0.93</td>      <td> -1.38</td>      <td> 19.38</td>      <td> 13.33</td>      <td>  1.00</td>      <td>  0.00</td>      <td> 13.33</td>      <td> 15.80</td>      <td>  1.23</td>      <td>  3.00</td>      <td> 12.80</td>      <td> 18.00</td>      <td>  0.06</td>      <td>  0.93</td>      <td> -1.38</td>      <td> 19.38</td>      <td>316.25</td>      <td>  0.94</td>      <td>-21.00</td>      <td>337.25</td>    </tr>    <tr>      <th>0</th>      <td> 0</td>      <td>  0.68</td>      <td>  0.06</td>      <td> 20.12</td>      <td>  0.82</td>      <td> -4.50</td>      <td> 24.62</td>      <td> 15.67</td>      <td>  0.68</td>      <td> -7.33</td>      <td> 23.00</td>      <td> 15.20</td>      <td>  0.66</td>      <td> -8.00</td>      <td> 23.20</td>      <td> 20.12</td>      <td>  0.09</td>      <td>  0.82</td>      <td> -4.50</td>      <td> 24.62</td>      <td>342.00</td>      <td>  1.20</td>      <td> 57.00</td>      <td>285.00</td>    </tr>    <tr>      <th>0</th>      <td> 0</td>      <td>  1.10</td>      <td>  0.07</td>      <td> 23.12</td>      <td>  0.93</td>      <td> -1.62</td>      <td> 24.75</td>      <td> 24.33</td>      <td>  0.84</td>      <td> -4.67</td>      <td> 29.00</td>      <td> 24.00</td>      <td>  1.00</td>      <td>  0.00</td>      <td> 24.00</td>      <td> 23.12</td>      <td>  0.06</td>      <td>  0.93</td>      <td> -1.62</td>      <td> 24.75</td>      <td>342.25</td>      <td>  0.85</td>      <td>-62.00</td>      <td>404.25</td>    </tr>    <tr>      <th>0</th>      <td> 0</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>      <td>   nan</td>    </tr>  </tbody></table>
+</div>
+
 Getting additional features
 -----------------------------------
 
@@ -328,6 +334,81 @@ dtypes: float64(328), int64(43), object(10)
 ```
 
 We have mostly float and int columns, along with a few "object" columns, which are strings.  We will need to remove these columns later on, as most machine learning algorithms do not take strings as input.
+
+### Algorithm
+
+We will be using a random forest algorithm with importances computed.  See *tasks.tasks.RandomForestTrain* .
+
+We will try to calculate error with the random forest and cross validation, via the *tasks.tasks.CrossValidate* class.  In order to do this, we will setup a workflow.
+
+Workflows
+-------------------------------
+
+Workflows plug everything that we have talked about together.  A workflow will take an input file, format it, and then take it through several tasks.
+
+Every workflow has a configuration file.
+
+Let's look at one:
+
+```
+[meta]
+#The workflow can save the results at the end.  If so, then it will use this in the name.
+run_id = 1
+#Do we want to load a saved workflow?
+load_previous_flow = False
+#Do we want to save this workflow?
+save_flow = True
+#Whether or not we want to train and predict, or just train.
+predict = False
+
+[inputs]
+#This is passed into the input class that has the appropriate format.  We defined NFLInput to take the format multicsv.
+# The workflow will pass in the data directory to its read_input method.
+file = ../data/
+#The format the file argument above is in.
+format = multicsv
+
+[targets]
+#We can optionally define a target along with the data if we are predicting for a known quantity.
+file = ../data/
+#The format that the target is in.
+format = multicsv
+
+[tasks]
+# list defines, in sequence, the tasks that will process the data.
+# So, in this case, we will load the data, format it, and then pass it into the train method of the cleanupnflcsv preprocessor.
+# The cleanup nflcsv preprocessor will process the data, and store it as a self attribute (field).
+# This will then be picked up by the workflow, and passed into generateseasonfeatures, and so on down the chain.
+list = preprocessors.nfl_season.cleanupnflcsv,preprocessors.nfl_season.generateseasonfeatures,preprocessors.nfl_season.generatesosfeatures,preprocessors.nfl_season.crossvalidate
+
+
+[predict]
+#Optional argument, file in which data for predictions is
+#Data for predictions will be passed through the same tasks as the inputs, but will be passed to the predict methods.
+file = ../data/csv/1/data.csv
+format = csv
+```
+
+This workflow is at config/nfl_save.conf.
+
+## Running a workflow
+
+We can run it by running:
+
+```
+python manage.py run_flow --settings=config.settings --pythonpath=`pwd`
+```
+
+Once the workflow is run, it will store its results in the stored_data directory (or another directory if we change it in the settings).
+
+Validation
+----------------------------
+
+We could do cross validation, but we will instead do sequential validation.
+
+Cross validation is tricky in this case, because we are working with what is essentially time series data.  We have incorporated data from multiple seasons into one.  The 2008 season would have information from the 2005-2007 seasons, because it has features corresponding to prior seasons.  This would nullify cross validation results, as it is possible that a model could be trained on 2008 data and used to predict 2005.
+
+Sequential validation is my made-up term referring to the process of looping through year by year (after a minimum number of years), and predicting that year given data from previous years.
 
 
 <div>
