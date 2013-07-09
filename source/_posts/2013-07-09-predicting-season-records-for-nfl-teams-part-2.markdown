@@ -28,12 +28,14 @@ We will be using the [percept](http://www.github.com/equirio/percept) and [nfl_s
 
 <!--more-->
 
-Installing percept
+Setup
 ------------------------------------
+
+### Installing percept
 
 First, we will need to install percept.  Percept is a modular machine learning framework.  It will allow us to plan and define a workflow that will get us from raw data to predictions.
 
-We can install percept via:
+Percept is under constant development, and the version on pypi might not be current, so we can install percept via github:
 
 ```
 $ git clone git://github.com/equirio/percept.git
@@ -60,10 +62,12 @@ $ source /path/to/percept/bin/activate
 
 The *data* folder in nfl_season has the data that we need.
 
+### Quickstart
+
 For the impatient, you can run everything yourself now by doing the following at the command line:
 
 ```
-$ cd nfl_seasons
+$ cd nfl_season
 $ python manage.py run_flow ~/equirio/nfl_season/config/nfl_save.conf --settings=config.settings --pythonpath=`pwd`
 $ python manage.py shell --settings=config.settings --pythonpath=`pwd`
 ```
@@ -298,6 +302,8 @@ This task has a tester, and defines a category, namespace, and help_text.  We ha
 * train - this is used to "train" the task.  This is called if the task is being instantiated on data with known outcomes.
 * predict - this is called after training, on data with unknown outcomes.
 
+If you specify an *args* class attribute (dictionary), then those arguments will be passed into the task train and predict methods.
+
 Tasks are run inside of workflows, which we will discuss later on.
 
 Converting per-game features to per-season
@@ -402,7 +408,7 @@ format = multicsv
 # So, in this case, we will load the data, format it, and then pass it into the train method of the cleanupnflcsv preprocessor.
 # The cleanup nflcsv preprocessor will process the data, and store it as a self attribute (field).
 # This will then be picked up by the workflow, and passed into generateseasonfeatures, and so on down the chain.
-list = preprocessors.nfl_season.cleanupnflcsv,preprocessors.nfl_season.generateseasonfeatures,preprocessors.nfl_season.generatesosfeatures,preprocessors.nfl_season.crossvalidate
+list = preprocessors.nfl_season.cleanupnflcsv,preprocessors.nfl_season.generateseasonfeatures,preprocessors.nfl_season.generatesosfeatures,preprocessors.nfl_season.sequentialvalidate
 
 
 [predict]
@@ -431,7 +437,71 @@ We could do cross validation, but we will instead do sequential validation.
 
 Cross validation is tricky in this case, because we are working with what is essentially time series data.  We have incorporated data from multiple seasons into one.  The 2008 season would have information from the 2005-2007 seasons, because it has features corresponding to prior seasons.  This would nullify cross validation results, as it is possible that a model could be trained on 2008 data and used to predict 2005.
 
-Sequential validation is my made-up term referring to the process of looping through year by year (after a minimum number of years), and predicting that year given data from previous years.
+Sequential validation is my made-up term referring to the process of looping through year by year (after a minimum number of years), and predicting that year given data from previous years.  So, since we have data from 1970-2012, we will loop through each of those years, and predict the year given the previous years (with a minimum of 10, so we actually start at 1980).
+
+We can do sequential validation using *tasks.tasks.SequentialValidate*, and it will in fact be our final task in our workflow.
+
+So, now we can run validation with this at the command line(may take ~15 minutes):
+
+```
+$ cd nfl_seasons
+$ python manage.py run_flow ~/equirio/nfl_season/config/nfl_save.conf --settings=config.settings --pythonpath=`pwd`
+```
+
+After it is finished running, we can run a shell using:
+
+```
+$ python manage.py shell --settings=config.settings --pythonpath=`pwd`
+```
+
+In the shell, we can get the results and error from sequential validation:
+
+```
+import pickle
+flow = pickle.load(open('/path/to/nfl_season/stored_data/1_tasks'))
+res = flow.tasks[3].results.value
+error = flow.tasks[3].error.value
+```
+
+The workflow will automatically save the results using *pickle.dump* .  We can see the fields of the SequentialValidate class below:
+
+```
+data = Complex()
+results = Complex()
+error = Float()
+importances = Complex()
+importance = Complex()
+column_names = List()
+```
+
+All of the tasks in a workflow are available at `workflow.tasks` .  In each task, the fields are available by doing `workflow.tasks[task_number].fieldname.`
+
+Trying out importance will give us the random forest importances of each feature.
+
+Potential Improvements
+--------------------------
+
+This algorithm does generate improvement over the baseline, but it could be better:
+
+* Add in better data, such as number of sacks per season.
+* Incorporate salary data, such as highest paid player on a team.
+* Add in information on weather conditions faced during the season.
+* Change the "look-back" period to more than 3 years.  Try incorporating multiple look back periods.
+* Use feature importance to remove uninformative or overvalued features.
+* Try ensembling, or a different algorithm.
+* Add in metadata about the team, such as coaching, ownership, attendance, etc.
+* Link historical teams with current teams (matching now is done on exact name, but that would lose data when a team relocated).
+
+I am sure that there are also numerous other improvements that I have not though of.
+
+Conclusion
+-------------------------
+
+This hopefully showed that it is possible to predict the NFL better than the baseline expectation, even with minimal data.  More breadth of data would improve this method considerably.
+
+It also hopefully served as an introduction to the percept platform, which has the potential to make machine learning easier to test, deploy, and modularize.
+
+Please feel free to contact me at vik dot paruchuri at gmail with any questions or concerns.
 
 
 <div>
