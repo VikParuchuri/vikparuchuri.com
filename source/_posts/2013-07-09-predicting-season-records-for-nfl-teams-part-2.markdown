@@ -60,6 +60,27 @@ $ source /path/to/percept/bin/activate
 
 The *data* folder in nfl_season has the data that we need.
 
+For the impatient, you can run everything yourself now by doing the following at the command line:
+
+```
+$ cd nfl_seasons
+$ python manage.py run_flow ~/equirio/nfl_season/config/nfl_save.conf --settings=config.settings --pythonpath=`pwd`
+$ python manage.py shell --settings=config.settings --pythonpath=`pwd`
+```
+
+And the following in the shell:
+
+```
+import pickle
+flow = pickle.load(open('/path/to/nfl_season/stored_data/1_tasks'))
+res = flow.tasks[3].results.value
+error = flow.tasks[3].error.value
+```
+
+*res* will be the full results, and *error* will tell you the error value.
+
+If you want to know more about what is happening, read on.
+
 Getting the data into a usable form
 ------------------------------------
 
