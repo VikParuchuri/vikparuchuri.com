@@ -24,7 +24,7 @@ After selecting the error metric and defining an acceptable baseline, which was 
 
 We don't technically need to use percept for this, but it will make a few things easier.  Any of the code shown here can be taken and used independently if desired.  Everything below has been tested using Ubuntu 12.10 and a virtualenv.  A different configuration may not get the same results.
 
-We will be using the [percept](http://www.github.com/equirio/percept) and [nfl_season](http://www.github.com/equirio/nfl_season) git repositories.
+We will be using the [percept](http://www.github.com/equirio/percept) and [nfl_season](http://www.github.com/equirio/nfl_season) git repositories.  You can find documentation for percept [here](http://percept.readthedocs.org/en/latest/)
 
 <!--more-->
 
@@ -68,7 +68,7 @@ For the impatient, you can run everything yourself now by doing the following at
 
 ```
 $ cd nfl_season
-$ python manage.py run_flow ~/equirio/nfl_season/config/nfl_save.conf --settings=config.settings --pythonpath=`pwd`
+$ python manage.py run_flow /path/to/nfl_season/config/nfl_save.conf --settings=config.settings --pythonpath=`pwd`
 $ python manage.py shell --settings=config.settings --pythonpath=`pwd`
 ```
 
@@ -165,6 +165,7 @@ python manage.py list_tasks --settings=config.settings --pythonpath=`pwd`
 ```
 
 Command line flags:
+
 * --settings - defines which settings file we should load.  Settings can change the behavior of a project.
 * --pythonpath - tells manage.py what to append to sys.path for importing.
 
@@ -309,7 +310,7 @@ Tasks are run inside of workflows, which we will discuss later on.
 Converting per-game features to per-season
 -------------------------------------
 
-After cleanup, ee have very basic box scores for each game in a season.  We want to generate team statistics for the whole season, which we can then use to predict the following season.
+After cleanup, we have very basic box scores for each game in a season.  We want to generate team statistics for the whole season, which we can then use to predict the following season.
 
 Look at *tasks.tasks.GenerateSeasonFeatures* for the code for this.
 
@@ -445,7 +446,7 @@ So, now we can run validation with this at the command line(may take ~15 minutes
 
 ```
 $ cd nfl_seasons
-$ python manage.py run_flow ~/equirio/nfl_season/config/nfl_save.conf --settings=config.settings --pythonpath=`pwd`
+$ python manage.py run_flow /path/to/nfl_season/config/nfl_save.conf --settings=config.settings --pythonpath=`pwd`
 ```
 
 After it is finished running, we can run a shell using:
@@ -492,7 +493,7 @@ This algorithm does generate improvement over the baseline, but it could be bett
 * Add in metadata about the team, such as coaching, ownership, attendance, etc.
 * Link historical teams with current teams (matching now is done on exact name, but that would lose data when a team relocated).
 
-I am sure that there are also numerous other improvements that I have not though of.
+I am sure that there are also numerous other improvements that I have not thought of.
 
 Conclusion
 -------------------------
