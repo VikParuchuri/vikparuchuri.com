@@ -22,6 +22,12 @@ This post will introduce the technical details behind the nfl season record pred
 
 After selecting the error metric and defining an acceptable baseline, which was setup in part one, the next step is to develop a plan of attack.  In order to create and develop this plan, we will use the [percept](http://www.github.com/equirio/percept) framework created by [Equirio](http://www.equirio.com).
 
+We don't technically need to use percept for this, but it will make a few things easier.  Any of the code shown here can be taken and used independently if desired.  Everything below has been tested using Ubuntu 12.10 and a virtualenv.  A different configuration may not get the same results.
+
+We will be using two git repositories for this:
+* [percept](http://www.github.com/equirio/percept)
+* [nfl_season](http://www.github.com/equirio/nfl_season)
+
 ### Installing percept
 
 First, we will need to install percept.  Percept is a modular machine learning framework.  It will allow us to plan and define a workflow that will get us from raw data to predictions.
@@ -117,7 +123,171 @@ After we define our input, which will take in our data and provide it in a consi
 
 [Pandas](http://pandas.pydata.org/) is a python data analysis library that defines a dataframe, which is similar to an R dataframe, a container that can hold data of varying types in each column.  Think of an array, but with several data types.
 
-Our formatter, which is in *formatters.formatters.NFLFormatter*, will take the input and reformat it as needed.
+Our formatter, which is in *formatters.formatters.NFLFormatter*, will take the input and reformat it as needed.  Here, it will turn the csv input and turn it into a dataframe.
+
+Understanding namespaces and testers
+--------------------------------------
+
+### Namespaces
+
+Now that we have our data into a dataframe format, which is ready to analyze, let's pause and look into how namespaces work.
+
+Try this command in the *nfl_season* directory:
+
+```
+python manage.py list_tasks --settings=config.settings --pythonpath=`pwd`
+```
+
+Command line flags:
+* --settings - defines which settings file we should load.  Settings can change the behavior of a project.
+* --pythonpath - tells manage.py what to append to sys.path for importing.
+
+This will show us a list of the tasks that we can perform:
+
+```
+Name                                                Help
+base.percept.fieldmodel
+formatters.percept.baseformat                       Base class for reformatting input data.  Do not use directly.
+formatters.percept.jsonformat                       Example class to convert from csv to dataframe.
+inputs.percept.baseinput                            Base class for input.  Do not use directly.
+inputs.percept.csvinput                             Example class to load in csv files.
+...
+inputs.inputs.nflinput                              Load multiple nfl season csv files.
+formatters.nfl_season.nflformatter                  Example class to convert from csv to dataframe.
+...
+```
+
+Each task is listed as category.namespace.name .  Each of these are class attributes that can be set.  For example, in our nflinput class, we set the namespace, but the category was inherited from BaseInput.
+
+Namespaces allow us to easily register and find classes later.
+
+### Testers
+
+Now, try running:
+
+```
+python manage.py test --settings=config.settings --pythonpath=`pwd`
+```
+
+This will run all available tests in nfl_season.  Every class that has a defined *tester* and *test_cases* will be tested.
+
+### Manage.py
+
+If you have used [Django](https://www.djangoproject.com/) before, manage.py will look familiar.  It allows us to run some project-level tasks.  A listing of all available commands can be found by running:
+
+```
+python manage.py help --settings=config.settings --pythonpath=`pwd`
+```
+
+Cleaning the data
+----------------------------
+
+Now, we have our data in a dataframe roughly like this:
+
+```
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 6811 entries, 0 to 7294
+Data columns (total 14 columns):
+Week          6811  non-null values
+Home          6811  non-null values
+Winner/tie    6811  non-null values
+YdsW          6811  non-null values
+TOW           6811  non-null values
+PtsW          6811  non-null values
+YdsL          6811  non-null values
+Loser/tie     6811  non-null values
+TOL           6811  non-null values
+Year          6811  non-null values
+Day           6811  non-null values
+PtsL          6811  non-null values
+DayNum        6811  non-null values
+MonthNum      6811  non-null values
+dtypes: object(14)
+```
+
+We need to clean it up to remove bad rows and make values numeric.
+
+For example, some of the rows in the data frame repeat the header or are blank, so we remove them:
+
+```
+row_removal_values = ["", "Week", "Year"]
+for r in row_removal_values:
+    data = data[data.iloc[:,0]!=r]
+```
+
+We also map the string month value to a number:
+
+```
+month_map = {v: k for k,v in enumerate(calendar.month_name)}
+data['MonthNum'] = np.asarray([s.split(" ")[0] for s in data.iloc[:,10]])
+for k in month_map.keys():
+    data['MonthNum'][data['MonthNum']==k] = month_map[k]
+```
+
+Look at *tasks.tasks.CleanupNFLCSV* for a full listing of what is done.
+
+CleanupNFLCSV inherits from Task, and is a task, distinct from inputs and formatters.
+
+Tasks
+-------------------------------------
+
+Tasks are everything that comes after initial input of the data.  Tasks can be preprocessors, algorithms, or anything in between.
+
+Let's look at the CleanupNFLCSV task:
+
+```
+class CleanupNFLCSV(Task):
+    tester = CleanupNFLCSVTester
+    test_cases = [{'stream' : os.path.join(settings.PROJECT_PATH, "data"), 'dataformat' : NFLFormats.multicsv}]
+    data = Complex()
+
+    data_format = NFLFormats.dataframe
+
+    category = RegistryCategories.preprocessors
+    namespace = get_namespace(__module__)
+
+    help_text = "Convert from direct nfl data to features."
+
+    def train(self, data, target, **kwargs):
+        """
+        Used in the training phase.  Override.
+        """
+        self.data = self.predict(data)
+
+    def predict(self, data, **kwargs):
+        """
+        Used in the predict phase, after training.  Override
+        """
+        ...
+        return data
+```
+
+This task has a tester, and defines a category, namespace, and help_text.  We have some new things, though:
+
+* data - every task can define fields, which are persisted in a manner according to the project settings.  Fields can be persisted in memory, in the local filesystem, in a remote filesystem, etc.  Field naming is arbitrary.  Complex() is one kind of field, which uses pickle to serialize/unserialize.  Other fields include Dict, Float, and List, which use json to serialize.  We can create as many fields as we want and name them whatever we want.
+* data_format - This specifies the type of data format that this class accepts.  The format is automatically generated and fed in.
+* train - this is used to "train" the task.  This is called if the task is being instantiated on data with known outcomes.
+* predict - this is called after training, on data with unknown outcomes.
+
+Tasks are run inside of workflows, which we will discuss later on.
+
+Converting per-game features to per-season
+-------------------------------------
+
+After cleanup, ee have very basic box scores for each game in a season.  We want to generate team statistics for the whole season, which we can then use to predict the following season.
+
+Look at *tasks.tasks.GenerateSeasonFeatures* for the code for this.
+
+We will generate a lot of features, some of which I will describe here:
+
+* total_wins - simple, the number of wins for a team in a season.
+* pts_per_yard - number of points gained per yard gained.
+* home_pts_opp_stat - points scored by the opponent when the team was at home
+* home_yds_stat_last_3 - yards gained by the team in the last three games of the season.
+
+Now, we have some per-season features for the team in isolation.  To take the next step,
+
+
 
 
 
