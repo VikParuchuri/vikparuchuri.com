@@ -13,7 +13,7 @@ categories:
 published: true
 ---
 
-*Cross-posted to [Vik's Blog](http://www.vikparuchuri.com) and [Equirio](http://www.equirio.com).  This is the first, non-technical part.  See [the second part](/blog/predicting-season-records-for-nfl-teams-part-2) for more detail.*
+*This is the first, non-technical, part of this series.  See [the second part](/blog/predicting-season-records-for-nfl-teams-part-2) for more detail.*
 
 Introduction
 -----------------
