@@ -226,7 +226,14 @@ for k in month_map.keys():
 
 Look at *tasks.tasks.CleanupNFLCSV* for a full listing of what is done.
 
+Our cleaned data:
+
+<div>
+<table border="1" class="dataframe">  <thead>    <tr style="text-align: right;">      <th></th>      <th>Week</th>      <th>Home</th>      <th>Winner/tie</th>      <th>YdsW</th>      <th>TOW</th>      <th>PtsW</th>      <th>YdsL</th>      <th>Loser/tie</th>      <th>TOL</th>      <th>Year</th>      <th>Day</th>      <th>PtsL</th>      <th>DayNum</th>      <th>MonthNum</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td> 1</td>      <td> 0</td>      <td>   Indianapolis Colts</td>      <td> 452</td>      <td> 1</td>      <td> 41</td>      <td> 293</td>      <td>   New Orleans Saints</td>      <td> 3</td>      <td> 2007</td>      <td> 3</td>      <td> 10</td>      <td> 6</td>      <td> 9</td>    </tr>    <tr>      <th>1</th>      <td> 1</td>      <td> 0</td>      <td>     Seattle Seahawks</td>      <td> 343</td>      <td> 1</td>      <td> 20</td>      <td> 284</td>      <td> Tampa Bay Buccaneers</td>      <td> 2</td>      <td> 2007</td>      <td> 6</td>      <td>  6</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>2</th>      <td> 1</td>      <td> 1</td>      <td>  Pittsburgh Steelers</td>      <td> 365</td>      <td> 1</td>      <td> 34</td>      <td> 221</td>      <td>     Cleveland Browns</td>      <td> 5</td>      <td> 2007</td>      <td> 6</td>      <td>  7</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>3</th>      <td> 1</td>      <td> 0</td>      <td>    Green Bay Packers</td>      <td> 215</td>      <td> 2</td>      <td> 16</td>      <td> 283</td>      <td>  Philadelphia Eagles</td>      <td> 3</td>      <td> 2007</td>      <td> 6</td>      <td> 13</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>4</th>      <td> 1</td>      <td> 1</td>      <td>     Tennessee Titans</td>      <td> 350</td>      <td> 2</td>      <td> 13</td>      <td> 272</td>      <td> Jacksonville Jaguars</td>      <td> 1</td>      <td> 2007</td>      <td> 6</td>      <td> 10</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>5</th>      <td> 1</td>      <td> 0</td>      <td>       Dallas Cowboys</td>      <td> 478</td>      <td> 2</td>      <td> 45</td>      <td> 438</td>      <td>      New York Giants</td>      <td> 1</td>      <td> 2007</td>      <td> 6</td>      <td> 35</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>6</th>      <td> 1</td>      <td> 1</td>      <td> New England Patriots</td>      <td> 431</td>      <td> 0</td>      <td> 38</td>      <td> 227</td>      <td>        New York Jets</td>      <td> 0</td>      <td> 2007</td>      <td> 6</td>      <td> 14</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>7</th>      <td> 1</td>      <td> 0</td>      <td>    Minnesota Vikings</td>      <td> 302</td>      <td> 1</td>      <td> 24</td>      <td> 265</td>      <td>      Atlanta Falcons</td>      <td> 2</td>      <td> 2007</td>      <td> 6</td>      <td>  3</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>8</th>      <td> 1</td>      <td> 0</td>      <td>  Washington Redskins</td>      <td> 400</td>      <td> 2</td>      <td> 16</td>      <td> 273</td>      <td>       Miami Dolphins</td>      <td> 1</td>      <td> 2007</td>      <td> 6</td>      <td> 13</td>      <td> 9</td>      <td> 9</td>    </tr>    <tr>      <th>9</th>      <td> 1</td>      <td> 1</td>      <td>    Carolina Panthers</td>      <td> 385</td>      <td> 2</td>      <td> 27</td>      <td> 238</td>      <td>       St. Louis Rams</td>      <td> 2</td>      <td> 2007</td>      <td> 6</td>      <td> 13</td>      <td> 9</td>      <td> 9</td>    </tr>  </tbody></table>
+</div>
+
 CleanupNFLCSV inherits from Task, and is a task, distinct from inputs and formatters.
+
 
 Tasks
 -------------------------------------
@@ -285,8 +292,58 @@ We will generate a lot of features, some of which I will describe here:
 * home_pts_opp_stat - points scored by the opponent when the team was at home
 * home_yds_stat_last_3 - yards gained by the team in the last three games of the season.
 
-Now, we have some per-season features for the team in isolation.  To take the next step,
+Now, we have some per-season features for the team in isolation.  To take the next step, we will want to do two things:
+* Get statistics that span multiple teams in a single season (ie strength of schedule)
+* Get statistics that span multiple seasons for a single team (ie points scored over the last 3 seasons)
 
+Getting additional features
+-----------------------------------
+
+Now that we have our basic feature set, we can add a bit of complexity.
+
+Look at *tasks.tasks.GenerateSOSFeatures* for a full listing of these.
+
+We will first generate strength of schedule statistics across the league and add those in to the per-game features.
+
+We will also calculate all of our features over the past three seasons:
+
+```
+last_3 = data.loc[(data['team']==team) & (data['year']<year) & (data['year']>year-4),:]
+if last_3.shape[0]>0:
+    last_3_row = pd.DataFrame(list(last_3.mean(axis=0))).T
+else:
+    last_3_row = pd.DataFrame([0 for l in xrange(0,data.shape[1])]).T
+```
+
+Checking our error and making predictions
+------------------------------------
+
+Now, we have our full set of features, which looks like this:
+
+```
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 1026 entries, 0 to 0
+Columns: 381 entries, arizona_cardinals to opp_opp_total_wins
+dtypes: float64(328), int64(43), object(10)
+```
+
+We have mostly float and int columns, along with a few "object" columns, which are strings.  We will need to remove these columns later on, as most machine learning algorithms do not take strings as input.
+
+
+<div>
+<script>
+$('.table').dataTable({
+    "bPaginate": false,
+    "bLengthChange": false,
+    "bSort": false,
+    "bStateSave": true,
+    "sScrollY": 450,
+    "sScrollX": 500,
+    "aLengthMenu": [[50, 100, -1], [50, 100, "All"]],
+    "iDisplayLength": 40,
+});
+</script>
+</div>
 
 
 
