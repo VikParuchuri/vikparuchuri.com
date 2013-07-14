@@ -13,11 +13,11 @@ categories:
 Introduction
 ----------------------------
 
-I had my natural predilection towards math crushed out of me at some point in school, and since then, Math and I had a wary understanding.  I dabbled quietly, and Math turned a blind eye to me ignoring some of its deeper theory.  When I stuggled loudly, Math did its best to hide its smirks.  I generally refrained from throwing textbooks.
+I had my natural predilection towards math crushed out of me at some point in school, and after that point, Math (yes, we are referring to the higher power of math) and I had a wary understanding.  I dabbled quietly, and Math turned a blind eye to me ignoring some of its deeper theory.  When I stuggled loudly, Math did its best to hide its smirks.  I generally refrained from throwing textbooks.
 
 Ever since I started working on machine learning, it was necessary for Math and I to come to a deeper agreement.  As part of that, I will be making posts about some useful techniques (I'm bad at negotiation).
 
-The first topic will be matrix inversion.  Matrix inversion directly leads us into linear regression, and is helpful in other methods (although it can generally be bypassed by other techniques).
+The first topic will be matrix inversion.  Matrix inversion directly leads us into linear regression, and is helpful in other methods, although it can generally be bypassed by other techniques.
 
 We will first look at the theory, and then implement it in Python.  You can get the code from [Github](https://github.com/vikparuchuri/algorithms).
 
@@ -166,7 +166,7 @@ Roughly, it goes:
 
 ```
 Start with i=1, j=1, and matrix Z.
-Concatente Z with its identity matrix as we did above to make matrix X.
+Concatenate Z with its identity matrix as we did above to make matrix X.
 Is everything in the column j at and below X[i][j] zero?  If yes, our job is done, increment j and restart from the top.  If j equals the number of columns in Z, we are done.
 k is the row index of the first non-zero column entry.
 If k!=i, swap row k and row i, so that the highest value is reduced first.
