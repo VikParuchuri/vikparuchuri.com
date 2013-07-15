@@ -14,11 +14,11 @@ categories:
 
 Linear regression is a very basic technique that we use a lot in machine learning.  In a lot of cases (and I have been guilty of this), we just use it without much thought as to how the internals actually work.
 
-We can plot observations (such as, a child's age is 1), and associated dependent variables (ie, the child has 1 friend) on an x/y axis, like the one below:
+In a 2-D coordinate system, we can plot observations (such as, a child's age is 1), and associated dependent variables (ie, the child has 1 friend) on an x/y axis, like the one below:
 
 ![linear regression](../images/linear-regression/linear-system.png)
 
-In the above system, we have plotted several observation and dependent variable pairs [1,1], [2,4], [3,9], [4,16].  We have also added in a line.  This line allows us to predict the dependent variables for future observations (when the child is 5, according to our line, they will have 20 friends).  The line is defined by an equation {%m%}y=bx+a{%em%} where m is the slope of the line, and b is the y-intercept.  In the simplest form of linear regression, we can figure out m and b to find the line.  In more complex forms, such as {%m%}y=b\_{1}x\_{1} + b\_{2}x\_{2}+a{%em%}, we can predict y using multiple features.
+In the above system, we have plotted several observation and dependent variable pairs [1,1], [2,4], [3,9], [4,16].  We have also added in a line.  This line allows us to predict the dependent variables for future observations (when the child is 5, according to our line, they will have 20 friends).  The line is defined by an equation {%m%}y=bx+a{%em%} where b is the slope of the line, and a is the y-intercept.  In the simplest form of linear regression, we can figure out b and a to find the line.  In more complex forms, such as {%m%}y=b\_{1}x\_{1} + b\_{2}x\_{2}+a{%em%}, we can predict y using multiple features.
 
 Today, I'm going to shed some light on the internals to linear regression, and do some comparisons of various approaches in Python.  If you have not read my earlier post on [matrix inversion](/blog/inverting-your-very-own-matrix), I highly recommend it.
 
@@ -27,7 +27,7 @@ Today, I'm going to shed some light on the internals to linear regression, and d
 Setup
 --------------------------------
 
-As you can see from the line and points above, the point of linear regression is to minimize the sum of squared errors.
+As you can see from the line and points above, the point of linear regression is to minimize the sum of squared errors between the actual y value and the predicted y value.
 
 We can express the various pairs in matrix form using the equation {%m%}y=bX + e{%em%} where X is the matrix of X observations, y is the vector of dependent values, b is the vector of coefficients, and e is a vector of errors (which we want to minimize).
 
@@ -317,7 +317,16 @@ print(lr.predict([[1,2,1],[2,100,2],[3,2,2],[4,2,1]]))
  [ 16.]]
 ```
 
+Further reading
+------------------------------
 
+In almost all cases, you are best off using numpy, or another linear regression algorithm that doesn't rely on matrix inversion, and is thus faster and can solve even in situations with non-singular matrices.  However, it is useful to know how linear regression is working, and it can be beneficial to tweak the formula if needed for specific situations.
+
+Further reading:
+
+* [Applied linear models](http://www.stat.purdue.edu/~jennings/stat514/stat512notes/topic3.pdf)
+* [Linear Algebra book](http://www.numbertheory.org/book/mp103.pdf)
+* [Numpy linear regression code](https://github.com/numpy/numpy/blob/v1.7.0/numpy/linalg/linalg.py#L1708)
 
 
 
