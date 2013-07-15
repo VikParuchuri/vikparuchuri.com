@@ -45,15 +45,15 @@ We can express the various pairs in matrix form using the equation {%m%}y=bX + e
 1 & 4
 \end{bmatrix}
 \begin{bmatrix}
-b\_{0} \\
-b\_{1}
+b_{0} \\
+b_{1}
 \end{bmatrix} +
 \begin{bmatrix}
-e\_{1} \\
-e\_{2} \\
-e\_{3} \\
-e\_{4}
-\\end{bmatrix}
+e_{1} \\
+e_{2} \\
+e_{3} \\
+e_{4}
+\end{bmatrix}
 {%endmath%}
 
 We add in an extra column on the left of the X matrix to create the intercept, which is {%m%}b\_{0}{%em%}.  We can multiply out the matrices to get:
@@ -66,10 +66,10 @@ We add in an extra column on the left of the X matrix to create the intercept, w
 16
 \end{bmatrix}=
 \begin{bmatrix}
-1b\_{0} + 1b\_{1} + e\_{1}\\
-1b\_{0} + 2b\_{1} + e\_{2}\\
-1b\_{0} + 3b\_{1}+ e\_{3}\\
-1b\_{0} + 4b\_{1}+ e\_{4}
+1b_{0} + 1b_{1} + e_{1}\\
+1b_{0} + 2b_{1} + e_{2}\\
+1b_{0} + 3b_{1}+ e_{3}\\
+1b_{0} + 4b_{1}+ e_{4}
 \end{bmatrix}
 {%endmath%}
 
