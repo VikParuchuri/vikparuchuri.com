@@ -78,5 +78,28 @@ So, we want to solve for {%m%}b\_{0}{%em%} and {%m%}b\_{1}{%em%} in a way that m
 Minimizing Error
 --------------------------------
 
+We can model the sum of squared errors of the above system as:
+
+{%math%}
+\begin{bmatrix}
+e_{1} & e_{2} & e_{3} & e_{4}
+\end{bmatrix}
+\begin{bmatrix}
+e_{1} \\
+e_{2} \\
+e_{3} \\
+e_{4}
+\end{bmatrix}
+{%endmath%}
+
+This will simplify to {%m%} e\_{1}^2 + e\_{2}^2 +  e\_{3}^2 + e\_{4}^2 {%em%}.  Our first matrix is the transpose of the second matrix.  We can denote the transpose as {%m%}E^{T}{%em%}, and the original as E.
+
+Error just refers to predicted values minus actual values.  In this case, our actual values are in the y vector, and our predicted values are bX.
+
+So, our squared error is {%m%}E^{T}E=(Y-Xb)^{T}(Y-Xb){%em%}.
+
+Setting error to zero (we want to minimize it) and taking the derivative with respect to b gives us {%m%}-2X^{T}(y-Xb)=0{%em%}.  We can then multiply this out to get {%m%}X^{T}y=X^{T}Xb{%em%}, and finally {%m%}b=(X^{T}X)^{-1}(X^{T}y){%em%}.
+
+
 
 
