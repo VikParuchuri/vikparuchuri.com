@@ -59,4 +59,33 @@ So, we have the scripts and transcripts, right? (It's amazing how easy it is to 
 
 Just like it is difficult to decide which one of the 5000 varieties of soap at the supermarket is the correct one, it is equally difficult for a computer to decide which one of 50+ characters is speaking a line.  We are going to figure out which characters talk in a similar way to others, and group them together, based on our scripts.
 
+We can figure out which characters are linguistically similar to each other, based on our small sample of scripts:
+
+![linear regression](../images/simpsons-scripts/clusters.png)
+
+In the above, the larger clusters contain multiple characters, but they are only labelled by the first character.  So, cluster "Moe" consists of:
+
+```
+Moe
+Ned
+Smithers
+Apu
+Skinner
+Milhouse
+Grimes
+```
+
+So, we group them together.  As we can see, the main characters are all very distinct, due to their large amount of dialogue.
+
+Some data exploration
+-----------------------------------------------
+
+
+
+Make our model
+-----------------------------------------------
+
+We can then make a model to predict who is speaking the lines of text in the transcripts.
+
+We can do this by applying a [random forest classifier](http://en.wikipedia.org/wiki/Random_forest).  This will tell us whether the line `I think the boy's hurt.` is Smithers expressing concern, or Burns delighting in causing pain (although attentive Simpsons fans already know the answer).
 
