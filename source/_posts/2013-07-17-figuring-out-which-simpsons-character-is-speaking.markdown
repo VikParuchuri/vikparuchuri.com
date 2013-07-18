@@ -10,6 +10,7 @@ categories:
     - ML
     - clustering
     - python
+    - R
 ---
 
 You probably have a favorite Simpsons character.  Maybe you hope to someday [block out the sun](http://en.wikipedia.org/wiki/Who_Shot_Mr._Burns%3F), Mr. Burns style, maybe you enjoy Homer's skill in [averting meltdowns](http://en.wikipedia.org/wiki/Homer_Defined), or maybe you identify with Lisa's struggles for acceptance.  Through its characters, the Simpsons made a huge impact on a generation, and although the show is still running, my best memories will be of the [early seasons](http://deadhomersociety.com/zombiesimpsons/).
@@ -28,7 +29,7 @@ Aunt Hortense.
 Great-grandpa Simpson.
 ```
 
-I immediately set about to correct this glaring omission.  Rather that sit down and manually label each episode with speaker information, I decide to use the power of the computer to do it for me.  To quote Homer, "Don't worry, head.  The computer will do our thinking now."
+I immediately set about to correct this glaring omission.  Rather that sit down and manually label each episode with speaker information, I decide to use the power of the computer to do it for me.  To quote Homer, `Don't worry, head.  The computer will do our thinking now.`
 
 I will follow this post up with a technical one, but for now, you can find all of my code [here](https://github.com/VikParuchuri/simpsons-scripts).
 
@@ -84,7 +85,7 @@ Let's look at the initial data before we dive in.
 
 We can see how many lines each character has in our scripts:
 
-![how many lines](../images/simpsons-scripts/lines_said_per_character_initial.png)
+![how many lines](../images/simpsons-scripts/lines_per_character_initial.png)
 
 We can also see what words each character is most likely to say (more common towards the bottom).  As we have always suspected, it looks like the show does, in fact, revolve around Homer:
 
@@ -108,8 +109,11 @@ After we do this, we end up with labelled transcripts:
 
 We can also see who is speaking how many lines now:
 
+![how many lines](../images/simpsons-scripts/lines_per_character_final.png)
 
 And we can see what the commonly said words are:
+
+![commonly said words](../images/simpsons-scripts/commonly_said_words_final.png)
 
 
 What does this mean?
@@ -120,7 +124,7 @@ What does this mean?
 -- Homer Simpson
 ```
 
-This leaves us in a good spot.  We have labelled the speakers, and although it isn't great, it is a good starting spot, and it will enable us to do some additional analysis later on.
+This leaves us in a good spot.  We have labelled the speakers, and although it isn't great, it is a good starting spot, and it will enable us to do some additional linguistic analysis later on (which is what I originally wanted to do).
 
 We could potentially make this better in a lot of ways:
 
@@ -128,3 +132,5 @@ We could potentially make this better in a lot of ways:
 * Add in more labelled training data, potentially with some self-labelled data.
 * Tweak the algorithm.
 * Clean up the input data more.
+
+I was looking into implementing the first suggestion, but as Homer once said, `There is a time for many words, and there is also a time for sleep.` Well, wrong Homer, but you get the idea.  I hope this was an interesting post, and I will be making another one in the future with the technical details behind this.
