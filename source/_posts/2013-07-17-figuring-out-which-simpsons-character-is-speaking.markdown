@@ -115,7 +115,7 @@ We can also see who is speaking how many lines now:
 
 ![how many lines](../images/simpsons-scripts/lines_per_character_final.png)
 
-Homer is being assigned too many lines, but the proportion is semi-close to our previous graph.  We can see what the commonly said words are:
+Not all of the lines have been labelled, as the lines the algorithm is uncertain about are left unlabelled.  Homer is also being assigned too many lines, but the proportion is semi-close to our previous graph.  We can see what the commonly said words are:
 
 ![commonly said words](../images/simpsons-scripts/commonly_said_words_final.png)
 
