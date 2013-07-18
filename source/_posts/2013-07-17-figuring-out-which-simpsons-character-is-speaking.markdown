@@ -29,7 +29,7 @@ Aunt Hortense.
 Great-grandpa Simpson.
 ```
 
-I immediately set about to correct this glaring omission.  Rather that sit down and manually label each episode with speaker information, I decide to use the power of the computer to do it for me.  To quote Homer, `Don't worry, head.  The computer will do our thinking now.`
+I immediately set about to correct this glaring omission.  Rather that sit down and manually label each episode with speaker information, I decided to use the power of the computer to do it for me.  To quote Homer, `Don't worry, head.  The computer will do our thinking now.`
 
 I will follow this post up with a technical one, but for now, you can find all of my code [here](https://github.com/VikParuchuri/simpsons-scripts).
 
@@ -91,7 +91,6 @@ We can also see what words each character is most likely to say (more common tow
 
 ![commonly said words](../images/simpsons-scripts/commonly_said_words_initial.png)
 
-We can also extract basic summary statistics, such as, there are `102066` lines in the transcripts, and `1016692` words, for an average of `9.96` words per line.
 
 Make our model
 -----------------------------------------------
@@ -105,15 +104,24 @@ We also do some matching to find which lines in the scripts exactly correspond t
 After we do this, we end up with labelled transcripts:
 
 ```
+Homer: Come on, Lisa. Say somethin' funny.
+Lisa: Like what?  Oh, somethin' stupid like Bart would say.
+Bart: Forget it, Dad. If I ever become famous I want it to be for something worthwhile, not because of some obnoxious fad.
+Tertiary: Obnoxious fad?  Ah, don't worry, Son.
+Homer: That little snot boy. I'd like to smack that kid!
 ```
 
 We can also see who is speaking how many lines now:
 
 ![how many lines](../images/simpsons-scripts/lines_per_character_final.png)
 
-And we can see what the commonly said words are:
+Homer is being assigned too many lines, but the proportion is semi-close to our previous graph.  We can see what the commonly said words are:
 
 ![commonly said words](../images/simpsons-scripts/commonly_said_words_final.png)
+
+From some of the commonly said words, we can see that some lines are being mis-attributed (lisa rarely says Homer, for instance), but it looks reasonable overall.
+
+We can also extract basic summary statistics, such as, there are `102066` lines in the transcripts, and `1016692` words, for an average of `9.96` words per line.
 
 
 What does this mean?
