@@ -61,7 +61,7 @@ Just like it is difficult to decide which one of the 5000 varieties of soap at t
 
 We can figure out which characters are linguistically similar to each other, based on our small sample of scripts:
 
-![linear regression](../images/simpsons-scripts/clusters.png)
+![clusters](../images/simpsons-scripts/clusters.png)
 
 In the above, the larger clusters contain multiple characters, but they are only labelled by the first character.  So, cluster "Moe" consists of:
 
@@ -80,7 +80,17 @@ So, we group them together.  As we can see, the main characters are all very dis
 Some data exploration
 -----------------------------------------------
 
+Let's look at the initial data before we dive in.
 
+We can see how many lines each character has in our scripts:
+
+![how many lines](../images/simpsons-scripts/lines_said_per_character_initial.png)
+
+We can also see what words each character is most likely to say (more common towards the bottom).  As we have always suspected, it looks like the show does, in fact, revolve around Homer:
+
+![commonly said words](../images/simpsons-scripts/commonly_said_words_initial.png)
+
+We can also extract basic summary statistics, such as, there are `102066` lines in the transcripts, and `1016692` words, for an average of `9.96` words per line.
 
 Make our model
 -----------------------------------------------
@@ -89,3 +99,32 @@ We can then make a model to predict who is speaking the lines of text in the tra
 
 We can do this by applying a [random forest classifier](http://en.wikipedia.org/wiki/Random_forest).  This will tell us whether the line `I think the boy's hurt.` is Smithers expressing concern, or Burns delighting in causing pain (although attentive Simpsons fans already know the answer).
 
+We also do some matching to find which lines in the scripts exactly correspond to lines in the transcripts, using the [k-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm) algorithm.
+
+After we do this, we end up with labelled transcripts:
+
+```
+```
+
+We can also see who is speaking how many lines now:
+
+
+And we can see what the commonly said words are:
+
+
+What does this mean?
+-------------------------------------------------
+
+```
+"Uh-huh, uh-huh. Okay. Um Can you repeat the part of the stuff where you said all about uuhhh, things. Uhh... the things."
+-- Homer Simpson
+```
+
+This leaves us in a good spot.  We have labelled the speakers, and although it isn't great, it is a good starting spot, and it will enable us to do some additional analysis later on.
+
+We could potentially make this better in a lot of ways:
+
+* Use subtitles with time information, and combine those with audio files to decide who is speaking.  This is a very good option, and would get much higher accuracy.
+* Add in more labelled training data, potentially with some self-labelled data.
+* Tweak the algorithm.
+* Clean up the input data more.
