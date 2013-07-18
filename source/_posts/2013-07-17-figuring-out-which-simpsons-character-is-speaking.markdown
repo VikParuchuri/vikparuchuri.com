@@ -33,6 +33,8 @@ I immediately set about to correct this glaring omission.  Rather that sit down 
 
 I will follow this post up with a technical one, but for now, you can find all of my code [here](https://github.com/VikParuchuri/simpsons-scripts).
 
+<!--more-->
+
 Get the transcripts!
 --------------------------------------------
 
