@@ -12,44 +12,44 @@ categories:
     - machine learning
 ---
 
-[Earlier](/blog/figuring-out-which-simpsons-character-is-speaking), I looked at transcripts of Simpsons episodes and tried to figure out which character was speaking which line.
+In a [previous post](/blog/figuring-out-which-simpsons-character-is-speaking), I looked at transcripts of Simpsons episodes and tried to figure out which character was speaking which line.
 
  This worked decently, but it wasn't great. It gave us memorable scenes like this one:
 
- ```
-"Homer :  D'oh!  A deer!  A female deer."
-"Marge :  Son, you're okay!"
-"Bart :  Dad, I can't let you sell him. Stampy and I are friends. Ow!"
-"Bart :  Dad, how would you like to be sold to an ivory dealer?"
-"Bart :  Dad, you're sinking!  Huh?"
-"Marge :  Get a rope, Bart.  No, that's okay."
- ```
+```
+Homer :  D'oh!  A deer!  A female deer.
+Marge :  Son, you're okay!
+Bart :  Dad, I can't let you sell him. Stampy and I are friends. Ow!
+Bart :  Dad, how would you like to be sold to an ivory dealer?
+Bart :  Dad, you're sinking!  Huh?
+Marge :  Get a rope, Bart.  No, that's okay.
+```
 
  And this one:
 
- ```
-"Homer :  I don't like this new director's cut."
-"Secondary :  You're stealing a table?  I'm not stealin' it."
-"Tertiary :  Ah. Is that my necktie you're wearing?  Souvenir."
-"Bart :  Mom, what if there's a really bad, crummy guy who's going to jail, but I know he's innocent."
-"Marge :  Well, Bart, your Uncle Arthur used to have a saying ''Shoot 'em all, and let God sort 'em out.'' Unfortunately, one day he put his theory into practice."
- ```
+```
+Homer :  I don't like this new director's cut.
+Secondary :  You're stealing a table?  I'm not stealin' it.
+Tertiary :  Ah. Is that my necktie you're wearing?  Souvenir.
+Bart :  Mom, what if there's a really bad, crummy guy who's going to jail, but I know he's innocent.
+Marge :  Well, Bart, your Uncle Arthur used to have a saying ''Shoot 'em all, and let God sort 'em out.'' Unfortunately, one day he put his theory into practice.
+```
 
  And some not so memorable scenes:
 
- ```
-"Homer :  Mmm, engineblock eggs."
-"Marge :  Hey, it's morning, and Mom and Dad aren't home yet."
-"Tertiary :  Hey. This isn't the Y.M.C.A."
-"Homer :  Dispatch, this is Chief Wiggum back in pursuit of the rebelling women."
-"Homer :  All right. Your current location?  Oh. Uh, I'm a I'm on a road. Looks to be asphalt."
- ```
+```
+Homer :  Mmm, engineblock eggs.
+Marge :  Hey, it's morning, and Mom and Dad aren't home yet.
+Tertiary :  Hey. This isn't the Y.M.C.A.
+Homer :  Dispatch, this is Chief Wiggum back in pursuit of the rebelling women.
+Homer :  All right. Your current location?  Oh. Uh, I'm a I'm on a road. Looks to be asphalt.
+```
 
 Trying to identify who is speaking only by looking at the text is a bit like trying to walk in a straight line with your eyes closed.  There is a lot of information that you end up missing.
 
-Imagine trying to identify which one of your friends said `Hey, how's it going?`.  Even if you know someone for years and years, you will never get any insight into whether or not they said that phrase.
+Imagine trying to figure out which one of your friends said `hey, how's it going?`.  Even if you know someone for years and years, it won't help you figure it out.
 
-Enter our friend, sound.  If we played you a sound clip of your friend saying the same phrase, you would almost instantly know who said it.  Audio has a lot of information in this context that text cannot convey, and if we want to accurately identify our Simpsons characters, we need to use it.
+Enter our friend, sound.  If I played you a sound clip of your friend saying the same phrase, you would almost instantly know who said it.  Audio has a lot of information in this context that text cannot convey, and if we want to accurately identify our Simpsons characters, we need to use it.
 
 As we progress, keep in mind that the code for this is available [here](https://github.com/VikParuchuri/simpsons-scripts), but this is the non-technical explanation.  I will make a full technical post once I evaluate the various methods.
 
@@ -145,7 +145,7 @@ Reading them in gives us what is an nx2 array:
 0.01218507 &  0.01218507\\
 0.004356 & 0.004356
 \end{bmatrix}
-{%endmath}
+{%endmath%}
 
 Here, 2 is our number of audio channels (in this case, we have stereo audio, so a right and a left).
 
