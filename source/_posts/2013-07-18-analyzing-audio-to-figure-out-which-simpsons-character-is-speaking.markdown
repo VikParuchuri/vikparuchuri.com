@@ -122,3 +122,37 @@ We want to do two main things:
 
 The first thing is relatively easy.  This line `00:17:32,523 --> 00:17:35,651` is timing information, that tells us that Barney is pretending to be Krusty from 17 minutes and 32 seconds into the episode until 17 minutes and 35 seconds into the video.  We can parse the subtitles to get the whole line, when the line started in seconds, and when the line ended in seconds.
 
+Now, we just have the easy task of getting the audio out of the video and making the computer understand it.  Right?
+
+Working with audio
+----------------------------------------------------------
+
+The first thing that we need to do is extract the audio tracks from our video files, which is easy with a tool like [ffmpeg](http://www.ffmpeg.org/).
+
+Once we convert the episodes to audio-only, we can read the audio files and process them.
+
+Reading them in gives us what is an nx2 array:
+
+{%math%}
+\begin{bmatrix}
+0.02521298 & 0.02521298\\
+0.00824107 & 0.00824107\\
+-0.00271195 & -0.00271195\\
+-0.00310439 & -0.00310439\\
+0.00400125 & 0.00400125\\
+0.01215246 & 0.01215246\\
+0.0157427 & 0.0157427\\
+0.01218507 &  0.01218507\\
+0.004356 & 0.004356
+\end{bmatrix}
+{%endmath}
+
+Here, 2 is our number of audio channels (in this case, we have stereo audio, so a right and a left).
+
+The length of the array matches up with the length of our episode, and is determined by the frequency of the sampling of the sound.  The sampling frequency determines how many times per second the sound wave was measured and recorded.  The higher the sampling frequency, the bigger n would be for 1 second of audio.
+
+We can use this information to match up our subtitles with the audio.
+
+After we match them up, we can extract important audio features that fingerprint individual features.  These features are things such as how high the wave for a particular speaker is, how low the wave is, how many times the wave changes from above 0 to below 0, and so on.  Once we have these features, we can train a machine learning algorithm to predict who is speaking.
+
+For the algorithm to work, we need to have labelled data, that is, we need subtitles that we have already identified a speaker for.  I sacrificed 30 minutes of my life in the name of science to do this labelling for portions of a few episodes.  This gives our algorithm the initial training to predict speakers.
