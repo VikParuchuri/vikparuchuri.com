@@ -117,6 +117,7 @@ didn't have a seven or an eight!
 We also have the episodes from some of the Simpsons seasons (well, I do, at least).
 
 We want to do two main things:
+
 * Correlate the lines in the subtitles to the lines in the videos
 * Make the video into a format that can be used for predictions
 
@@ -172,10 +173,80 @@ Once we have these features, we can train a machine learning algorithm to predic
 For the algorithm to work, we need to have labelled data, that is, we need subtitles that we have already identified a speaker for.  I sacrificed 30 minutes of my life in the name of science to do this labelling for portions of a few episodes.  This gives our algorithm the initial training to predict speakers.
 
 In rough terms, the algorithm will:
+
 * Read in our input features
 * Correlate our training labels with the features in the labelled lines
 * Create a model mapping features to labels
 * Predict the labels for the unlabelled lines
 
-Colorful Charts
+Visualizing the audio
 -------------------------------------------------------------------
+
+We can visualize our labelled lines and their predicted classifications in 2 dimensions with an SVM classification plot:
+
+![svm class](../images/simpsons-audio/svm_class.png)
+
+This shows up where the support vectors between the classes (labels) are, and where they fall.
+
+We can also take our audio features, and use them to visualize the characters in two dimensions.  This first plot shows you how vocally dissimilar (or similar) the characters are in the small initial sample of text that I hand-labelled, which comes out to 313 lines across 5 episodes.  The larger a dot is, the more lines that character had.
+
+![initial line](../images/simpsons-audio/initial_line_plot.png)
+
+Now, we can use the algorithm to finish labelling the remaining lines of those 5 episodes.  This gives us 1544 lines, and a different plot:
+
+![final line](../images/simpsons-audio/final_line_plot.png)
+
+We can also directly look at the lines and compare accuracy.  Label is the hand label, and predicted label is what the algorithm predicted:
+
+```
+                                                                          Line Label Predicted Label season episode
+79                                                                  - "Yello." Homer        Homer      1       1
+80                                              - Marge, please.|- Who's this? Patty        Patty      1       1
+81                                                May I please speak to Marge? Patty        Patty      1       1
+82                           - This is her sister, isn't it?|- Is Marge there? Homer        Homer      1       1
+83                              - Who shall I say is calling?|- Marge, please. Homer        Homer      1       1
+84                                                       It's your sister.|Oh! Homer        Homer      1       1
+85                                        - Hello.|- Hello, Marge. It's Patty. Patty        Homer      1       1
+86 Selma and I couldn't be more excited|about seeing our sister Christmas Eve. Patty        Patty      1       1
+87                    Well, Homer and I are looking|forward to your visit too. Marge        Marge      1       1
+88                                      Somehow I doubt|that Homer is excited. Patty        Patty      1       1
+89                                        of all the men|you could've married, Patty        Patty      1       1
+```
+
+We can define two simple error metrics to figure out how we are doing.
+
+The first is adjacent correctness.  So, if our result label occurs in a window +/- from the actual label, then we mark it as "adjacent correct."  This is because the subtitle timing information is not always perfect, and multiple characters can also speak in one subtitle line, making labelling difficult.  So, line 85 above would be "adjacent correct" because Homer is speaking in line 84, meaning the predicted label (Homer) occured in the actual labels one line before.
+
+We can define exact correct to mean that the result label and the actual label are the same.
+
+### The perils of error estimation
+
+I had initially used cross validation to measure error.  Cross validation involves randomly splitting up a dataset and using some sections to predict other sections.  I realized after the fact that this made the correct rate way too high.  Using cross validation, for example, allows the algorithm to use some of the lines from Season 1, Episode 1, which I hand labelled the beginning of, to predict the rest.
+
+Our "adjacent correct" rate with cross validation is `291/313`, or `93%`, and our exact correct rate is `275/313`, or `87.8%`.
+
+Instead of using cross validation, we can do something I call "sequential validation", where we treat each episode separately, and predict each episode with data from all other episodes.
+
+When we do this, our adjacent correct rate is `142/313`, or `45%`, and our exact correct rate is `84/313`, or `27%`.  With only 313 labelled training lines, this is a pretty good result.
+
+What can we do with this?
+------------------------------------------------------------------------
+
+I originally wanted to do some linguistic analysis on the Simpsons episodes, and we are getting to that point (although I did say that last time, playing with sound is just too cool to pass up).
+
+We could make some improvements to this:
+
+* Combine the NLP based approach [from last time](/blog/figuring-out-which-simpsons-character-is-speaking) with the audio based approach from this time.
+* Hand label more training lines (this will increase accuracy a lot).
+* Exploit the data to "auto-label".  For instance, some lines say [Burns] or [Marge] when the character isn't on screen.
+* Correlate the labelled data used in the last post with the subtitles used here to generate labelled data.
+* Generate more/better audio features.
+
+Ultimately, the general approach to improving an algorithm is more data, more approaches, more features, and we cover those bases here.
+
+Once my machine gets through labelling all of the lines (processing the audio streams takes a long time!), I will look into refining the method a bit, and then do some linguistic analysis (ever wanted to know how much the characters like each other?).
+
+Would be happy to hear any comments/suggestions.  And after writing this post, I need a beer, so here’s to alcohol,the cause of, and solution to, all of life’s problems.
+
+
+
