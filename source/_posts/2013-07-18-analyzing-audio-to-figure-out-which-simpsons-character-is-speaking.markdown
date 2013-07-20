@@ -47,9 +47,9 @@ Homer :  All right. Your current location?  Oh. Uh, I'm a I'm on a road. Looks t
 
 Trying to identify who is speaking only by looking at the text is a bit like trying to walk in a straight line with your eyes closed.  There is a lot of information that you end up missing.
 
-Imagine trying to figure out which one of your friends said `hey, how's it going?`.  Even if you know someone for years and years, it won't help you figure it out.
+What if I told you that one of your friends asked me `hey, how's it going?`, and I asked you to figure out which friend.  Even if you know someone for years and years, it won't help you figure it out.
 
-Enter our friend, sound.  If I played you a sound clip of your friend saying the same phrase, you would almost instantly know who said it.  Audio has a lot of information in this context that text cannot convey, and if we want to accurately identify our Simpsons characters, we need to use it.
+Enter the amazing sound wave.  If I played you a sound clip of your friend saying the same phrase, you would almost instantly know who said it.  Audio has a lot of information in this context that text cannot convey, and if we want to accurately identify our Simpsons characters, we need to use it.
 
 As we progress, keep in mind that the code for this is available [here](https://github.com/VikParuchuri/simpsons-scripts), but this is the non-technical explanation.  I will make a full technical post once I evaluate the various methods.
 
@@ -70,9 +70,9 @@ We can zoom in to actually see the lines:
 
 ![intro zoom](../images/simpsons-audio/intro_zoom.png)
 
-One of the lines is the right side audio, and the left side audio is the blue.  It doesn't matter much which is which for our purposes, but let's say that blue is left and green is right.  Most audio now, including our Simpsons audio, is in stereo format, which means that there are 2 independent sources of sound.  For our purposes, it means that we have two streams of sound to look at.
+One of the lines is the right side audio, one of the lines is the left side audio.  It doesn't matter much which is which for our purposes, but let's say that blue is left and green is right.  Most audio now, including our Simpsons audio, is in stereo format, which means that there are 2 independent sources of sound.  When you put on a pair of headphones, or listen to speakers, different sound plays on the left and right if you have stereo audio.  Audio could also be in mono format, in which case we would only see one line.  For our purposes, stereo means that we have two streams of sound to look at.
 
-You can see that sound has some obvious tendencies.  The sound is oscillating up and down, but the pattern is not always fixed, so one peak might be higher or lower than the one before it.  We can use these oscillations to differentiate between speakers.
+You can see that sound has some obvious tendencies.  The sound wave is oscillating up and down, but the pattern is not always fixed, so one peak might be higher or lower than the one before it, and one local minimum might be lower or higher than the one before it.  We can use these oscillations to differentiate between Simpsons characters.
 
 Here is Homer speaking the line `Sure do! When you're 18,you're out the door!`:
 
@@ -118,11 +118,11 @@ We also have the episodes from some of the Simpsons seasons (well, I do, at leas
 
 We want to do two main things:
 * Correlate the lines in the subtitles to the lines in the videos
-* Find a way to get things that we can use to predict with out of the videos
+* Make the video into a format that can be used for predictions
 
-The first thing is relatively easy.  This line `00:17:32,523 --> 00:17:35,651` is timing information, that tells us that Barney is pretending to be Krusty from 17 minutes and 32 seconds into the episode until 17 minutes and 35 seconds into the video.  We can parse the subtitles to get the whole line, when the line started in seconds, and when the line ended in seconds.
+The first thing is relatively easy.  This line `00:17:32,523 --> 00:17:35,651` is timing information, that tells us that Barney is pretending to be Krusty from 17 minutes and 32 seconds into the episode until 17 minutes and 35 seconds into the video.  We can parse the subtitle file to get the whole line, when the line started in seconds, and when the line ended in seconds, for each of the lines in an episode.
 
-Now, we just have the easy task of getting the audio out of the video and making the computer understand it.  Right?
+Now, we just have the easy task of getting the audio out of the video and making and algorithm understand it.  Right?
 
 Working with audio
 ----------------------------------------------------------
@@ -131,7 +131,7 @@ The first thing that we need to do is extract the audio tracks from our video fi
 
 Once we convert the episodes to audio-only, we can read the audio files and process them.
 
-Reading them in gives us what is an nx2 array:
+Reading them in gives us what is an {%m%}nx2{%em%} array:
 
 {%math%}
 \begin{bmatrix}
@@ -149,10 +149,33 @@ Reading them in gives us what is an nx2 array:
 
 Here, 2 is our number of audio channels (in this case, we have stereo audio, so a right and a left).
 
-The length of the array matches up with the length of our episode, and is determined by the frequency of the sampling of the sound.  The sampling frequency determines how many times per second the sound wave was measured and recorded.  The higher the sampling frequency, the bigger n would be for 1 second of audio.
+The length of the array (n) matches up with the length of our episode, and is determined by the sampling frequency of the sound.  The sampling frequency determines how many times per second the sound wave was measured and recorded.  The higher the sampling frequency, the bigger n would be for the same length of audio.  For example, Season 4, Episode 12 (Marge vs. the Monorail) is 23 minutes and 5 seconds long.  When we read in the episode, we get a {%m%}66515968x2{%em%} array.  The sampling frequency of this is `48000`.
 
-We can use this information to match up our subtitles with the audio.
+{%math%}
+\begin{align}
+66515968/48000=1385.75 seconds \\
+1385.75/60 = 23.1 minutes
+\end{align}
+{%endmath%}
 
-After we match them up, we can extract important audio features that fingerprint individual features.  These features are things such as how high the wave for a particular speaker is, how low the wave is, how many times the wave changes from above 0 to below 0, and so on.  Once we have these features, we can train a machine learning algorithm to predict who is speaking.
+So, our audio array has the same length as the episode.  We have timing information in seconds from our handy subtitle file, and we can match that up with the audio tracks to extract the lines that the characters are speaking.
+
+Audio fingerprinting
+-----------------------------------------------------------------
+
+We talked before about different voices having unique oscillations and features.
+
+We can quantify these unique differences (features), and use them to "fingerprint" individual characters.  These features are things such as how high on average the wave for a particular speaker is, how low on average the wave is, [zero crossing rate](http://en.wikipedia.org/wiki/Zero-crossing_rate), and [cepstrum](http://en.wikipedia.org/wiki/Cepstrum).  We generate each of our features for each line of character audio that we have extracted.
+
+Once we have these features, we can train a machine learning algorithm to predict who is speaking.
 
 For the algorithm to work, we need to have labelled data, that is, we need subtitles that we have already identified a speaker for.  I sacrificed 30 minutes of my life in the name of science to do this labelling for portions of a few episodes.  This gives our algorithm the initial training to predict speakers.
+
+In rough terms, the algorithm will:
+* Read in our input features
+* Correlate our training labels with the features in the labelled lines
+* Create a model mapping features to labels
+* Predict the labels for the unlabelled lines
+
+Colorful Charts
+-------------------------------------------------------------------
