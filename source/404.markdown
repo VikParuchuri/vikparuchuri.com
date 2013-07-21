@@ -1,0 +1,10 @@
+---
+layout: page
+title: "404 Error"
+date: 2013-07-18 23:55
+comments: false
+sharing: false
+footer: false
+---
+
+There has been a 404 error, and the page you are looking for cannot be found.  You can find the homepage [here](http://www.vikparuchuri.com).
