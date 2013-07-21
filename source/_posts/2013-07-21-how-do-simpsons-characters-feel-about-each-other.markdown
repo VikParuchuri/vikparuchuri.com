@@ -19,21 +19,7 @@ This idle thought led me down a very deep rabbit hole.  The most glaring problem
 
 I first tried using natural language processing techniques to [determine who was speaking each line](/blog/figuring-out-which-simpsons-character-is-speaking).  This worked reasonably well, but I felt that it was still missing something.  I then [directly analyzed the audio](/blog/analyzing-audio-to-figure-out-which-simpsons-character-is-speaking/) from the episodes to figure out the "voice fingerprints" for each character, which I used to label the lines.  This was better than just looking at the text of the lines.  I wanted to combine these techniques, but ran out of time.  It can be fairly easily done at some later date to increase accuracy.
 
-After labelling the scripts, I was left with this:
-
-```
-     start    end season episode                                                         line result_label
-599 393.76 396.04      5       8    All I've gotta do is take this uniform back after school.         Bart
-600 396.16 399.92      5       8             You're lucky. You only joined theJunior Campers.     Milhouse
-601 400.04 403.60      5       8          I got a dirty word shaved into the back of my head.         Bart
-602 403.72 406.52      5       8            [ Gasps ] What is it with you kids and that word?      Skinner
-603 406.64 408.84      5       8                    I'm going to shave you bald, young man...      Skinner
-604 408.96 412.76      5       8 until you learn that hair is not a right-- it's a privilege.      Skinner
-```
-
-`Start` is how many seconds into the episode the line started, `end` is when it ended, and `result_label` is who the algorithm determined spoke a given line.  As you can see, the algorithm is not 100% perfect, primarily due to the difficulty of syncing the subtitles up with the audio, and the fact that multiple people can be speaking during a single subtitle line.
-
-From this, we can fairly easily determine how much each of the characters likes the rest.  If you want to skip ahead, the heatmap of how much the characters like each other is below.  It shows how much each character in the row likes each character in the column.  Some characters may feel differently about each other (for example, check out Krusty and Lisa).  Red indicates dislike, and green indicates like.
+From the labelled lines, we can determine how much each of the characters likes the rest.  If you want to skip ahead, the heatmap of how much the characters like each other is below.  It shows how much each character in the row likes each character in the column.  Some characters may feel differently about each other (for example, check out Krusty and Lisa).  Red indicates dislike, and green indicates like.
 
 ![character sentiments](http://www.vikparuchuri.com/images/simpsons-sentiment/character_sentiments.png)
 
@@ -77,9 +63,21 @@ We can then compare our sentence vector to the negative sentiment vector using a
 Application
 ----------------------------------------------------------------
 
-We will apply a slight variation of this to our problem.
+We will apply a slight variation of this to our problem.  After labelling the scripts, I was left with this:
 
-We will find the "neighboring characters" for each line that our characters speak to be the character that spoke immediately before and the character that speaks immediately after.  So, in our introductory example, the first line Bart has, his neighoring character is Milhouse.  In his second line, his neighboring characters are Milhouse and Skinner.  We can reasonably expect that what a character says indicates their opinion of the neighboring characters -- those characters that are in the same scene as them.
+```
+     start    end season episode                                                         line result_label
+599 393.76 396.04      5       8    All I've gotta do is take this uniform back after school.         Bart
+600 396.16 399.92      5       8             You're lucky. You only joined theJunior Campers.     Milhouse
+601 400.04 403.60      5       8          I got a dirty word shaved into the back of my head.         Bart
+602 403.72 406.52      5       8            [ Gasps ] What is it with you kids and that word?      Skinner
+603 406.64 408.84      5       8                    I'm going to shave you bald, young man...      Skinner
+604 408.96 412.76      5       8 until you learn that hair is not a right-- it's a privilege.      Skinner
+```
+
+`Start` is how many seconds into the episode the line started, `end` is when it ended, and `result_label` is who the algorithm determined spoke a given line.  As you can see, the algorithm is not 100% perfect, primarily due to the difficulty of syncing the subtitles up with the audio, and the fact that multiple people can be speaking during a single subtitle line.
+
+We will find the "neighboring characters" for each line that our characters speak to be the character that spoke immediately before and the character that speaks immediately after.  So, in our example above, in the first line Bart has, his neighoring character is Milhouse.  In his second line, his neighboring characters are Milhouse and Skinner.  We can reasonably expect that what a character says indicates their opinion of the neighboring characters -- those characters that are in the same scene as them.
 
 For each character, we will then build up a "neighboring character" matrix using our lines.
 
