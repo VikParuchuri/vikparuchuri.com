@@ -196,6 +196,10 @@ Now, we can use the algorithm to finish labelling the remaining lines of those 5
 
 ![final line](http://www.vikparuchuri.com/images/simpsons-audio/final_line_plot.png)
 
+Update:  And here is the plot for 192 episodes across 10 seasons.  In this case, the size of the dot is log scaled.
+
+![final line](http://www.vikparuchuri.com/images/simpsons-audio/final_results.png)
+
 We can also directly look at the lines and compare accuracy.  Label is the hand label, and predicted label is what the algorithm predicted:
 
 ```
@@ -244,7 +248,7 @@ We could make some improvements to this:
 
 Ultimately, the general approach to improving an algorithm is more data, more approaches, more features, and we cover those bases here.
 
-Once my machine gets through labelling all of the lines (processing the audio streams takes a long time!), I will look into refining the method a bit, and then do some linguistic analysis (ever wanted to know how much the characters like each other?).
+Once my machine gets through labelling all of the lines (processing the audio streams takes a long time! Update:  It finished, see the plot above.), I will look into refining the method a bit, and then do some linguistic analysis (ever wanted to know how much the characters like each other?).
 
 Would be happy to hear any comments/suggestions.  And after writing this post, I need a beer, so here’s to alcohol,the cause of, and solution to, all of life’s problems.
 
