@@ -12,6 +12,8 @@ categories:
     - machine learning
 ---
 
+*Update: you can find the next post in this series [here](/blog/how-do-simpsons-characters-feel-about-each-other/).*
+
 In a [previous post](/blog/figuring-out-which-simpsons-character-is-speaking), I looked at transcripts of Simpsons episodes and tried to figure out which character was speaking which line.
 
  This worked decently, but it wasn't great. It gave us memorable scenes like this one:

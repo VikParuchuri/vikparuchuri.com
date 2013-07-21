@@ -13,6 +13,8 @@ categories:
     - R
 ---
 
+*Update: you can find the next post in this series [here](/blog/analyzing-audio-to-figure-out-which-simpsons-character-is-speaking/).*
+
 You probably have a favorite Simpsons character.  Maybe you hope to someday [block out the sun](http://en.wikipedia.org/wiki/Who_Shot_Mr._Burns%3F), Mr. Burns style, maybe you enjoy Homer's skill in [averting meltdowns](http://en.wikipedia.org/wiki/Homer_Defined), or maybe you identify with Lisa's struggles for acceptance.  Through its characters, the Simpsons made a huge impact on a generation, and although the show is still running, my best memories will be of the [early seasons](http://deadhomersociety.com/zombiesimpsons/).
 
 I recently wanted to do some linguistic analysis of Simpsons episodes.  To my surprise, I found that it is impossible to find Simpsons episodes scripts with information about who is speaking which line.  You can find [episode capsules](http://snpp.com/episodes/7G10.html) on snpp.com, but they feature only quotes from the episodes.  Simpsoncrazy has some [scripts](http://www.simpsoncrazy.com/scripts), but not enough for any real analysis.  You can find complete [transcripts](http://www.springfieldspringfield.co.uk/view_episode_scripts.php?tv-show=the-simpsons&episode=s01e01), but they lack any information on who is speaking when.
