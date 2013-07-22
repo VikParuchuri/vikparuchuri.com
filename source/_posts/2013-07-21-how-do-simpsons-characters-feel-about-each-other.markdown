@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How do Simpsons characters feel about each other?"
+title: "Do the Simpsons characters like each other?"
 date: 2013-07-21 14:33
 comments: true
 categories:
