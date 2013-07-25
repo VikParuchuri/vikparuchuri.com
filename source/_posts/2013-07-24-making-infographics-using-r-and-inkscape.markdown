@@ -24,6 +24,8 @@ This post will take us from a raw chart exported from R to a finished infographi
 
 ![voice fingerprints final](http://www.vikparuchuri.com/images/simpsons-scripts/voice_fingerprints.png)
 
+<!--more-->
+
 Starting out
 ---------------------------------------------
 
