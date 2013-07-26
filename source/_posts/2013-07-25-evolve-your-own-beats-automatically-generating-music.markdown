@@ -29,9 +29,10 @@ I'm going to broadly outline the keys to my strategy below. You might think that
 * Once we have an assessment tool, we can generate music, and then use the assessment tool to see if it is any good
 * Profit??
 
-One important thing to note is that while the music itself is automatically generated, the building blocks of the final song are extracted from existing songs and mixed together.  The key to this is actually finding readily available, free music, and I would sincerely like to thank [last.fm](http://www.last.fm/music/+free-music-downloads) and the wonderful artists who put up their music up there.  I am not sure how much my algorithm has obfuscated the original sounds of the music, but if anyone recognizes theirs, I would love to hear from them.
+One important thing to note is that while the music itself is automatically generated, the building blocks of the final song are extracted from existing songs and mixed together.  So don't worry about this replacing humans anytime.  The key to the algorithm is actually finding readily available, free music, and I would sincerely like to thank [last.fm](http://www.last.fm/music/+free-music-downloads) and the wonderful artists who put up their music up there.  I am not sure how much my algorithm has obfuscated the original sounds of the music, but if anyone recognizes theirs, I would love to hear from them.
 
-Here are some samples of the computer generated music:
+Here are some samples of the computer generated music.  Because of the way they are generated, they all have short riffs that repeat.  I want to try to improve this behavior in the future.  Caution:  Listening to these may give you a headache.  Don't say I didn't warn you!
+
 <div>
     <div id="jquery_jplayer_1" class="jp-jplayer"></div>
     <div id="jp_container_1">
@@ -95,7 +96,7 @@ Here are some samples of the computer generated music:
             oga: "/downloads/code/07-25-2013-224817Vaenga.ogg"
           },
           {
-            title: "Atmospheric"
+            title: "Atmospheric",
             oga: "/downloads/code/07-25-2013-224913Vaenga.ogg"
           },
           {
@@ -103,7 +104,7 @@ Here are some samples of the computer generated music:
             oga: "/downloads/code/07-25-2013-225227Vakning%2Ba%25C3%25B0%2Belska.ogg"
           },
           {
-            title: "Melancholy"
+            title: "Melancholy",
             oga: "/downloads/code/07-25-2013-225539Saturnus.ogg"
           },
           {
@@ -127,7 +128,7 @@ Here are some samples of the computer generated music:
             oga: "/downloads/code/07-25-2013-231949Jenova%2BReturns%2B%2528J-E-N-O-V-A%2B%257E%2BJenova%2BComplete%2529.ogg"
           },
           {
-            title: "Where are we going?"
+            title: "Where are we going?",
             oga: "/downloads/code/07-25-2013-232912Saturnus.ogg"
           },
           {
@@ -173,6 +174,94 @@ Here are some samples of the computer generated music:
   </script>
 </div>
 
+<!--more-->
+
+So, how did you do it?
+-----------------------------------------------------
+
+I used some of the knowledge and functions that I had built up from doing [audio analysis](http://vikparuchuri.com/blog/analyzing-audio-to-figure-out-which-simpsons-character-is-speaking/) on the Simpsons to attempt music generation.
+
+The first thing I did was write a web spider to automatically grab links to free music from the last.fm free music section.  I was able to download 500 tracks using this crawler.  Half of the tracks were classical music, and half electronic.
+
+Unfortunately, these tracks were in .mp3 format.  Mp3 is a proprietary codec, which makes it harder to find decoders for, which makes it harder to process and work with.  I was able to get around this by converting the .mp3 tracks to .ogg tracks.  [Ogg](https://en.wikipedia.org/wiki/Ogg) is a free audio format.
+
+I was then able to extract audio features from these tracks.  Audio features are numbers that describe the sound in a song.  Sound is just a wave.  We can measure how instense that wave is at various points in time, which gives us a sequence of numbers that make up that sound.
+
+Here are the sound waves in the first 10 seconds of a classical track:
+
+![10 seconds of song](../images/evolve-beats/song_10s.png)
+
+And here are the sound waves in the first 10 seconds of an electronic track:
+
+![10 seconds of song](../images/evolve-beats/esong_10s.png)
+
+We can quickly see that the second track has more intense peaks, and appears to have higher energy when compared with the classical track.  Using our knowledge of classical music vs electronic music, this makes sense.  Just like we can look at the two graphs and understand that they are different, so can a computer.
+
+For example, when we read the classical track in, the first 10 audio samples produce the following:
+
+{%math%}
+\begin{bmatrix}
+2.35185598e-05 & -1.04448336e-05\\
+-3.46823663e-06 & -3.73403673e-05\\
+-2.69492170e-06 & -1.44758296e-05\\
+9.47549870e-06 & 2.09419904e-05\\
+-2.70856035e-05 & 3.44590421e-06\\
+-3.01332675e-05 & 2.74870854e-05\\
+-1.44664727e-06 & 7.49632018e-05\\
+-3.80197125e-05 & 2.56412422e-05\\
+-5.61815832e-05 & -1.29676855e-05\\
+-4.73532873e-06 & 3.69851950e-05
+
+\end{bmatrix}
+{%endmath%}
+
+And the second produces:
+
+{%math%}
+\begin{bmatrix}
+.18460009e-05 & -6.85636178e-06\\
+-1.83847499e-06 & -3.18044404e-05\\
+-5.80170308e-06 & -1.55047346e-05\\
+3.17729814e-06 &  2.17720844e-05\\
+-2.59620665e-05 &  8.40834218e-06\\
+-2.97414826e-05 &  2.96072376e-05\\
+-7.36495986e-06 &  7.55500150e-05\\
+-3.90941568e-05 &  2.75659913e-05\\
+-5.52387464e-05 & -1.12897151e-05\\
+-6.22146581e-06 &  4.04318343e-05
+\end{bmatrix}
+{%endmath%}
+
+These numbers describe how the sound waves look.  The numbers on the left are the left audio track, and the numbers on the right are the right audio track.  Each sound is sampled `44100` times per second, so one second of audio will result in a `44100x2` matrix.
+
+Let's say that someone asked you to look at the numbers from 1 minute audio sample and summarize what made it good or bad to them.  That is `2646000` numbers in each audio track, and it is almost impossible to make any meaningful realizations when swamped with so much information.  It is the same way with a learning algorithm, and so we extract audio features to reduce the dimensionality and make it easier for the computer to understand what is going on.
+
+We calculate several features, including changes in peak intensity throughout the track.  All of the features can be found [here](https://github.com/VikParuchuri/evolve-music).  These features describe our sound tracks using only `319` numbers instead of `2646000`+.
+
+Training the algorithm
+--------------------------------------
+
+Once we have our features for each of our tracks, we can go ahead and train our algorithm.  Our algorithm will decide if a track is classical or electronic music.  We will have to assign the label of "0" to one type of music, and "1" to the other.  I gave classical a 1, and electronic a 0, which is no reflection on my own musical taste.
+
+Once you have your features and your labels, it is possible to train an algorithm.  The algorithm can tell if an input track is classical or electronic.  More crucially, it will give you a decimal number between 0 and 1 that indicates how classical or how electronic a track is.  This is crucial in our music quality tester.
+
+Splicing/Remixing
+-----------------------------------------
+
+Once we have an algorithm, we can loop through our tracks and splice new tracks into them to make remixes.  Here is roughly how splicing works:
+
+![10 seconds of song](../images/evolve-beats/workflow.png)
+
+So, we pull a short audio clip out of a randomly selected track.  We then use the quality assessor to see if it is good (if it close to 0 or 1, we are defining things that are pure examples as "good").  We do this a few times, and take the "best" audio clip, and insert it into several evenly spaced places in the original track.
+
+This splicing procedure is repeated until the original song (the song that clips are being spliced into) gets a high quality rating and is different from all of the other tracks (measured through euclidean distance), or until the specified number of splices is done.
+
+Through this splicing, we end up with a very different track from the original -- one that could have insertions from dozens of other songs, making a very intricate remix (indeed, in almost all cases, there are no traces of the original song).
+
+Improvements
+------------------------------------------
+
+You can find all the code for this [here](https://github.com/VikParuchuri/evolve-music).  This was an interesting project to work on, particularly because there really isn't a "right" answer with music (at least until humans listen to something and decide if they like it or not).
 
 
 
