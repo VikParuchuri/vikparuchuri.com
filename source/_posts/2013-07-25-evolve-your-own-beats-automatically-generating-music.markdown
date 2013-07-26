@@ -21,6 +21,8 @@ Why would I want to generate music automatically?
 * It may have broader applicability
 * It's cool
 
+I opted to pursue a strategy that "evolved" music out of other pieces of music.  I chose this strategy in order to emphasize the process, and to see and understand what goes into the final track.  Seeing a track take shape is a very exciting experience, and its full history is saved.
+
 I'm going to broadly outline the keys to my strategy below. You might think that a lot of my points are crazy, so bear with me for a while(at least until I can prove them out later):
 
 * We can easily acquire music that is already categorized (ie labelled as classical/techno/electronic, etc)
@@ -31,7 +33,7 @@ I'm going to broadly outline the keys to my strategy below. You might think that
 
 One important thing to note is that while the music itself is automatically generated, the building blocks of the final song are extracted from existing songs and mixed together.  So don't worry about this replacing humans anytime.  The key to the algorithm is actually finding readily available, free music, and I would sincerely like to thank [last.fm](http://www.last.fm/music/+free-music-downloads) and the wonderful artists who put up their music up there.  I am not sure how much my algorithm has obfuscated the original sounds of the music, but if anyone recognizes theirs, I would love to hear from them.
 
-Here are some samples of the computer generated music.  Because of the way they are generated, they all have short riffs that repeat.  I want to try to improve this behavior in the future.  Caution:  Listening to these may give you a headache.  Don't say I didn't warn you!
+Here are some samples of the computer generated music.  Because of the way they are generated, they all have short riffs that repeat.  I want to try to improve this behavior in the future.  Caution:  Listening to these may give you a headache.  Don't say I didn't warn you!  If the player below does not show up you may have to visit [my site](http://vikparuchuri.com/) to see it.
 
 <div>
     <div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -234,14 +236,14 @@ And the second produces:
 
 These numbers describe how the sound waves look.  The numbers on the left are the left audio track, and the numbers on the right are the right audio track.  Each sound is sampled `44100` times per second, so one second of audio will result in a `44100x2` matrix.
 
-Let's say that someone asked you to look at the numbers from 1 minute audio sample and summarize what made it good or bad to them.  That is `2646000` numbers in each audio track, and it is almost impossible to make any meaningful realizations when swamped with so much information.  It is the same way with a learning algorithm, and so we extract audio features to reduce the dimensionality and make it easier for the computer to understand what is going on.
+Let's say that someone asked you to look at the numbers from a 1 minute audio sample and summarize what made it good or bad.  That is `2646000` numbers in each audio track, and it is almost impossible to make any meaningful realizations when swamped with so much information.  It is the same way with a learning algorithm, so we extract audio features to reduce the dimensionality and make it easier for the computer to understand what is going on.
 
 We calculate several features, including changes in peak intensity throughout the track.  All of the features can be found [here](https://github.com/VikParuchuri/evolve-music).  These features describe our sound tracks using only `319` numbers instead of `2646000`+.
 
 Training the algorithm
 --------------------------------------
 
-Once we have our features for each of our tracks, we can go ahead and train our algorithm.  Our algorithm will decide if a track is classical or electronic music.  We will have to assign the label of "0" to one type of music, and "1" to the other.  I gave classical a 1, and electronic a 0, which is no reflection on my own musical taste.
+Once we have our features for each of our tracks, we can go ahead and train our algorithm.  Our algorithm will decide if a track is classical or electronic music.  We will have to assign the label of "0" to one type of music, and "1" to the other.  I gave classical a 1, and electronic a 0, which is not a reflection of my own musical taste.
 
 Once you have your features and your labels, it is possible to train an algorithm.  The algorithm can tell if an input track is classical or electronic.  More crucially, it will give you a decimal number between 0 and 1 that indicates how classical or how electronic a track is.  This is crucial in our music quality tester.
 
@@ -250,13 +252,58 @@ Splicing/Remixing
 
 Once we have an algorithm, we can loop through our tracks and splice new tracks into them to make remixes.  Here is roughly how splicing works:
 
-![10 seconds of song](../images/evolve-beats/workflow.png)
+![splicing workflow](../images/evolve-beats/workflow.png)
 
-So, we pull a short audio clip out of a randomly selected track.  We then use the quality assessor to see if it is good (if it close to 0 or 1, we are defining things that are pure examples as "good").  We do this a few times, and take the "best" audio clip, and insert it into several evenly spaced places in the original track.
+So, we pull a randomly selected short audio clip out of a randomly selected track.  We then use the quality assessor to see if it is good (if it close to 0 or 1, we are defining things that are pure examples as "good").  We do this a few times, and take the "best" audio clip, and insert it into several evenly spaced places in the original track.
 
 This splicing procedure is repeated until the original song (the song that clips are being spliced into) gets a high quality rating and is different from all of the other tracks (measured through euclidean distance), or until the specified number of splices is done.
 
 Through this splicing, we end up with a very different track from the original -- one that could have insertions from dozens of other songs, making a very intricate remix (indeed, in almost all cases, there are no traces of the original song).
+
+Looking at our songs
+------------------------------------------
+
+We can look at the first 10 seconds of a remixed song:
+
+![10 seconds of song](../images/evolve-beats/mix_10s.png)
+
+And here is the history of that song:
+
+<div>
+<table border="1" class="dataframe table display">
+<thead> 
+<tr><th>song_index</th><th>iteration</th><th>quality</th><th>distance</th><th>splice_song_index</th><th>splice_song</th></tr>
+</thead>
+<tbody>
+<tr><td>13</td><td>-1</td><td>0.905635225885</td><td>0</td><td>0</td><td>N/A</td></tr>
+<tr><td>13</td><td>0</td><td>0.905635225885</td><td>5.53740630788e-18</td><td>75</td><td>25D1%2581%25D1%258F.ogg</td></tr>
+<tr><td>13</td><td>10</td><td>0.143886317386</td><td>0.0875533808843</td><td>177</td><td>Wenn%2Bsie%2Blacht.ogg</td></tr>
+<tr><td>13</td><td>20</td><td>0.331367817368</td><td>0.334819780512</td><td>122</td><td>Sprinkler.ogg</td></tr>
+<tr><td>13</td><td>30</td><td>0.0819852832353</td><td>0.0989308766371</td><td>331</td><td>Generalized%2BVegetal%2B%257E%2BTheme%2Bof%2BStar%2BGeneral.ogg</td></tr>
+<tr><td>13</td><td>40</td><td>0.876639434639</td><td>0.252705284634</td><td>340</td><td>crystal%2Bviolet.ogg</td></tr>
+<tr><td>13</td><td>50</td><td>0.817946248196</td><td>0.400284251004</td><td>25</td><td>Bullseye.ogg</td></tr>
+<tr><td>13</td><td>60</td><td>0.0499835257335</td><td>0.0218079019239</td><td>345</td><td>Messiah%253A%2BHalleluia%2BChorus%2B%2528Handel%2529.ogg</td></tr>
+<tr><td>13</td><td>70</td><td>0.952422919673</td><td>0.437933963581</td><td>478</td><td>Etude%2Bin%2BDb%2BMajor%252C%2BPosthumous%2B%2528Chopin%2529.ogg</td></tr>
+</tbody>
+</table>
+
+  <script>
+    $('.table').dataTable({
+        "bPaginate": false,
+        "bLengthChange": true,
+        "bSort": false,
+        "bStateSave": true,
+        "sScrollY": 300,
+        "sScrollX": 500,
+        "aLengthMenu": [[50, 100, -1], [50, 100, "All"]],
+        "iDisplayLength": 6,
+    });
+    </script><br/>
+</div>
+
+The `song_index` is the number of the original song in my song database.  `iteration` is which iteration the algorithm is on (the algorithm will iterate a maximum of 100 times, but can stop sooner if it makes a good song).  `quality` is the quality from 0 to 1 of the track.  0 means the track is electronic, 1 means that it is classical.  The algorithm considers a created song to be good if it is close to 0 or close to 1.  `distance` is how similar the created song is to the most similar song in the database.  The algorithm will try to create a quality song that is not similar to the songs in the database.  `splice_song_index` is the index of the the song that is being spliced into the created song at the specified iteration.  `splice_song` is the name of the spliced song.
+
+In the above history, we start at iteration -1, which is the original song.  The first splice song, `25D1%2581%25D1%258F.ogg`, is then chosen to be spliced in.  Notes are randomly selected and spliced into the original track 10 times, after which a new song is picked on iteration 10.  The quality is also computed at iteration 10, and we can see that the song has moved from classical to electronic quite dramatically.  We continue this process until iteration 70, when the quality is very high, and the distance between this track and all the others is also high, making this a good song to save.
 
 Improvements
 ------------------------------------------
