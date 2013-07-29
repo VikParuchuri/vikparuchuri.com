@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Making instrumental music from scratch"
-date: 2013-07-29 08:44
+date: 2013-07-29 15:34
 comments: true
 categories:
     - R
@@ -10,6 +10,8 @@ categories:
     - markov chains
     - genetic algorithms
     - machine learning
+    - ML
+    - instruments
 ---
 
 I recently posted about [automatically making music](http://www.vikparuchuri.com/blog/evolve-your-own-beats-automatically-generating-music).  The algorithm that I made pulled out interesting sequences of music from existing songs and remixed them.  While this worked reasonably well, it also didn't have full control over the basics of the music; it wasn't actually specifying which instruments to use, or what notes to play.
@@ -89,21 +91,21 @@ Below are some sample tracks created using the algorithm.  If the player below d
           cssSelectorAncestor: "#jp_container_2"
         },
         [
-             {'oga': '../downloads/code/midi-music/Horn.ogg', 'title': 'Horn'},
-             {'oga': '../downloads/code/midi-music/Atmosphere.ogg', 'title': 'Atmosphere'},
-             {'oga': '../downloads/code/midi-music/Workloads.ogg', 'title': 'Workloads'},
-             {'oga': '../downloads/code/midi-music/Epic.ogg', 'title': 'Epic'},
-             {'oga': '../downloads/code/midi-music/Anthem.ogg', 'title': 'Anthem'},
-             {'oga': '../downloads/code/midi-music/Melancholy.ogg', 'title': 'Melancholy'},
-             {'oga': '../downloads/code/midi-music/Choir.ogg', 'title': 'Choir'},
-             {'oga': '../downloads/code/midi-music/Danger.ogg', 'title': 'Danger'},
-             {'oga': '../downloads/code/midi-music/New_Age.ogg', 'title': 'New_Age'},
-             {'oga': '../downloads/code/midi-music/Loans.ogg', 'title': 'Loans'},
-             {'oga': '../downloads/code/midi-music/Trouble.ogg', 'title': 'Trouble'},
-             {'oga': '../downloads/code/midi-music/Synth.ogg', 'title': 'Synth'},
-             {'oga': '../downloads/code/midi-music/Uncertainties.ogg',
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Horn.ogg', 'title': 'Horn'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Atmosphere.ogg', 'title': 'Atmosphere'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Workloads.ogg', 'title': 'Workloads'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Epic.ogg', 'title': 'Epic'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Anthem.ogg', 'title': 'Anthem'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Melancholy.ogg', 'title': 'Melancholy'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Choir.ogg', 'title': 'Choir'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Danger.ogg', 'title': 'Danger'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/New_Age.ogg', 'title': 'New_Age'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Loans.ogg', 'title': 'Loans'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Trouble.ogg', 'title': 'Trouble'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Synth.ogg', 'title': 'Synth'},
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Uncertainties.ogg',
               'title': 'Uncertainties'},
-             {'oga': '../downloads/code/midi-music/Xylophone.ogg', 'title': 'Xylophone'}
+             {'oga': 'http://www.vikparuchuri.com/downloads/code/midi-music/Xylophone.ogg', 'title': 'Xylophone'}
         ],
         {
           playlistOptions: {
@@ -125,17 +127,17 @@ Below are some sample tracks created using the algorithm.  If the player below d
 MIDI
 ------------------------------------
 
-MIDI was standardized in 1983 (but that doesn't make it any less cool), and defines a protocol that allows instruments to communicate easily.  It enables different instruments to be placed on different channels.  It also encodes instrument notes by specifying pitch, velocity, and duration.  Tempo tracks define timing information, such as [MPQN](http://nokturnal.pl/home/atari/midi_delta) and BPM.
+MIDI was standardized in 1983, and defines a protocol that allows instruments to communicate easily.  It enables different instruments to be placed on different channels.  It also encodes instrument notes by specifying pitch, velocity, and duration.  Tempo tracks define timing information, such as [MPQN](http://nokturnal.pl/home/atari/midi_delta) and BPM.
 
 We can write this information to a midi file in bytes.  [Here](http://www.midi.org/techspecs/midimessages.php) are the byte code formats for various midi events.
 
 Byte code is a step between how we see files and data, and how computers store files and data.  For example, we can use a hex editor to see the hex representation of the word "Hello":
 
-![bytes](../images/midi-music/bytes.png)
+![bytes](http://www.vikparuchuri.com/images/midi-music/bytes.png)
 
 The midi format stores data in a similar way:
 
-![midi bytes](../images/midi-music/midi_bytes.png)
+![midi bytes](http://www.vikparuchuri.com/images/midi-music/midi_bytes.png)
 
 Even from this brief glimpse of the midi file format, we can see that we don't want to be stuck directly editing midi files.  It would be quite painful.  Luckily, several people have written containers for midi.  These containers allow midi to be edited in natural ways using programming languages, without actually having to edit the files directly.  One of these is called [python-midi](https://github.com/vishnubob/python-midi), and is the editor I chose to use.
 
@@ -188,13 +190,13 @@ MIDI is critical to what we want to do, and once we have the principles down, we
 
 Here is a rough diagram of our algorithm:
 
-![algo flow](../images/midi-music/algo-flow.png)
+![algo flow](http://www.vikparuchuri.com/images/midi-music/algo-flow.png)
 
 We will exploit [markov chains](https://en.wikipedia.org/wiki/Markov_chain) to make our basic tracks.  Markov chains are defined with the probability of one state changing to another state.  For example, let's say that for the past 5 days, the weather was `Sunny, Cloudy, Sunny, Sunny, Sunny`.  So, after it was sunny, it was cloudy on one day, and sunny on two other days.  After it was cloudy, it was sunny on one day.  So, our system has two states, sunny and cloudy, and it transitions between those states with a certain probability.
 
 Creating a markov chain:
 
-![markov chain](../images/midi-music/markov-chain.png)
+![markov chain](http://www.vikparuchuri.com/images/midi-music/markov-chain.png)
 
 If today was sunny, there would be a 66% chance of tomorrow being sunny, and a 33% chance of tomorrow being cloudy.  A markov chain is a fancy way of formalizing transitions between things.
 
@@ -335,7 +337,7 @@ After we do this, we keep the best songs, generate new songs to add "fresh blood
 
 Here is a diagram of this:
 
-![ga flow](../images/midi-music/ga-flow.png)
+![ga flow](http://www.vikparuchuri.com/images/midi-music/ga-flow.png)
 
 We repeat our genetic algorithm a few times, and we end up with finished songs.
 
@@ -344,7 +346,7 @@ Results
 
 When we run the algorithm over 2 generations with 100 songs per generation, we can process our output songs to visualize where they fall in relation to each other.  See the previous post for details, but this involves taking several audio features and decomposing them to two dimensions.
 
-![midi](../images/midi-music/midi_generated.png)
+![midi](http://www.vikparuchuri.com/images/midi-music/midi_generated.png)
 
 We can see that our generated music is very similar to classical music, although it appears to have its own distinct characteristics.
 
