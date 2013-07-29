@@ -89,10 +89,21 @@ Below are some sample tracks created using the algorithm.  If the player below d
           cssSelectorAncestor: "#jp_container_2"
         },
         [
-          {
-            title: "Heavy",
-            oga:"http://www.vikparuchuri.com/downloads/code/07-25-2013-223535.ogg"
-          }
+             {'oga': '../downloads/code/midi-music/Horn.ogg', 'title': 'Horn'},
+             {'oga': '../downloads/code/midi-music/Atmosphere.ogg', 'title': 'Atmosphere'},
+             {'oga': '../downloads/code/midi-music/Workloads.ogg', 'title': 'Workloads'},
+             {'oga': '../downloads/code/midi-music/Epic.ogg', 'title': 'Epic'},
+             {'oga': '../downloads/code/midi-music/Anthem.ogg', 'title': 'Anthem'},
+             {'oga': '../downloads/code/midi-music/Melancholy.ogg', 'title': 'Melancholy'},
+             {'oga': '../downloads/code/midi-music/Choir.ogg', 'title': 'Choir'},
+             {'oga': '../downloads/code/midi-music/Danger.ogg', 'title': 'Danger'},
+             {'oga': '../downloads/code/midi-music/New_Age.ogg', 'title': 'New_Age'},
+             {'oga': '../downloads/code/midi-music/Loans.ogg', 'title': 'Loans'},
+             {'oga': '../downloads/code/midi-music/Trouble.ogg', 'title': 'Trouble'},
+             {'oga': '../downloads/code/midi-music/Synth.ogg', 'title': 'Synth'},
+             {'oga': '../downloads/code/midi-music/Uncertainties.ogg',
+              'title': 'Uncertainties'},
+             {'oga': '../downloads/code/midi-music/Xylophone.ogg', 'title': 'Xylophone'}
         ],
         {
           playlistOptions: {
@@ -183,7 +194,7 @@ We will exploit [markov chains](https://en.wikipedia.org/wiki/Markov_chain) to m
 
 Creating a markov chain:
 
-![bytes](../images/midi-music/markov-chain.png)
+![markov chain](../images/midi-music/markov-chain.png)
 
 If today was sunny, there would be a 66% chance of tomorrow being sunny, and a 33% chance of tomorrow being cloudy.  A markov chain is a fancy way of formalizing transitions between things.
 
@@ -324,16 +335,18 @@ After we do this, we keep the best songs, generate new songs to add "fresh blood
 
 Here is a diagram of this:
 
-![bytes](../images/midi-music/ga-flow.png)
+![ga flow](../images/midi-music/ga-flow.png)
 
 We repeat our genetic algorithm a few times, and we end up with finished songs.
 
 Results
 ----------------------------------------------------------------
 
-When we run the algorithm over 2 generations with 100 songs per generation, we get the following:
+When we run the algorithm over 2 generations with 100 songs per generation, we can process our output songs to visualize where they fall in relation to each other.  See the previous post for details, but this involves taking several audio features and decomposing them to two dimensions.
 
+![midi](../images/midi-music/midi_generated.png)
 
+We can see that our generated music is very similar to classical music, although it appears to have its own distinct characteristics.
 
 Extending this
 -----------------------------------------------------------------
@@ -350,5 +363,7 @@ Potential improvements:
 * Explicitly avoid certain note patterns.
 * Algorithm to automatically pick which instruments should be slotted together.
 * Algorithm to identify optimal remix candidates.
+* Add in vocal tracks using something like [espeak](https://help.ubuntu.com/community/TextToSpeech) to generate the voice and [pydub](http://pydub.com/) to mix them into the song.
+* Try the "remixing engine" from my previous post on this music to see what happens.
 
 I would love to hear any comments, suggestions, or feedback you have.
