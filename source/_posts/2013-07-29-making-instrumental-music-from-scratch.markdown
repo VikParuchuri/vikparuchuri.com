@@ -130,4 +130,72 @@ You can probably immediately see how this is applicable to music.  If we can fig
 Learning probabilities for the markov chains
 ----------------------------------------------------
 
-In order to learn the probabilities for the markov chains, we first have to get a lot of midi music. fddf
+In order to learn the probabilities for the markov chains, we first have to get a lot of midi music.  As I mentioned earlier, we will get this music from midi world and midi archive.  Midi world has all classical tracks, and midi archive has "modern" tracks that are all over the place, but are not really classical.  We will get these by [web scraping](https://github.com/VikParuchuri/evolve-music/blob/master/crawler/crawler/spiders/scrape.py).
+
+We can then read in the tracks after we download them.  Once we read them in, we will have tracks like this:
+
+```
+midi.ProgramChangeEvent(tick=0, channel=0, data=[0])
+midi.NoteOffEvent(tick=20, channel=9, data=[42, 64]),
+midi.NoteOnEvent(tick=28, channel=9, data=[38, 90]),
+midi.NoteOnEvent(tick=0, channel=9, data=[42, 90]),
+midi.NoteOffEvent(tick=20, channel=9, data=[38, 64]),
+midi.NoteOffEvent(tick=0, channel=9, data=[42, 64]),
+midi.NoteOnEvent(tick=28, channel=9, data=[42, 70]),
+midi.NoteOffEvent(tick=20, channel=9, data=[35, 64]),
+midi.NoteOffEvent(tick=0, channel=9, data=[42, 64]),
+```
+
+We can easily generate three time series from this, for tick, pitch, and velocity, along with a constant value for instrument (from ProgramChangeEvent).  So, we can create the time series `pitch = [42,38,42,38,42,42,35,42]`, `velocity = [64,90,90,64,64,70,64,64]`, and `ticks = [20,28,0,20,0,28,20,0]` for instrument 0, which is the Acoustic Grand Piano.
+
+If we do this for the ~ 500 tracks that can be downloaded, we can build up very long time series for each instrument.  Then, just like we did with our weather data, we can create markov chains defining the transitions for ticks, pitch, and velocity.  So, if we are playing a note with a velocity of 90, we would have a 50% chance of the next note having a velocity of 90, and a 50% chance of the next note having a velocity of 64.  We segment this by instrument because we would expect different pitch and velocity combinations to be ideal for different instruments (ie, you wouldn't play a flute and a guitar the same way).
+
+We can also do the same thing for the tempo tracks, where we can get a time series for ticks and a time series for mpqn (microseconds per quarter note, which defines the speed of the music).
+
+Generating tracks with Markov chains
+----------------------------------------------------
+
+Once we learn the markov chains for each time series, we can use random number generators to make sequences of notes and tempos.
+
+To make a track, we have to generate values for ticks, velocity, and pitch.  So, for each of our tick, velocity, and pitch audio chains, we pick a random number, and then initialize our chain with that number (just like we started off with today is sunny earlier).  Then, we can use a random number generator to pick the next value, and so on, until we reach our designated length.  In this case, we start all our tracks off at 2000 ticks in length, so we first generate the tick sequence, make sure all the ticks add up to 2000, and then generate the other two to be the same length.
+
+<div>
+<table border="1" class="dataframe table display">
+<thead>
+<tr><th>index</th><th>tick</th><th>pitch</th><th>velocity</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>0</td><td>42</td><td>90</td></tr>
+<tr><td>1</td><td>20</td><td>38</td><td>64</td></tr>
+<tr><td>2</td><td>0</td><td>42</td><td>64/td></tr>
+<tr><td>3</td><td>28</td><td>35</td><td>70</td></tr>
+<tr><td>4</td><td>20</td><td>42</td><td>64</td></tr>
+<tr><td>5</td><td>0</td><td>35</td><td>64</td></tr>
+<tr><td>6</td><td>28</td><td>42</td><td>90</td></tr>
+<tr><td>7</td><td>0</td><td>42</td><td>90</td></tr>
+<tr><td>8</td><td>20</td><td>42</td><td>64</td></tr>
+</tbody>
+</table>
+
+  <script>
+    $('.table').dataTable({
+        "bPaginate": false,
+        "bLengthChange": true,
+        "bSort": false,
+        "bStateSave": true,
+        "sScrollY": 300,
+        "sScrollX": 500,
+        "aLengthMenu": [[50, 100, -1], [50, 100, "All"]],
+        "iDisplayLength": 6,
+    });
+    </script><br/>
+</div>
+
+Given our notes from the previous section, the above are the potential time series we can get from tick, pitch, and velocity using our markov chains and a random number generator.  Note how we can only transition between notes that existed in the original data and had the right transitions in the original data.
+
+We can do the same for our tempo tracks to generate our SetTempoEvents.
+
+Combining tracks and assessing quality
+---------------------------------------------------------
+
+Once we have a pool 
