@@ -36,8 +36,8 @@ I got instrumental tracks from [midi world](http://www.midiworld.com/) and [midi
 Below are some sample tracks created using the algorithm.  If the player below does not show up you may have to visit [my site](http://www.vikparuchuri.com/blog/making-instrumental-music-from-scratch#player) to see it.
 
 <div>
-    <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-    <div id="jp_container_1">
+    <div id="jquery_jplayer_2" class="jp-jplayer"></div>
+    <div id="jp_container_2">
       <div class="jp-playlist">
         <ul>
           <li></li>
@@ -85,8 +85,8 @@ Below are some sample tracks created using the algorithm.  If the player below d
     $(document).ready(function(){
 
         var myPlaylist = new jPlayerPlaylist({
-          jPlayer: "#jquery_jplayer_1",
-          cssSelectorAncestor: "#jp_container_1"
+          jPlayer: "#jquery_jplayer_2",
+          cssSelectorAncestor: "#jp_container_2"
         },
         [
           {
