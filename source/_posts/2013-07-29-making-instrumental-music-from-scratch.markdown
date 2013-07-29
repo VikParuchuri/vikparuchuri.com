@@ -27,9 +27,9 @@ Now that we know that something like MIDI exists, we can define our algorithm li
 * Judge the quality of the sound
 * Now that we know which songs are good and which songs are bad, remove the bad songs, generate new songs, and repeat
 
-One important thing to note is that we can analyze (in fact, we have to analyze) a lot of songs to calibrate the process by which we do the instrumental track generation, the first step.  So we can generate tracks that take on the characteristics of any genre we want.  We are also indebted to the human composers and artists who created the music in the first place.  This algorithm is less to replace them than to explore music creation in my own way.
+One important thing to note is that we can analyze (in fact, we have to analyze) a lot of songs to calibrate the process by which we do the instrumental track generation, the first step.  So we can generate tracks that take on the characteristics of any genre we want.  We are also indebted to the human composers and artists who created the music in the first place.  This algorithm is less to replace them than to explore music creation in my own way.  All of the code for the algorithm is available [here](https://github.com/VikParuchuri/evolve-music).
 
-I got the instrumental tracks from [midi world](http://www.midiworld.com/) and [midi archive](http://midi-archive.com/).  A lot of the free midi sites use sessions to discourage scraping, and these were the only two I could find that do not have such provisions.
+I got instrumental tracks from [midi world](http://www.midiworld.com/) and [midi archive](http://midi-archive.com/).  A lot of the free midi sites use sessions to discourage scraping, and these were the only two I could find that do not have such provisions.
 
 <a name="player"></a>
 
@@ -168,13 +168,7 @@ The tempo track defines the [microseconds per quarter note](http://nokturnal.pl/
 
 * SetTempoEvent - Sets the tempo of the instrumental tracks in a song.  `tick` is the same as in an instrumental track. 
 
-We can combine one or more (I think more is possible, although I always use one) tempo tracks with multiple instrumental tracks to make a song.
-
-We can then write this song to a file.  The file will be in the byte format that we discussed earlier.  You can directly edit the file using a hex editor like [bless](http://home.gna.org/bless/) if you really want to.
-
-Otherwise, you can convert the file into a sound file by using [fluidsynth](http://sourceforge.net/apps/trac/fluidsynth/) along with a [soundfont](http://sourceforge.net/apps/trac/fluidsynth/wiki/SoundFont).  Fluidsynth will turn the numbers for pitch, velocity, and instrument into notes, and write the result to a [wav](http://en.wikipedia.org/wiki/WAV) file.
-
-Once we have our file converted, we can listen to it directly, or use tools like [oggenc](http://linux.die.net/man/1/oggenc) to convert the wav to another, smaller, file format.
+We can combine one or more (I think more is possible, although I always use one) tempo tracks with multiple instrumental tracks to make a song.  The song can then be written to a file.  The file will be in the byte format that we discussed earlier.  You can directly edit the file using a hex editor like [bless](http://home.gna.org/bless/) if you really want to.  Otherwise, you can convert the file into a sound file by using [fluidsynth](http://sourceforge.net/apps/trac/fluidsynth/) along with a [soundfont](http://sourceforge.net/apps/trac/fluidsynth/wiki/SoundFont).  Fluidsynth will turn the numbers for pitch, velocity, and instrument into notes, and write the result to a [wav](http://en.wikipedia.org/wiki/WAV) file.  Once we have our file converted, we can listen to it directly, or use tools like [oggenc](http://linux.die.net/man/1/oggenc) to convert the wav to another, smaller, file format.
 
 Okay, now what?
 --------------------------------------
@@ -185,9 +179,9 @@ Here is a rough diagram of our algorithm:
 
 ![algo flow](../images/midi-music/algo-flow.png)
 
-We will exploit [markov chains](https://en.wikipedia.org/wiki/Markov_chain) to make our basic tracks.  Markov chains essentially give us the probability of one state changing to another state.  For example, let's say that for the past 5 days, the weather was `Sunny, Cloudy, Sunny, Sunny, Sunny`.  So, after it was sunny, it was cloudy on one day, and sunny on two other days.  After it was cloudy, it was sunny on one day.  So, our system has two states, sunny and cloudy, and it transitions between those states with a certain probability.
+We will exploit [markov chains](https://en.wikipedia.org/wiki/Markov_chain) to make our basic tracks.  Markov chains are defined with the probability of one state changing to another state.  For example, let's say that for the past 5 days, the weather was `Sunny, Cloudy, Sunny, Sunny, Sunny`.  So, after it was sunny, it was cloudy on one day, and sunny on two other days.  After it was cloudy, it was sunny on one day.  So, our system has two states, sunny and cloudy, and it transitions between those states with a certain probability.
 
-We can create a markov chain:
+Creating a markov chain:
 
 ![bytes](../images/midi-music/markov-chain.png)
 
@@ -211,12 +205,12 @@ Weather = cloudy
 
 Our predictions for the next 5 days would be `[cloudy, sunny, sunny, sunny, cloudy]`.  If we went through the Markov chain a second time, we would get a completely different set of predictions.  However, both sets of predictions would be based on past observations, and thus have an element of logic to them.
 
-You can probably immediately see how this is applicable to music.  If we can figure out how to make an appropriate chain, we can use a random number generator to automatically make tracks.
+You can probably immediately see how this is applicable to music.  If we can figure out how to make an appropriate chain, we can use a random number generator to automatically make tracks by stringing notes together.
 
 Learning probabilities for the markov chains
 ----------------------------------------------------
 
-In order to learn the probabilities for the markov chains, we first have to get a lot of midi music.  As I mentioned earlier, we will get this music from midi world and midi archive.  Midi world has all classical tracks, and midi archive has "modern" tracks that are all over the place, but are not really classical.  We will get these by [web scraping](https://github.com/VikParuchuri/evolve-music/blob/master/crawler/crawler/spiders/scrape.py).
+In order to learn the probabilities for the markov chains, we first have to get a lot of midi music.  As I mentioned earlier, we will get this music from midi world and midi archive.  Midi world has all classical tracks, and midi archive has "modern" tracks that are all over the place, but are not really classical.  We will get these by [web scraping](http://en.wikipedia.org/wiki/Web_scraping), using [this code](https://github.com/VikParuchuri/evolve-music/blob/master/crawler/crawler/spiders/scrape.py).
 
 We can then read in the songs after we download them.  Once we read the songs in, each song will have multiple instrumental tracks that list events like this:
 
@@ -253,7 +247,7 @@ To make an instrumental track, we have to generate values for ticks, velocity, a
 <tbody>
 <tr><td>0</td><td>0</td><td>42</td><td>90</td></tr>
 <tr><td>1</td><td>20</td><td>38</td><td>64</td></tr>
-<tr><td>2</td><td>0</td><td>42</td><td>64/td></tr>
+<tr><td>2</td><td>0</td><td>42</td><td>64</td></tr>
 <tr><td>3</td><td>28</td><td>35</td><td>70</td></tr>
 <tr><td>4</td><td>20</td><td>42</td><td>64</td></tr>
 <tr><td>5</td><td>0</td><td>35</td><td>64</td></tr>
@@ -274,10 +268,10 @@ To make an instrumental track, we have to generate values for ticks, velocity, a
         "aLengthMenu": [[50, 100, -1], [50, 100, "All"]],
         "iDisplayLength": 6,
     });
-    </script><br/>
+    </script><br/><br/>
 </div>
 
-Given our notes from the previous section, the above are the potential time series we can get from tick, pitch, and velocity using our markov chains and a random number generator.  Note how we can only transition between notes that existed in the original data and had the right transitions in the original data.
+Given our notes from the previous section, the above is one potential time series we can get from tick, pitch, and velocity using our markov chains and a random number generator.  Note how we can only transition between notes that existed in the original data and had the right transitions in the original data.
 
 We can do the same for our tempo tracks to generate our SetTempoEvents.
 
@@ -288,8 +282,8 @@ Once we have a pool of tracks and a pool of tempos, we can combine them to make 
 
 We set a number of songs that we want, then we pick a random tempo for each song, and we start to pick tracks to fill out the songs.  We follow some rules:
 
-* The number of instrumental tracks in the song are randomly chosen, but do not exceed 8.
-* We try to select varied instruments for the song (ie, we don't pick a viola, a violin, and a cello as the sole instruments in a song).
+* The number of instrumental tracks in each song is randomly chosen, but does not exceed 8.
+* We try to select varied instruments for each song (ie, we don't pick a viola, a violin, and a cello as the sole instruments in a song).
 
 Using this process, we create 100 songs.  Now what?  We definitely want some way to figure out if the songs are good or not.  Enter the musical quality assessment tool (MQAT) from my [previous post](http://www.vikparuchuri.com/blog/evolve-your-own-beats-automatically-generating-music).  The MQAT will tell us if a song is good or not by comparing it to examples of good songs.
 
@@ -354,5 +348,7 @@ Potential improvements:
 * Similar to above, have layered Markov chains for meta-features of the music, like period and instrument changes.
 * Define explicitly which instruments sound good with which other instruments.
 * Explicitly avoid certain note patterns.
+* Algorithm to automatically pick which instruments should be slotted together.
+* Algorithm to identify optimal remix candidates.
 
 I would love to hear any comments, suggestions, or feedback you have.

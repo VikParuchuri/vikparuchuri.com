@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448"
+   height="850.35999"
+   id="svg9179"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="algo-flow.svg"
+   inkscape:export-filename="/home/vik/vikparuchuri/vikparuchuri.com/source/images/evolve-beats/algo-flow.png"
+   inkscape:export-xdpi="93.333336"
+   inkscape:export-ydpi="93.333336">
+  <defs
+     id="defs9181">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible">
+      <path
+         id="path3790"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="849.05823"
+     inkscape:cy="612.08153"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1855"
+     inkscape:window-height="1176"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata9184">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-202.00218)">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect9187"
+       width="404.28571"
+       height="97.14286"
+       x="169.90439"
+       y="240.93361" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot9189"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       transform="translate(27.762085,210)"><flowRegion
+         id="flowRegion9191"><rect
+           id="rect9193"
+           width="370"
+           height="65.714294"
+           x="188.57143"
+           y="48.076469"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold" /></flowRegion><flowPara
+         id="flowPara9195">Generate Tracks</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 372.04724,356.6479 c 0,82.85714 0,82.85714 0,82.85714"
+       id="path9199"
+       inkscape:connector-curvature="0" />
+    <rect
+       y="465.21933"
+       x="169.90439"
+       height="97.14286"
+       width="404.28571"
+       id="rect9893"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <flowRoot
+       transform="translate(66.248413,434.28571)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       id="flowRoot9895"
+       xml:space="preserve"><flowRegion
+         id="flowRegion9897"><rect
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold"
+           y="48.076469"
+           x="188.57143"
+           height="65.714294"
+           width="370"
+           id="rect9899" /></flowRegion><flowPara
+         id="flowPara9901">Make Songs</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 372.04724,579.50504 c 0,81.42857 0,81.42857 0,81.42857"
+       id="path9903"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect10087"
+       width="404.28571"
+       height="97.14286"
+       x="169.90439"
+       y="682.36218" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot10089"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       transform="translate(33.943726,651.42857)"><flowRegion
+         id="flowRegion10091"><rect
+           id="rect10093"
+           width="370"
+           height="65.714294"
+           x="188.57143"
+           y="48.076469"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold" /></flowRegion><flowPara
+         id="flowPara10095">Evaluate Songs</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 372.04724,796.6479 c 0,68.57143 0,70 0,70"
+       id="path10097"
+       inkscape:connector-curvature="0" />
+    <rect
+       y="882.36218"
+       x="169.90439"
+       height="97.14286"
+       width="404.28571"
+       id="rect10281"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <flowRoot
+       transform="translate(38.562866,851.42857)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       id="flowRoot10283"
+       xml:space="preserve"><flowRegion
+         id="flowRegion10285"><rect
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold"
+           y="48.076469"
+           x="188.57143"
+           height="65.714294"
+           width="370"
+           id="rect10287" /></flowRegion><flowPara
+         id="flowPara10289">Improve Songs</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot10291"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simpsonfont;-inkscape-font-specification:Simpsonfont Bold"><flowRegion
+         id="flowRegion10293"><rect
+           id="rect10295"
+           width="248.57143"
+           height="395.71429"
+           x="685.71429"
+           y="543.79077" /></flowRegion><flowPara
+         id="flowPara10297"></flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot10299"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Simpsonfont;-inkscape-font-specification:Simpsonfont Bold"><flowRegion
+         id="flowRegion10301"><rect
+           id="rect10303"
+           width="701.42859"
+           height="1127.1428"
+           x="-44.285713"
+           y="-127.63782" /></flowRegion><flowPara
+         id="flowPara10305"></flowPara></flowRoot>  </g>
+</svg>
