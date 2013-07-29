@@ -29,6 +29,8 @@ Now that we know that something like MIDI exists, we can define our algorithm li
 
 One important thing to note is that we can analyze (in fact, we have to analyze) a lot of songs to calibrate the process by which we do the instrumental track generation, the first step.  So we can generate tracks that take on the characteristics of any genre we want.  We are also indebted to the human composers and artists who created the music in the first place.  In my case, I got the instrumental tracks from [midi world](http://www.midiworld.com/) and [midi archive](http://midi-archive.com/).  A lot of the free midi sites use sessions to discourage scraping, and these were the only two I could find that do not have such provisions.
 
+<!--more-->
+
 MIDI
 ------------------------------------
 
@@ -99,6 +101,10 @@ Okay, now what?
 
 MIDI is critical to what we want to do, and once we have the principles down, we can move to our next phase.  The next phase is to define an algorithm to automatically create instrumental and tempo tracks.
 
+Here is a rough diagram of our algorithm:
+
+![algo flow](../images/midi-music/algo-flow.png)
+
 We will exploit [markov chains](https://en.wikipedia.org/wiki/Markov_chain) to make our basic tracks.  Markov chains essentially give us the probability of one state changing to another state.  For example, let's say that for the past 5 days, the weather was `Sunny, Cloudy, Sunny, Sunny, Sunny`.  So, after it was sunny, it was cloudy on one day, and sunny on two other days.  After it was cloudy, it was sunny on one day.  So, our system has two states, sunny and cloudy, and it transitions between those states with a certain probability.
 
 We can create a markov chain:
@@ -123,9 +129,9 @@ Iteration 5.  Random number = 70.
 Weather = cloudy
 ```
 
-Our predictions for the next 5 days would be `[cloudy, sunny, sunny, sunny, cloudy]`.  If we went through the Markov chain a second time, we would get a completely different chain.  However, both chains would be based on past observations, and thus have an element of logic to them.
+Our predictions for the next 5 days would be `[cloudy, sunny, sunny, sunny, cloudy]`.  If we went through the Markov chain a second time, we would get a completely different set of predictions.  However, both sets of predictions would be based on past observations, and thus have an element of logic to them.
 
-You can probably immediately see how this is applicable to music.  If we can figure out an appropriate chain, we can use a random number generator to automatically make tracks.
+You can probably immediately see how this is applicable to music.  If we can figure out how to make an appropriate chain, we can use a random number generator to automatically make tracks.
 
 Learning probabilities for the markov chains
 ----------------------------------------------------
@@ -157,7 +163,7 @@ Generating tracks with Markov chains
 
 Once we learn the markov chains for each time series, we can use random number generators to make sequences of notes and tempos.
 
-To make a track, we have to generate values for ticks, velocity, and pitch.  So, for each of our tick, velocity, and pitch audio chains, we pick a random number, and then initialize our chain with that number (just like we started off with today is sunny earlier).  Then, we can use a random number generator to pick the next value, and so on, until we reach our designated length.  In this case, we start all our tracks off at 2000 ticks in length, so we first generate the tick sequence, make sure all the ticks add up to 2000, and then generate the other two to be the same length.
+To make a track, we have to generate values for ticks, velocity, and pitch.  So, for each of our tick, velocity, and pitch audio chains, we pick a random number, and then initialize our chain with that number (just like we started off with today is sunny earlier).  Then, we can use a random number generator to pick the next value, and so on, until we reach our designated length.  In this case, we want all of our tracks to be the same number of ticks in length, so we first generate the tick sequence, make sure all the ticks add up to a predetermined number (let's say 2000), and then generate the other two sequences to be the same length.
 
 <div>
 <table border="1" class="dataframe table display">
@@ -195,7 +201,69 @@ Given our notes from the previous section, the above are the potential time seri
 
 We can do the same for our tempo tracks to generate our SetTempoEvents.
 
-Combining tracks and assessing quality
+Combining tracks and evaluating quality
 ---------------------------------------------------------
 
-Once we have a pool 
+Once we have a pool of tracks and a pool of tempos, we can combine them to make songs.
+
+We set a number of songs that we want, then we pick a random tempo, and we start to pick tracks to fill out the song.  We follow some rules:
+
+* The number of instrumental tracks in the song are randomly chosen, but do not exceed 8.
+* We try to select varied instruments for the song (ie, we don't pick a viola, a violin, and a cello as the sole instruments in a song).
+
+Using this process, we create 100 songs.  Now what?  We definitely want some way to figure out if the songs are good or not.  Enter the musical quality assessment tool (MQAT) from my [previous post](http://www.vikparuchuri.com/blog/evolve-your-own-beats-automatically-generating-music).  The MQAT will tell us if a song is good or not.
+
+In order to do this, we must first convert our song into sound from MIDI.  We could make an algorithm to judge the quality of the MIDI directly, but ultimately the midi file doesn't matter, the sound it generates does.  We could try to tie the tempo to the instrumental tracks and figure out how they affect each other, but it has already been done for us by tools that convert midi files into wav (sound) files.
+
+We convert our midi file into sound using Fluidsynth.  I talked about extracting musical features in my previous post, but I will talk about it a bit here.  Sound is just a wave, and we can measure that wave at various points to get intensities.
+
+![10 seconds of song](http://www.vikparuchuri.com/images/evolve-beats/song_10s.png)
+
+The above is an example of 10 seconds of a song.  The blue and green lines represent different audio channels.  Another way to look at this would be to look at it as a sequence of numbers:
+
+{%math%}
+\begin{bmatrix}
+2.35185598e-05 & -1.04448336e-05\\
+-3.46823663e-06 & -3.73403673e-05\\
+-2.69492170e-06 & -1.44758296e-05\\
+9.47549870e-06 & 2.09419904e-05\\
+-2.70856035e-05 & 3.44590421e-06\\
+-3.01332675e-05 & 2.74870854e-05\\
+-1.44664727e-06 & 7.49632018e-05\\
+-3.80197125e-05 & 2.56412422e-05\\
+-5.61815832e-05 & -1.29676855e-05\\
+-4.73532873e-06 & 3.69851950e-05
+
+\end{bmatrix}
+{%endmath%}
+
+From those numbers, we can describe the track.
+
+Luckily, we already have sample "good" tracks, which are our midi files that we downloaded.  We can compare the songs that we generate to these songs using our MQAT.
+
+We pick the 25 best songs and keep them.
+
+Semi-Genetic Component
+----------------------------------------------------------------
+
+We then borrow a page from biology and use [genetic algorithms](http://en.wikipedia.org/wiki/Genetic_algorithm) (sort of).  Genetic algorithms let us define a population, and then define mutations to that population.  You also define something that measures "fitness" (how good or bad each member of the population is).  In our case, our population is our set of songs.  We can "mutate" the songs by remixing two songs together (swapping tracks between them), or by adding two songs together to make one larger song.
+
+After we do this, we keep the best songs, generate new songs to add "fresh blood" to the population, and try again with a new "generation."
+
+Here is a diagram of this:
+
+![bytes](../images/midi-music/ga-flow.png)
+
+We repeat our genetic algorithm a few times, and we end up with songs!  Due to the track combination method, each successive generation will be longer than the one before it.
+
+Extending this
+-----------------------------------------------------------------
+
+All of the code for this is available [here](https://github.com/VikParuchuri/evolve-music).
+
+Potential improvements:
+
+* Have an additional "harmonizing" layer that tries to ensure that songs have good harmony.
+* Similar to above, have layered Markov chains for meta-features of the music, like period and instrument changes.
+* Define explicitly which instruments sound good with which other instruments.
+* Explictly avoid certain note patterns.
