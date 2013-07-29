@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Making instrumental music from scratch"
+title: "Programming instrumental music from scratch"
 date: 2013-07-29 15:34
 comments: true
 categories:
