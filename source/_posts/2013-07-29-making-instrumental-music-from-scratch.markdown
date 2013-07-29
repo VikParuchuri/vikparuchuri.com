@@ -16,7 +16,7 @@ I recently posted about [automatically making music](http://www.vikparuchuri.com
 
 Maybe I'm being a control freak, but it would be nice to have complete control over exactly what is being played and how it is being played, rather than making a "remixing engine" (although the remixing engine is cool).  It would also kind of fulfill my on-and-off ambition of playing the guitar (I'm really bad at it).
 
-Enter the [MIDI format](http://en.wikipedia.org/wiki/MIDI).  The MIDI format lets you specify pitch, velocity, and instrument.  You can specify different instruments in different tracks, and then combine the tracks to make a song.  You can write the song into what is basically a text file, after which you can covert it to sound (I'll describe this process a bit more further down).  Using the power of MIDI, we can quickly define music from the ground up using a computer, and then play it back.
+Enter the [MIDI format](http://en.wikipedia.org/wiki/MIDI).  The MIDI format lets you specify pitch, velocity, and instrument.  You can specify different instruments in different tracks, and then combine the tracks to make a song.  You can write the song into a file, after which you can covert it to sound (I'll describe this process a bit more further down).  Using the power of MIDI, we can quickly define music from the ground up using a computer, and then play it back.
 
 Now that we know that something like MIDI exists, we can define our algorithm like this:
 
@@ -27,7 +27,87 @@ Now that we know that something like MIDI exists, we can define our algorithm li
 * Judge the quality of the sound
 * Now that we know which songs are good and which songs are bad, remove the bad songs, generate new songs, and repeat
 
-One important thing to note is that we can analyze (in fact, we have to analyze) a lot of songs to calibrate the process by which we do the instrumental track generation, the first step.  So we can generate tracks that take on the characteristics of any genre we want.  We are also indebted to the human composers and artists who created the music in the first place.  In my case, I got the instrumental tracks from [midi world](http://www.midiworld.com/) and [midi archive](http://midi-archive.com/).  A lot of the free midi sites use sessions to discourage scraping, and these were the only two I could find that do not have such provisions.
+One important thing to note is that we can analyze (in fact, we have to analyze) a lot of songs to calibrate the process by which we do the instrumental track generation, the first step.  So we can generate tracks that take on the characteristics of any genre we want.  We are also indebted to the human composers and artists who created the music in the first place.  This algorithm is less to replace them than to explore music creation in my own way.
+
+I got the instrumental tracks from [midi world](http://www.midiworld.com/) and [midi archive](http://midi-archive.com/).  A lot of the free midi sites use sessions to discourage scraping, and these were the only two I could find that do not have such provisions.
+
+<a name="player"></a>
+
+Below are some sample tracks created using the algorithm.  If the player below does not show up you may have to visit [my site](http://www.vikparuchuri.com/blog/making-instrumental-music-from-scratch#player) to see it.
+
+<div>
+    <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+    <div id="jp_container_1">
+      <div class="jp-playlist">
+        <ul>
+          <li></li>
+        </ul>
+      </div>
+       <div class="jp-type-single">
+      <div class="jp-gui jp-interface">
+        <ul class="jp-controls">
+          <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+          <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+          <li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+          <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
+          <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
+          <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
+        </ul>
+        <div class="jp-progress">
+          <div class="jp-seek-bar">
+            <div class="jp-play-bar"></div>
+          </div>
+        </div>
+        <div class="jp-volume-bar">
+          <div class="jp-volume-bar-value"></div>
+        </div>
+        <div class="jp-time-holder">
+          <div class="jp-current-time"></div>
+          <div class="jp-duration"></div>
+          <ul class="jp-toggles">
+            <li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
+            <li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="jp-title">
+        <ul>
+          <li>Bubble</li>
+        </ul>
+      </div>
+      <div class="jp-no-solution">
+        <span>Update Required</span>
+        To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+      </div>
+    </div>
+    </div>
+      <script type="text/javascript">
+    $(document).ready(function(){
+
+        var myPlaylist = new jPlayerPlaylist({
+          jPlayer: "#jquery_jplayer_1",
+          cssSelectorAncestor: "#jp_container_1"
+        },
+        [
+          {
+            title: "Heavy",
+            oga:"http://www.vikparuchuri.com/downloads/code/07-25-2013-223535.ogg"
+          }
+        ],
+        {
+          playlistOptions: {
+            enableRemoveControls: true
+          },
+          swfPath: "/javascripts",
+          supplied: "oga",
+          smoothPlayBar: true,
+          keyEnabled: true,
+          audioFullScreen: true
+        });
+        });
+  </script>
+</div>
+
 
 <!--more-->
 
@@ -64,7 +144,7 @@ Python midi allows us to create instrumental tracks:
     midi.EndOfTrackEvent(tick=0, data=[])]
 ```
 
-A track is just a list of events.  The key events in a normal track are:
+A track is just a list of events, in order.  Each event affects the music in some way.  The important events in an instrumental track are:
 
 * ProgramChangeEvent - defines a change in instrument.  `data` defines which instrument is to be played, using [these codes](http://en.wikipedia.org/wiki/General_MIDI).
 * NoteOnEvent - Defines a note that is to be played.  `tick` is how long to wait from the previous note to starting to play the current note.  `data` is made up of pitch and velocity.  Pitch controls the pitch of the note, and velocity is volume.  See [this](http://stackoverflow.com/questions/2038313/midi-ticks-to-actual-playback-seconds-midi-music) for a bit more info about ticks.
@@ -84,7 +164,7 @@ We can also make tempo tracks:
   midi.EndOfTrackEvent(tick=0, data=[])]
 ```
 
-The tempo track defines the [microseconds per quarter note](http://nokturnal.pl/home/atari/midi_delta) and the beats per minute of the song, which essentially governs the pacing.
+The tempo track defines the [microseconds per quarter note](http://nokturnal.pl/home/atari/midi_delta) and the beats per minute of the song, which govern the pacing.
 
 * SetTempoEvent - Sets the tempo of the instrumental tracks in a song.  `tick` is the same as in an instrumental track. 
 
@@ -92,9 +172,9 @@ We can combine one or more (I think more is possible, although I always use one)
 
 We can then write this song to a file.  The file will be in the byte format that we discussed earlier.  You can directly edit the file using a hex editor like [bless](http://home.gna.org/bless/) if you really want to.
 
-Otherwise, you can convert the file into a sound file by using [fluidsynth](http://sourceforge.net/apps/trac/fluidsynth/) along with a [soundfont](http://sourceforge.net/apps/trac/fluidsynth/wiki/SoundFont).  Fluidsynth will turn the numbers for pitch, velocity, and instrument into notes.
+Otherwise, you can convert the file into a sound file by using [fluidsynth](http://sourceforge.net/apps/trac/fluidsynth/) along with a [soundfont](http://sourceforge.net/apps/trac/fluidsynth/wiki/SoundFont).  Fluidsynth will turn the numbers for pitch, velocity, and instrument into notes, and write the result to a [wav](http://en.wikipedia.org/wiki/WAV) file.
 
-Once we have our file converted (it will be in .wav format), we can listen to it directly or use tools like [oggenc](http://linux.die.net/man/1/oggenc) to convert the wav to another, smaller, file format.
+Once we have our file converted, we can listen to it directly, or use tools like [oggenc](http://linux.die.net/man/1/oggenc) to convert the wav to another, smaller, file format.
 
 Okay, now what?
 --------------------------------------
@@ -261,9 +341,11 @@ Extending this
 
 All of the code for this is available [here](https://github.com/VikParuchuri/evolve-music).
 
+This algorithm is pretty decent, and can make reasonable-sounding music.  The main weaknesses are a lack of domain knowledge and specificity.  Knowing more about audio would help in this.
+
 Potential improvements:
 
 * Have an additional "harmonizing" layer that tries to ensure that songs have good harmony.
 * Similar to above, have layered Markov chains for meta-features of the music, like period and instrument changes.
 * Define explicitly which instruments sound good with which other instruments.
-* Explictly avoid certain note patterns.
+* Explicitly avoid certain note patterns.
