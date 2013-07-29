@@ -12,16 +12,16 @@ categories:
     - machine learning
 ---
 
-I recently posted about [automatically making music](http://www.vikparuchuri.com/blog/evolve-your-own-beats-automatically-generating-music).  The method that I used pulled out interesting sequences of music from existing songs and remixed them.  While this method worked reasonably well, it also didn't give me full control over the basics of the music; I wasn't actually specifying which instruments to use, or what notes to play.
+I recently posted about [automatically making music](http://www.vikparuchuri.com/blog/evolve-your-own-beats-automatically-generating-music).  The algorithm that I made pulled out interesting sequences of music from existing songs and remixed them.  While this worked reasonably well, it also didn't have full control over the basics of the music; it wasn't actually specifying which instruments to use, or what notes to play.
 
 Maybe I'm being a control freak, but it would be nice to have complete control over exactly what is being played and how it is being played, rather than making a "remixing engine" (although the remixing engine is cool).  It would also kind of fulfill my on-and-off ambition of playing the guitar (I'm really bad at it).
 
-Enter the [MIDI format](http://en.wikipedia.org/wiki/MIDI).  The MIDI format lets you specify pitch, velocity, and instrument.  You can specify different instruments in different tracks, and then combine the tracks to make a song.  You can write the song into a file, after which you can covert it to sound (I'll describe this process a bit more further down).  Using the power of MIDI, we can quickly define music from the ground up using a computer, and then play it back.
+Enter the [MIDI format](http://en.wikipedia.org/wiki/MIDI).  The MIDI format lets you specify pitch, velocity, and instrument.  You can specify different instruments in different tracks, and then combine the tracks to make a song.  You can write the song into a file, after which you can covert it to sound (I'll describe this process a bit more further down).  Using the power of MIDI, we can define music from the ground up using a computer, and then play it back.
 
 Now that we know that something like MIDI exists, we can define our algorithm like this:
 
 * Calibrate track generation by reading in a lot of MIDI tracks
-* Generate instrumental tracks
+* Generate instrumental tracks and tempo tracks
 * Combine the instrumental tracks to make songs
 * Convert the songs into sound
 * Judge the quality of the sound
@@ -122,7 +122,7 @@ Byte code is a step between how we see files and data, and how computers store f
 
 ![bytes](../images/midi-music/bytes.png)
 
-The midi format stores data in a similar format.
+The midi format stores data in a similar way:
 
 ![midi bytes](../images/midi-music/midi_bytes.png)
 
@@ -332,7 +332,14 @@ Here is a diagram of this:
 
 ![bytes](../images/midi-music/ga-flow.png)
 
-We repeat our genetic algorithm a few times, and we end up with finished songs.  Due to the track combination method, the songs in each successive generation will be longer than the songs in the one before it.
+We repeat our genetic algorithm a few times, and we end up with finished songs.
+
+Results
+----------------------------------------------------------------
+
+When we run the algorithm over 2 generations with 100 songs per generation, we get the following:
+
+
 
 Extending this
 -----------------------------------------------------------------
