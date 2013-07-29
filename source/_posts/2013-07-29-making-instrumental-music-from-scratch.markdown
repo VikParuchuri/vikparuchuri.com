@@ -20,11 +20,23 @@ Enter the [MIDI format](http://en.wikipedia.org/wiki/MIDI).  The MIDI format let
 
 Now that we know that something like MIDI exists, we can define our algorithm like this:
 
+* Calibrate track generation by reading in a lot of MIDI tracks
 * Generate instrumental tracks with various instruments
 * Combine the instrumental tracks to make songs
 * Convert the songs into sound
 * Judge the quality of the sound
 * Now that we know which songs are good and which songs are bad, remove the bad songs, generate new songs, and repeat
+
+One important thing to note is that we can analyze (in fact, we have to analyze) a lot of songs to calibrate the process by which we do the instrumental track generation, the first step.  So we can generate tracks that take on the characteristics of any genre we want.  We are also indebted to the human composers and artists who created the music in the first place.  In my case, I got the instrumental tracks from [midi world](http://www.midiworld.com/) and [midi archive](http://midi-archive.com/).  A lot of the free midi sites use sessions to discourage scraping, and these were the only two I could find that do not have such provisions.
+
+MIDI
+------------------------------------
+
+MIDI was standardized in 1983, and defines a protocol that allows instruments to communicate easily.  It enables different instruments to be placed on different channels.  It also encodes instrument notes by specifying pitch, velocity, and duration.  Tempo tracks define timing information, such as [MPQN](http://nokturnal.pl/home/atari/midi_delta) and BPM.
+
+
+
+
 
 
 
