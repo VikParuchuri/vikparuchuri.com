@@ -25,7 +25,20 @@ As strange as it sounds, even though sitting at my computer day after day, codin
 
 You may have heard of the [edX automated essay scoring algorithm](http://www.nytimes.com/2013/04/05/science/new-test-for-computers-grading-essays-at-college-level.html?pagewanted=all), and the backlash such as [this](http://mfeldstein.com/si-ways-the-edx-announcement-gets-automated-essay-grading-wrong/) and [this](http://www.hackeducation.com/2012/04/15/robot-essay-graders/) to it.  I created this algorithm, and as much as the criticism can sting (seriously, the guy who wrote the first backlash article I linked to decided to call it [first year graduate student level](https://news.ycombinator.com/item?id=5801692), which I guess is a compliment, because I never went to grad school), I think that there are valid points on both sides of the issue, and I will try to go through them in my discussion.
 
-What is automated essay scoring
+What is AES
 -------------------------------------------------------------
 
+To me, AES is the art of giving students automatic, iterative, and correct scores and feedback on their essays and constructed responses.  You may notice that I inserted several words that go beyond the narrow scope contained in the words "automated essay scoring".  I will go through each one in order:
 
+* Feedback - in many applications of AES, such as in a ["second reader"](http://www.mba.com/the-gmat/gmat-scores-and-score-reports/understanding-your-score-report.aspx) on the GMAT(more on what this is later), feedback isn't as critical.  But in all cases where a student will be learning based on how their response is scored, feedback is absolutely critical.
+* Iterative - One of the main advantages of AES is that students can submit their response as many times as they want, getting very quick feedback and scoring each time.
+* Constructed responses - Automated scoring isn't just about essays.  As the second Hewlett Foundation competition showed, computers can grade constructed responses as well.
+
+Now, maybe you don't agree with my definition, but at least we have a baseline idea of what it is for when we proceed through this article.
+
+The history of AES
+--------------------------------------------------------------
+
+Remarkably, the idea of AES first came about in 1966, and was advanced by [Ellis Page](http://en.wikipedia.org/wiki/Ellis_Batten_Page).  Remarkably, it only took him two years to come up with working software.  I can't even imagine how much ingenuity it must have taken to do what he did with the hardware/software limitations of the time.  His software, called Project Essay Grade (PEG), was later purchased by Measurement, Inc., which continues to develop it.
+
+Through the 1990s and 2000s, several other companies, such as [Educational Testing Service](http://www.ets.org/), [Pearson](http://www.pearson.com/), and [CTB/McGraw-Hill](http://www.ctb.com/ctb.com/control/main), started developing their own, competing, tools.
