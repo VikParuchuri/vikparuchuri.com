@@ -12,7 +12,9 @@ categories:
     - discern
 ---
 
-We've all written essays, often at the behest of a teacher.  We have occasionally even enjoyed researching the topic and composing the paper.  Sometimes, this process can take hours and hours of careful work. Given this, people react badly to the notion that their essays may be scored not by a human teacher, but [by machine](http://gettingsmart.com/2012/04/automated-essay-scoring-systems-demonstrate-effectiveness/).  A soulless (or maybe not, but that's a topic for another day) computer judging the quality of our carefully constructed phrases and metaphors is more than most writers can bear.  But is this what automated essay scoring (AES) is?  If not, what is it?  In this article, I aim to explore the field, and where it is going.
+We've all written essays, often at the behest of a teacher.  We sometimes enjoy researching the topic and composing the paper, a process that can take hours and hours of careful work. Given this, people react badly to the notion that their essays may be scored not by a human teacher, but [by machine](http://gettingsmart.com/2012/04/automated-essay-scoring-systems-demonstrate-effectiveness/).  A soulless (or maybe not, but that's a topic for another day) computer judging the quality of our carefully constructed phrases and metaphors is more than most writers can bear.  But is this what automated essay scoring (AES) is?  If not, what is it?  In this article, I aim to explore the field, and where it is going.
+
+<!--more-->
 
 Who am I?
 --------------------------------------------------------
@@ -51,7 +53,7 @@ How does AES work?
 
 Here is a rough diagram of automated essay scoring:
 
-![aes diagram](http://www.vikparuchuri.com/images/aes/aes-flow.png)
+![aes diagram](../images/aes/aes-flow.png)
 
 So, students first write some essays.  Teachers then grade these essays using whatever criteria they want.
 
@@ -119,12 +121,16 @@ We can then tell a machine learning [algorithm](http://en.wikipedia.org/wiki/Sup
 
 Once the algorithm is trained, then it can predict the scores for new essays, after we turn them into sequences of features.
 
+As you can see, what the algorithm is trying to do is mimic the human scorer.  The algowe display rithm is trying to figure out how an expert human scorer grades an essay, and then tries to apply that same criteria to other essays.  So, it isn't actually a machine judging essays on arbitrary criteria; its a machine trying to figure out the criteria a human uses to score essays, and then apply those criteria to grade other essays.
+
+More on this is beyond the scope here, but I recently did a [talk](http://vikparuchuri.com/blog/my-talk-at-boston-python/) about AES, and also have a [tutorial](http://vikparuchuri.com/blog/natural-language-processing-tutorial/) on my blog, both of which I highly encourage you to check out if you are interested.
+
 Applying AES
 -----------------------------------------------
 
-Now that I have given you the theory, let's talk about application.  Here is a diagram of how we applied it at edX:
+Now that I have given you the theory, let's talk about application.  Here is a diagram of how we grade essays and constructed responses at edX:
 
-![edx flow](http://www.vikparuchuri.com/images/aes/edx-flow.png)
+![edx flow](../images/aes/edx-flow.png)
 
 So, when a student answers a question, it goes to any or all of self, peer, and AES to be scored.  Written feedback (from peer assessment), and rubric feedback (from all three assessments) are displayed to the student.
 
@@ -141,16 +147,54 @@ Photosynthesis
 2 points - Fully correct definition
 ```
 
-The AES will give the student feedback on how many points they scored for each category of the rubric.  I show you this example less to discuss the strengths and weaknesses of the edX system, but more to lead into a discussion of how, when, and why AES should be deployed.
+And here is specifically how the AES works:
+
+![edx aes flow](../images/aes/edx-aes-flow.png)
+
+The main differences are in that we allow teachers to regrade essays that AES has scored poorly.  When a machine learning algorithm scores an essay, it doesn't just give you a score; it also gives you a confidence value from 0% - 100% associated with that score.  A low confidence indicates that the machine learning model does not know how to score a given essay.  We show student papers that AES has graded to the teacher, in order of lowest confidence to highest.  When a teacher re-scores a paper, it gives the student the correct score, and makes the machine learning model better (it won't make the same mistake twice).  This is called [active learning](http://en.wikipedia.org/wiki/Active_learning_(machine_learning)).
+
+The AES will give the student feedback on how many points they scored for each category of the rubric.  I show you this example less to discuss the strengths and weaknesses of the edX system (it has both), but more to lead into a discussion of how, when, and why AES should be deployed.
+
 
 Lessons of application
 ----------------------------------------------------
 
-* Don't forget the goal - The goal here isn't to impress people with fancy technology or tell teachers how they should teach.  The goal is to maximize student learning and limited teacher resources (time) in a way that is flexible, and completely under the control of the subject expert (teacher).
-* Scale - In a MOOC setting, AES makes sense.  It is hard/impossible for a teacher to score thousands of students each week, and writing is a critical component of many courses.  But scale can also play a big part in the classroom.  Can a teacher grade 10 drafts per student per week?  Maybe it makes sense to allow students to score their "intermediate revisions" by machine, improve their writing, and give their key drafts and finished products to a teacher for more detailed feedback.
-* AES is best used in combination with other technologies - In the same vein as the point above, AES is useful in some domains, and can given students accurate scores and rubric feedback.  However, AES cannot give detailed feedback like an instructor or peer can.  You should evaluate your options and see how you can best use AES.  Maybe it works for certain questions.  Maybe you can grade tests with AES.  Maybe it is good for grading first drafts.
-* Put the power in the hands of teachers - AES is useless when the power is in the hands of researchers and programmers (although it does make us feel powerful).  The real people who need to shape and implement these technologies are teachers, and they need the power to define how the AES looks and works,  Maybe a teacher doesn't need to define what features the AES uses, but being able to turn off the AES for certain students might be useful.
-* Give people the information that they need - AES is a semi-shadow world to a lot of people, and that may be partially by design.  The less we tell people about how things are done, the more valuable we become.
+I personally have learned a lot of lessons in both developing and applying algorithms.  Here are some:
+
+## Don't forget the goal
+The goal here isn't to impress people with fancy technology or tell teachers how they should teach.  The goal is to maximize student learning and limited teacher resources (time) in a way that is flexible, and under the control of the subject expert (teacher).
+
+## Scale
+In a MOOC setting, AES makes sense.  It is hard/impossible for a teacher to score thousands of students each week, and writing is a critical component of many courses.  But scale can also play a big part in the classroom.  Can a teacher grade 10 drafts per student per week?  Maybe it makes sense to allow students to score their "intermediate revisions" with AES, improve their writing, and give their key drafts and finished products to a teacher for more detailed feedback.
+
+## AES is best used in combination with other ideas/technologies/concepts
+In the same vein as the point above, AES is useful in some domains, and can given students accurate scores and rubric feedback.  However, AES cannot give detailed feedback like an instructor or peer can.  You should evaluate your options and see how you can best use AES.  Maybe it works for certain questions.  Maybe you can grade tests with AES.  Maybe it is good for grading first drafts.  Maybe you should combine it with small group discussions or peer scoring.
+
+## Put the power in the hands of teachers
+AES is useless when the power is in the hands of researchers and programmers (although it does make us feel important).  The real people who need to shape and implement these technologies are teachers and students, and they need the power to define how the AES looks and works,  Maybe a teacher doesn't need to define what features the AES uses, but being able to turn off the AES for certain students might be useful.
+
+## Give people the information that they need
+AES is a semi-shadow world to a lot of people, and that may be partially by design.  The less we tell people about how things are done, the more valuable and important we become.  I am always leery of researchers who take the "non-cooperative expert" stance.  edX open sourced all of the software I developed/helped develop is [open source](http://code.edx.org/), and I have been [open sourcing](https://github.com/vikparuchuri/) all of my recent personal work.
+
+## Give teachers information on the algorithm
+Algorithms can estimate their own error rates (how many papers they grade correctly vs incorrectly).  At edX, these error rates are displayed to teachers, so that teachers can make the machine learning models better if they want to.  Giving teachers as much information as possible within an AES system is key.
+
+## It's not just about the code
+As important as it is to get code out there, it's also important to have serious discussions around AES, and disseminate and take in information whenever possible.  I would love to hear from anyone who has ideas or information that they want to share.
+
+## It's not all about the algorithm
+Most of the time I spent creating the edX open response assessment tool was spent on things that don't have to do with the algorithm.  Algorithms are fun and exciting, but learning tools are only useful if they help students, well, learn.  The most important thing in this is usability.  Can a student quickly digest and use their feedback?  Can a teacher quickly create a new problem and deliver it to students?  It is actually pretty easy to implement an algorithm.  It is hard to put the things in place around it to allow students to succeed.
+
+## Make everything dead simple
+Does a teacher have to manually read a ton of essays into a command line or GUI program (think Microsoft office)?  How do students get papers into the system?  At edX, everything is a web-based tool, and students can write papers, receive feedback entirely through a web interface.  Teachers can create problems that use AES in a few clicks, and can grade student papers through a web interface.  This isn't the end all be all of ways to approach this, but more user friendly is better.
+
+Future scenarios
+-----------------------------------------
+
+I know that the Hewlett Foundation is planning in-classroom trials of various AES products.  I think that the Hewlett Foundation is doing great work with this.  Unfortunately, I believe that this group has already been picked, and is mostly commercial products or "established" products.
+
+
+
 
 
 
