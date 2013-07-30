@@ -10,6 +10,7 @@ categories:
     - edX
     - essay scoring
     - discern
+    - EASE
 ---
 
 We've all written essays, often at the behest of a teacher.  We sometimes enjoy researching the topic and composing the paper, a process that can take hours and hours of careful work. Given this, people react badly to the notion that their essays may be scored not by a human teacher, but [by machine](http://gettingsmart.com/2012/04/automated-essay-scoring-systems-demonstrate-effectiveness/).  A soulless (or maybe not, but that's a topic for another day) computer judging the quality of our carefully constructed phrases and metaphors is more than most writers can bear.  But is this what automated essay scoring (AES) is?  If not, what is it?  In this article, I aim to explore the field, and where it is going.
@@ -188,10 +189,23 @@ Most of the time I spent creating the edX open response assessment tool was spen
 ## Make everything dead simple
 Does a teacher have to manually read a ton of essays into a command line or GUI program (think Microsoft office)?  How do students get papers into the system?  At edX, everything is a web-based tool, and students can write papers, receive feedback entirely through a web interface.  Teachers can create problems that use AES in a few clicks, and can grade student papers through a web interface.  This isn't the end all be all of ways to approach this, but more user friendly is better.
 
+## Grading isn't all about essays
+Can we grade uploaded videos?  How about pictures or songs?  This can be done with peer and teacher grading, but AES needs to be extended to work with alternative media as technology advances.
+
+There are many more lessons to be learned.  Let me know if you think of any.
+
 Future scenarios
 -----------------------------------------
 
 I know that the Hewlett Foundation is planning in-classroom trials of various AES products.  I think that the Hewlett Foundation is doing great work with this.  Unfortunately, I believe that this group has already been picked, and is mostly commercial products or "established" products.
+
+Some scenarios that I hope emerge out of this trial and others:
+
+* AES is used as a way to give students iterative feedback before submitting a final draft to a teacher for a full evaluation.
+* AES systems experiment with giving teachers information, and allowing them to regrade and customize grading.
+* Automated systems pre-score essays, and automatically identify students who might need teacher intervention.
+* A teacher scores an essay, then is given the score the same essay received via AES, and can update their score if they believe that the AES brings up useful points.
+
 
 
 
