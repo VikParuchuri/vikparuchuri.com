@@ -10,11 +10,14 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="800.09003"
-   height="1052.3622"
+   height="850.35999"
    id="svg9334"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="edx-aes-flow.svg">
+   sodipodi:docname="edx-aes-flow.svg"
+   inkscape:export-filename="/home/vik/vikparuchuri/vikparuchuri.com/source/images/aes/edx-aes-flow.png"
+   inkscape:export-xdpi="93.333336"
+   inkscape:export-ydpi="93.333336">
   <defs
      id="defs9336">
     <marker
@@ -114,25 +117,27 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(0,-202.00218)">
     <rect
        style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.85011244;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect2987"
        width="274.43561"
        height="108.72132"
-       x="67.782196"
-       y="92.287224" />
+       x="53.496483"
+       y="255.14436" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot3757"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
-       transform="translate(-7.8571386,27.142844)"><flowRegion
+       transform="translate(-22.142853,189.99999)"><flowRegion
          id="flowRegion3759"><rect
            id="rect3761"
            width="435.71429"
@@ -145,18 +150,18 @@
          style="font-size:30px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold"
          id="flowPara3765">essays</flowPara></flowRoot>    <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
-       d="m 392.14285,193.79073 c 61.42857,57.14285 61.42857,57.14285 61.42857,57.14285"
+       d="m 377.85714,356.64787 c 61.42857,57.14285 61.42857,57.14285 61.42857,57.14285"
        id="path4393"
        inkscape:connector-curvature="0" />
     <rect
-       y="286.57294"
-       x="506.35361"
+       y="449.43008"
+       x="492.0679"
        height="108.72132"
        width="274.43561"
        id="rect4579"
        style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.85011244;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <flowRoot
-       transform="translate(459.2857,219.99998)"
+       transform="translate(444.99999,382.85712)"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
        id="flowRoot4581"
        xml:space="preserve"><flowRegion
@@ -172,18 +177,18 @@
          style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold"
          id="flowPara4595">grade 100 essays</flowPara></flowRoot>    <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
-       d="m 640.71427,418.07645 c 0,80 0,80 0,80"
+       d="m 626.42856,580.93359 c 0,80 0,80 0,80"
        id="path4597"
        inkscape:connector-curvature="0" />
     <rect
-       y="506.57297"
-       x="494.92502"
+       y="669.43011"
+       x="480.63931"
        height="108.72132"
        width="274.43561"
        id="rect4781"
        style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.85011244;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <flowRoot
-       transform="translate(390.71427,435.71427)"
+       transform="translate(376.42856,598.57141)"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
        id="flowRoot4783"
        xml:space="preserve"><flowRegion
@@ -199,18 +204,18 @@
          style="font-size:30px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold"
          id="flowPara4795"> model is &quot;trained&quot;</flowPara></flowRoot>    <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
-       d="m 599.2857,633.79073 c -86.88644,50.16391 -86.88644,50.16391 -86.88644,50.16391"
+       d="m 584.99999,796.64787 c -86.88644,50.16391 -86.88644,50.16391 -86.88644,50.16391"
        id="path4797"
        inkscape:connector-curvature="0" />
     <rect
-       y="722.28723"
-       x="157.7822"
+       y="885.14435"
+       x="143.49648"
        height="108.72132"
        width="274.43561"
        id="rect4981"
        style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.85011244;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     <flowRoot
-       transform="translate(79.285707,649.99998)"
+       transform="translate(64.999993,812.85712)"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
        id="flowRoot4983"
        xml:space="preserve"><flowRegion
@@ -228,12 +233,12 @@
          style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold"
          id="flowPara4997">students</flowPara></flowRoot>    <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lstart)"
-       d="m 213.57142,246.64788 c 0,398.57142 1.42857,400 1.42857,400 l 0,-1.42858"
+       d="m 199.28571,409.50502 c 0,398.57142 1.42857,400 1.42857,400 l 0,-1.42858"
        id="path6473"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker9383)"
-       d="M 488.57143,560.93361 C 352.85714,338.07647 481.42857,345.21933 481.42857,345.21933"
+       d="M 474.28572,723.79075 C 338.57143,500.93361 467.14286,508.07647 467.14286,508.07647"
        id="path9508"
        inkscape:connector-curvature="0" />
     <flowRoot
@@ -250,36 +255,36 @@
        xml:space="preserve"
        id="flowRoot10246"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
-       transform="translate(327.14287,-71.428571)"><flowRegion
+       transform="translate(312.85716,91.428572)"><flowRegion
          id="flowRegion10248"><rect
            id="rect10250"
            width="431.42856"
            height="157.14285"
            x="45.714287"
            y="498.07648"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold;fill:#ff0000" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ff0000;font-family:Arial;-inkscape-font-specification:Arial Bold" /></flowRegion><flowPara
          id="flowPara10252"
-         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold;fill:#ff0000">Teacher sees the error rate </flowPara><flowPara
-         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold;fill:#ff0000"
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ff0000;font-family:Arial;-inkscape-font-specification:Arial Bold">Teacher sees the error rate </flowPara><flowPara
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ff0000;font-family:Arial;-inkscape-font-specification:Arial Bold"
          id="flowPara10254">of the model</flowPara></flowRoot>    <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker9383)"
-       d="M 491.42857,300.93361 C -85.714286,449.50504 475.71429,608.07647 475.71429,608.07647"
+       d="M 477.14286,463.79075 C -100,612.36218 461.42858,770.93361 461.42858,770.93361"
        id="path10258"
        inkscape:connector-curvature="0" />
     <flowRoot
-       transform="translate(191.42858,-124.28571)"
+       transform="translate(177.14287,38.571433)"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
        id="flowRoot10465"
        xml:space="preserve"><flowRegion
          id="flowRegion10467"><rect
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold;fill:#ff0000"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ff0000;font-family:Arial;-inkscape-font-specification:Arial Bold"
            y="498.07648"
            x="45.714287"
            height="157.14285"
            width="431.42856"
            id="rect10469" /></flowRegion><flowPara
          id="flowPara10473"
-         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold;fill:#ff0000">Teacher regrades </flowPara><flowPara
-         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial Bold;fill:#ff0000"
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ff0000;font-family:Arial;-inkscape-font-specification:Arial Bold">Teacher regrades </flowPara><flowPara
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#ff0000;font-family:Arial;-inkscape-font-specification:Arial Bold"
          id="flowPara10477">essays to improve model</flowPara></flowRoot>  </g>
 </svg>
