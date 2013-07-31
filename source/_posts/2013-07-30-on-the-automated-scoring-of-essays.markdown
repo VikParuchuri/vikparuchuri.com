@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "On the automated scoring of essays"
+title: "On the automated scoring of essays and the lessons learned along the way"
 date: 2013-07-31 12:30
 comments: true
 categories:
