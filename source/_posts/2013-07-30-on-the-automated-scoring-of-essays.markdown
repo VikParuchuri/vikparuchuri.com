@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "On the automated scoring of essays"
-date: 2013-07-30 12:37
+date: 2013-07-31 12:30
 comments: true
 categories:
     - AES
@@ -63,7 +63,7 @@ How does AES work?
 
 Here is a rough diagram of automated essay scoring:
 
-![aes diagram](../images/aes/aes-flow.png)
+![aes diagram](http://www.vikparuchuri.com/images/aes/aes-flow.png)
 
 So, students first write some essays.  Teachers then grade these essays using whatever criteria they want and a machine learning model is created.
 
@@ -144,7 +144,7 @@ Applying AES
 
 Now that I have given you the theory, let's talk about application.  Here is a diagram of how we grade essays and constructed responses at edX:
 
-![edx flow](../images/aes/edx-flow.png)
+![edx flow](http://www.vikparuchuri.com/images/aes/edx-flow.png)
 
 So, when a student answers a question, it goes to any or all of self, peer, and AES to be scored.  Written feedback (from peer assessment), and rubric feedback (from all three assessments) are displayed to the student.
 
@@ -165,7 +165,7 @@ The AES would tell you how you did on each of the rubric dimensions (which are c
 
 Here is specifically how the AES works:
 
-![edx aes flow](../images/aes/edx-aes-flow.png)
+![edx aes flow](http://www.vikparuchuri.com/images/aes/edx-aes-flow.png)
 
 The main difference between this and the generic workflow I showed you before is that edX allows teachers to regrade essays that AES has scored poorly.  When a machine learning model scores an essay, it doesn't just give you a score; it also gives you a confidence value from 0% - 100% associated with that score.  A low confidence indicates that the machine learning model does not know how to score a given essay well.  We show student papers that AES has already graded to the teacher, in order of lowest confidence to highest.  When a teacher re-scores a paper, it gives the student the correct score, and makes the machine learning model better (it won't make the same mistake twice).  This is called <i><a href="http://en.wikipedia.org/wiki/Active_learning_(machine_learning)">active learning</a></i>.
 
@@ -174,7 +174,7 @@ The AES will give the student feedback on how many points they scored for each c
 Lessons of application
 ----------------------------------------------------
 
-I personally have learned a lot of lessons in both developing and applying algorithms.  Below are some, in no particular order.  I talk about the edX system a lot, because I have a lot of recent experience with it.
+I personally have learned a lot of lessons in both developing and applying AES algorithms.  Below are some, in no particular order.  I talk about the edX system a lot, because I have a lot of recent experience with it.
 
 ### Don't forget the goal
 The goal here isn't to impress people with fancy technology or tell teachers how they should teach.  The goal is to maximize student learning and limited teacher resources (time) in a way that is flexible, and under the control of the subject expert (teacher).
@@ -208,7 +208,7 @@ I alluded earlier to several large assessment companies participating in the Kag
 
 Competitors and vendors were ranked by quadratic weighted kappa (QWK), which measures how closely the predicted scores from the models matched up with human scores  (higher kappas are better).  We can summarize the performance with this excellent charts from [Christopher Hefele](http://www.kaggle.com/users/1602/christopher-hefele):
 
-![vendors vs performers](../images/aes/aes-vendors.png)
+![vendors vs performers](http://www.vikparuchuri.com/images/aes/aes-vendors.png)
 
 We can see that the top six competition participants did better in terms of accuracy than all of the vendors.  I have discussed before what I think of accuracy as the sole metric for AES success, so take this with a bit of salt.  The main reason I show this is to illustrate that open competition, with a fair target, can lead to very unexpected results and breakthroughs.
 
@@ -218,7 +218,7 @@ I think that the best results come about when fresh ideas can be combined with e
 
 This second chart, also from Christopher, is also interesting:
 
-![performance rising](../images/aes/aes-scores.png)
+![performance rising](http://www.vikparuchuri.com/images/aes/aes-scores.png)
 
 Each line is how one of the top competitors performed on the public leaderboard (essentially us testing our algorithms before the final evaluation).  Looking at the "VikP & jman" line, which is the line for my team, brings back some memories of frantic coding and thinking up crazy solutions to increase accuracy.
 
@@ -234,9 +234,9 @@ The bright future
 
 The Hewlett Foundation has been doing some excellent work in the AES space, and I know that they are planning in-classroom trials of various AES products.  Unfortunately, I believe that the group of products has already been picked, and is mostly commercial products or "established" products.
 
-Some scenarios that I hope emerge out of this trial and others:
+Some scenarios that I hope emerge out of this trial and others are below.  Some of these are already being done to varying degrees:
 
-* AES is used as a way to give students iterative feedback before submitting a final draft to a teacher for a full evaluation.
+* AES is used as a way to give students iterative feedback before submitting a final draft to a teacher for a full evaluation.  Does this help learning?
 * AES systems experiment with giving teachers information, and allowing them to regrade and customize grading.
 * Automated systems pre-score essays, and automatically identify students who might need teacher intervention.
 * A teacher scores an essay, then is given the score the same essay received via AES, and can update their score if they believe that the AES brings up useful points.
