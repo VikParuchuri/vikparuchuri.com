@@ -16,7 +16,7 @@ categories:
 
 We've all written essays, primarily while we were in school.  The sometimes enjoyable process of researching the topic and composing the paper can take hours and hours of careful work. Given this, people react badly to the notion that their essays may be scored not by a human teacher, but [by machine](http://gettingsmart.com/2012/04/automated-essay-scoring-systems-demonstrate-effectiveness/).
 
-A piece of software coldly judging the quality of our carefully constructed phrases and metaphors based on unknown criteria is more than most writers can bear.  But is this what automated essay scoring (AES) is?  If not, what is it?  In this article, I aim to explore the field, and where it is going.
+A piece of software coldly judging the quality of our carefully constructed phrases and metaphors based on unknown criteria is more than most writers can bear.  But is this what automated essay scoring (AES) is?  If not, what is it?  In this article, I aim to explore what AES is, the state of field, some of the lessons I have learned along the way, and where I think it is going.
 
 <!--more-->
 
@@ -35,7 +35,7 @@ I was fortunate enough to be able to work with [Justin Fister](http://www.kaggle
 
 As strange as it sounds, even though I was sitting at my computer, coding for hours on end, participating in those competitions was a lot of fun.  I was able to spend every day learning, striving, and implementing (I may have had a less rosy recollection had I not done so well).  But the luster quickly faded post-contest.  We had made some interesting advances, and now possessed a lot of knowledge, but so what?  The knowledge was not being applied to anything, and there is a huge gap between theoretical and real-world results.  Justin found a job at MI, and I went to work for [edX](https://www.edx.org/), a massively open online class (MOOC) provider based in the Boston area, where I started to apply what I learned.
 
-You may have heard of the [edX automated essay scoring algorithm](http://www.nytimes.com/2013/04/05/science/new-test-for-computers-grading-essays-at-college-level.html?pagewanted=all), and the backlash such as [this](http://mfeldstein.com/si-ways-the-edx-announcement-gets-automated-essay-grading-wrong/) and [this](http://www.hackeducation.com/2012/04/15/robot-essay-graders/) to it.  I created this algorithm, and as much as the criticism can sting or get really strange (the guy who wrote the first backlash article I linked to decided to call it [first year graduate student level](https://news.ycombinator.com/item?id=5801692), which I guess he thought was an insult), I think that there are valid points on both sides of the issue, and I will try to go through them in my discussion.
+You may have heard of the [edX automated essay scoring algorithm](http://www.nytimes.com/2013/04/05/science/new-test-for-computers-grading-essays-at-college-level.html?pagewanted=all), and the backlash such as [this](http://mfeldstein.com/si-ways-the-edx-announcement-gets-automated-essay-grading-wrong/) and [this](http://www.hackeducation.com/2012/04/15/robot-essay-graders/) to it and AES.  I created this algorithm, and as much as the criticism can sting or get really strange (the guy who wrote the first backlash article I linked to decided to call it [first year graduate student level](https://news.ycombinator.com/item?id=5801692), which I guess he thinks is an insult), I think that there are valid points on both sides of the issue, and I will try to go through them in my discussion.
 
 What is AES?
 -------------------------------------------------------------
@@ -243,4 +243,4 @@ Some scenarios that I hope emerge out of this trial and others:
 * Small group discussions and peer grading are tried in combination with AES.
 * Automated scoring of alternative types of media, like videos, begins to emerge.
 
-Hopefully I have given you a good idea of what AES is, and what it can do, and how it might look in the future.  Please let me know if you have any questions or want to share something.  You can find me in a ridiculous amount of places: the comments section here, twitter, linkedin, and email.  Pick one.
+Hopefully I have given you a good idea of what AES is, and what it can do, and how it might look in the future.  Please let me know if you have any questions or want to share something.  You can find me in a ridiculous amount of places: the comments section here, twitter (@VikParuchuri), linkedin, and email (vik dot paruchuri at gmail).  Pick one.
