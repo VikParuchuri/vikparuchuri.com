@@ -244,3 +244,5 @@ Some scenarios that I hope emerge out of this trial and others are below.  Some 
 * Automated scoring of alternative types of media, like videos, begins to emerge.
 
 Hopefully I have given you a good idea of what AES is, and what it can do, and how it might look in the future.  Please let me know if you have any questions or want to share something.  You can find me in a ridiculous amount of places: the comments section here, twitter (@VikParuchuri), linkedin, and email (vik dot paruchuri at gmail).  Pick one.
+
+<a name="comments"></a>
