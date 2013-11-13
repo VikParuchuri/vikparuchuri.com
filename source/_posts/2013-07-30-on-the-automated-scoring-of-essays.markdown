@@ -102,21 +102,20 @@ We would now have the responses and associated interest scores:
 <tr><td>4</td><td>Machine learning predicts everything!</td><td>2</td></tr>
 </tbody>
 </table>
-
-  <script>
-    $('.table').dataTable({
-        "bPaginate": false,
-        "bLengthChange": false,
-        "bSort": false,
-        "bStateSave": true,
-        "sScrollY": 200,
-        "sScrollX": 500,
-        "bFilter": true,
-        "bInfo": false,
-        "aLengthMenu": [[50, 100, -1], [50, 100, "All"]],
-        "iDisplayLength": 4,
-    });
-    </script><br/>
+<script>
+$('.table').dataTable({
+"bPaginate": false,
+"bLengthChange": false,
+"bSort": false,
+"bStateSave": true,
+"sScrollY": 200,
+"sScrollX": 500,
+"bFilter": true,
+"bInfo": false,
+"aLengthMenu": [[50, 100, -1], [50, 100, "All"]],
+"iDisplayLength": 4,
+});
+</script><br/>
 </div>
 
 So, let's say that we get a half-filled-out survey that forgot to include the interest score.  All we got was the sentence `I really like solving problems.  Machine learning is very useful.`  Now, if we look at this in the context of the other responses, we can infer that the interest of the person is likely a 2/2.  But how would a computer do the same thing?  Through features.
